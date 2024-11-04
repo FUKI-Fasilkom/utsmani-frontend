@@ -21,6 +21,9 @@ const config: Config = {
       colors: {},
     },
   },
-  plugins: [require('tailwindcss-animate')],
+  plugins: [
+    require('tailwindcss-animate'),
+    require('@xpd/tailwind-3dtransforms'),
+  ],
 }
 export default config
