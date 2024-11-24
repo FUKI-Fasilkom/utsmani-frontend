@@ -87,9 +87,9 @@ export const Navbar: React.FC = () => {
           <Button variant={'tertiary'}>Masuk</Button>
           <Button>Daftar</Button>
         </div>
-        <div>
+        <div className="block md:hidden">
           <button onClick={openNavbar}>
-            <MenuIcon className="block md:hidden" />
+            <MenuIcon />
           </button>
         </div>
       </div>
