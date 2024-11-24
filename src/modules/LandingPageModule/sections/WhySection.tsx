@@ -2,7 +2,9 @@ export const WhySection: React.FC = () => {
   return (
     <div>
       <section className="bg-[#75482f] text-white py-12 px-8 text-center max-w-full mx-auto mt-12 shadow-lg">
-        <h2 className="text-[40px] font-bold mb-6">Mengapa harus belajar Al-Quran di Al-Utsmani?</h2>
+        <h2 className="text-[40px] font-bold mb-6">
+          Mengapa harus belajar Al-Quran di Al-Utsmani?
+        </h2>
         <ul className="space-y-4 text-[28px] inline-block text-left">
           <li className="flex items-center">
             <svg
@@ -57,10 +59,10 @@ export const WhySection: React.FC = () => {
             >
               <path d="M9 16.2l-3.5-3.5 1.4-1.4 2.1 2.1L16.6 7l1.4 1.4L9 16.2z" />
             </svg>
-            Berkesempatan besar mengikuti Wisuda Al Qur'an
+            Berkesempatan besar mengikuti Wisuda Al Qur&apos;an
           </li>
         </ul>
       </section>
     </div>
-  );
-};
+  )
+}

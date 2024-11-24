@@ -6,6 +6,7 @@ const config: Config = {
   theme: {
     container: {
       center: true,
+      padding: '1rem',
     },
     extend: {
       backgroundImage: {
