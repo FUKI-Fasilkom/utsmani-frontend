@@ -203,8 +203,8 @@ const CarouselPrevious = React.forwardRef<
   return (
     <Button
       ref={ref}
-      variant={variant}
-      size={size}
+      variant={variant as 'primary'} // TODO: Fix nanti
+      size={size as 'md'} // TODO: Fix nanti
       className={cn(
         'absolute  h-8 w-8 rounded-full',
         orientation === 'horizontal'
@@ -232,8 +232,8 @@ const CarouselNext = React.forwardRef<
   return (
     <Button
       ref={ref}
-      variant={variant}
-      size={size}
+      variant={variant as 'primary'} // TODO: Fix nanti
+      size={size as 'md'} // TODO: Fix nanti
       className={cn(
         'absolute h-8 w-8 rounded-full',
         orientation === 'horizontal'
