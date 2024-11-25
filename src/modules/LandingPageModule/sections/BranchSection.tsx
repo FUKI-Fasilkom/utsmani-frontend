@@ -1,9 +1,8 @@
 import Link from 'next/link'
 import { BRANCH_LIST } from '../constant'
-import InstagramIcon from '@/components/icons/Instagram'
 import TikTokIcon from '@/components/icons/TikTok'
-import FacebookIcon from '@/components/icons/Facebook'
 import { Mail, MapPin, Phone } from 'lucide-react'
+import { Facebook, Instagram } from '@/components/icons'
 
 export const BranchSection: React.FC = () => {
   return (
@@ -37,7 +36,7 @@ const OurContactSection: React.FC = () => {
     {
       name: 'Instagram',
       url: 'https://www.instagram.com/alutsmani/',
-      icon: InstagramIcon,
+      icon: Instagram,
     },
     {
       name: 'TikTok',
@@ -47,7 +46,7 @@ const OurContactSection: React.FC = () => {
     {
       name: 'Facebook',
       url: 'https://www.facebook.com/LBQUTSMANI',
-      icon: FacebookIcon,
+      icon: Facebook,
     },
   ]
   return (

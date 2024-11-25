@@ -1,7 +1,7 @@
 import React from 'react'
 import { IconProps } from './interface'
 
-const Instagram: React.FC<IconProps> = ({
+export const Instagram: React.FC<IconProps> = ({
   className,
   size = 'w-[24px]',
   fill = 'fill-white',
@@ -20,5 +20,3 @@ const Instagram: React.FC<IconProps> = ({
     </svg>
   )
 }
-
-export default Instagram
