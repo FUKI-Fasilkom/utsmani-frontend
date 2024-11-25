@@ -5,7 +5,7 @@ import { deleteCookie, getCookie } from 'cookies-next'
 async function customFetch<T = CustomFetchBaseResponse>(
   url: string,
   options: CustomFetchRequestInit = { uploadFile: false },
-  cookies?: () => ReadonlyRequestCookies
+  cookies?: () => Promise<ReadonlyRequestCookies>
 ): Promise<T> {
   const headers: HeadersInit = {
     authorization: '',

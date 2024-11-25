@@ -6,6 +6,7 @@ const config: Config = {
   theme: {
     container: {
       center: true,
+      padding: '1rem',
     },
     extend: {
       backgroundImage: {
@@ -18,9 +19,15 @@ const config: Config = {
         md: 'calc(var(--radius) - 2px)',
         sm: 'calc(var(--radius) - 4px)',
       },
-      colors: {},
+      colors: {
+        brown: '#6C4534',
+        white1: '#FFFBF7',
+      },
     },
   },
-  plugins: [require('tailwindcss-animate')],
+  plugins: [
+    require('tailwindcss-animate'),
+    require('@xpd/tailwind-3dtransforms'),
+  ],
 }
 export default config

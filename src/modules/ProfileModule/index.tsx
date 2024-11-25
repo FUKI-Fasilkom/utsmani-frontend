@@ -1,16 +1,18 @@
 import React from 'react'
-import { HeaderSection } from './sections/HeaderSection'
-import { DetailSection } from './sections/DetailSection'
-import { AboutUsSection } from './sections/AboutUsSection'
-import { StructureSection } from './sections/StructureSection'
+import {
+  AboutUsSection,
+  DetailSection,
+  HeaderSection,
+  StructureSection,
+} from './sections'
 
 export const ProfileModule: React.FC = async () => {
   return (
-    <>
+    <div className="flex flex-col gap-20">
       <HeaderSection />
       <AboutUsSection />
       <DetailSection />
       <StructureSection />
-    </>
+    </div>
   )
 }

@@ -13,7 +13,7 @@ import {
 
 export const LandingPageModule: React.FC = async () => {
   return (
-    <>
+    <div className="flex flex-col gap-20">
       <HeaderSection />
       <WhySection />
       <AboutSection />
@@ -23,6 +23,6 @@ export const LandingPageModule: React.FC = async () => {
       <TestimonySection />
       <JoinUsSection />
       <BranchSection />
-    </>
+    </div>
   )
 }

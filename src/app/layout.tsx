@@ -4,6 +4,7 @@ import './globals.css'
 import { Toaster } from '@/components/ui/sonner'
 import { AuthContextProvider } from '@/components/context'
 import { Footer, Navbar } from '@/components/elements'
+import { Suspense } from 'react'
 
 const poppins = Poppins({
   subsets: ['latin'],
@@ -47,12 +48,14 @@ export default function RootLayout({
         <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5" />
       </head>
       <body className={`${poppins.className} overflow-x-hidden min-h-screen`}>
-        <AuthContextProvider>
-          <Navbar />
-          <Toaster position="top-center" />
-          <main className="w-full min-h-screen bg-white">{children}</main>
-          <Footer />
-        </AuthContextProvider>
+        <Suspense>
+          <AuthContextProvider>
+            <Navbar />
+            <Toaster position="top-center" />
+            <main className="w-full min-h-screen bg-white">{children}</main>
+            <Footer />
+          </AuthContextProvider>
+        </Suspense>
       </body>
     </html>
   )
