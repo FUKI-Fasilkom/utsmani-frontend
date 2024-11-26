@@ -159,13 +159,13 @@ export const ActivitySection: React.FC = () => {
               <div
                 className={`w-full h-full flex justify-center overflow-hidden items-center  transform-style-3d transform-cpu transition-all rounded-[1.25rem] bg-cover 
                     ${
-                      index === selected1 - 1 ||
+                      index === selected1 - 1 || // Untuk slide sebelum
                       (index === ACTIVITY_EXAMPLES.length - 1 &&
-                        selected1 === 0)
+                        selected1 === 0) // Untuk slide sebelum, tapi posisi selected1 di index paling awal
                         ? 'rotate-y-30'
-                        : index === selected1 + 1 ||
+                        : index === selected1 + 1 || // Untuk slide setelah
                             (index === ACTIVITY_EXAMPLES.length - 2 &&
-                              selected1 === ACTIVITY_EXAMPLES.length - 1)
+                              selected1 === ACTIVITY_EXAMPLES.length - 1) // Untuk slide setelah, tapi posisi selected di index terakhir
                           ? '-rotate-y-30'
                           : ''
                     }`}
