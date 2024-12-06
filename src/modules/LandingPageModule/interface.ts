@@ -1,7 +1,12 @@
 export interface Props {}
 
 export interface ProgramProps {
+  id: string
   name: string
-  image_link: string
-  url: string
+  cover_image: string
+  title: string
+}
+
+export interface ProgramSectionProps {
+  programs: ProgramProps[]
 }
