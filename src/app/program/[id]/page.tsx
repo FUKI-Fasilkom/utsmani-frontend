@@ -1,5 +1,10 @@
 import { ProgramDetailModule } from '@/modules'
 
-export default function ProgramDetail() {
-  return <ProgramDetailModule />
+export default async function ProgramDetail({
+  params,
+}: {
+  params: Promise<{ id: string }>
+}) {
+  const id = (await params).id
+  return <ProgramDetailModule id={id} />
 }
