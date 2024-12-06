@@ -41,7 +41,7 @@ export const Navbar: React.FC = () => {
           </ul>
         </div>
         <div
-          className={`block md:hidden absolute ${openNav ? 'top-14' : '-translate-y-full top-0'} transition-all left-0 w-full bg-[#FCF9F4]`}
+          className={`block md:hidden absolute ${openNav ? 'top-14' : '-translate-y-full top-0'} transition-all left-0 z-50 w-full bg-[#FCF9F4]`}
         >
           <ul className="flex md:gap-3 flex-col lg:gap-8 font-medium ">
             <li>
