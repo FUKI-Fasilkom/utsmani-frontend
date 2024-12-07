@@ -1,38 +1,57 @@
 import { TESTIMONY_EXAMPLES } from '../constant'
 import Image from 'next/image'
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
+} from '@/components/ui/carousel'
 
 export const TestimonySection: React.FC = () => {
   const testimonyCards = TESTIMONY_EXAMPLES
+
   return (
     <section className="container flex flex-col gap-6 items-center text-brown">
       <div>
         <h2 className="font-bold text-5xl text-center">
-          Apa kata mereka tetang Al-Utsmani?
+          Apa kata mereka tentang Al-Utsmani?
         </h2>
       </div>
-      <div className="flex gap-5 justify-center">
-        {testimonyCards.map((testimony, index) => (
-          <div key={index} className="flex flex-col gap-4">
-            <div className="py-8 px-10 shadow-lg drop-shadow-sm rounded-2xl">
-              <p className="italic font-semibold leading-6">
-                {testimony.quote}
-              </p>
-            </div>
-            <div className="flex gap-2 items-center">
-              <Image
-                src={testimony.profilePicture}
-                height={64}
-                width={64}
-                alt="pp testimony"
-                className="rounded-full h-16 w-16"
-              />
-              <div>
-                <h4 className="font-bold text-xl">{testimony.nama}</h4>
-                <p className="font-medium text-lg">{testimony.role}</p>
-              </div>
-            </div>
-          </div>
-        ))}
+      <div className="flex justify-center w-full">
+        <Carousel className="w-full">
+          <CarouselContent className="flex w-full">
+            {testimonyCards.map((testimony, index) => (
+              <CarouselItem
+                key={index}
+                className="flex flex-col gap-4 h-auto basis-full md:basis-1/2 lg:basis-1/3 px-4"
+              >
+                <div className="flex flex-col gap-4 h-full w-full justify-between mx-auto max-w-[90%]">
+                  <div className="py-8 px-10 shadow-lg drop-shadow-sm h-full w-full rounded-2xl">
+                    <p className="italic font-semibold leading-6 line-clamp-5">
+                      {testimony.quote}
+                    </p>
+                  </div>
+                  <div className="flex gap-2 items-center">
+                    <Image
+                      src={testimony.profilePicture}
+                      height={64}
+                      width={64}
+                      alt="pp testimony"
+                      className="rounded-full h-16 w-16"
+                    />
+                    <div>
+                      <h4 className="font-bold text-xl">{testimony.nama}</h4>
+                      <p className="font-medium text-lg">{testimony.role}</p>
+                    </div>
+                  </div>
+                </div>
+              </CarouselItem>
+            ))}
+          </CarouselContent>
+          <CarouselPrevious className="ml-3">Prev</CarouselPrevious>
+          <CarouselNext className="mr-3">Next</CarouselNext>
+        </Carousel>
       </div>
     </section>
   )

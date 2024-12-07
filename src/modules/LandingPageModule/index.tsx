@@ -12,8 +12,8 @@ import {
 } from './sections'
 
 export const LandingPageModule: React.FC = async () => {
-  const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/program`)
-  const responseJson = await response.json()
+  // const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/program`)
+  // const responseJson = await response.json()
 
   //   console.log(responseJson)
   return (
@@ -21,7 +21,7 @@ export const LandingPageModule: React.FC = async () => {
       <HeaderSection />
       <WhySection />
       <AboutSection />
-      <ProgramSection programs={responseJson.contents} />
+      {/* <ProgramSection programs={responseJson.contents} /> */}
       <WakafSection />
       <ActivitySection />
       <TestimonySection />

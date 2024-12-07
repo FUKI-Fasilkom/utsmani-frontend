@@ -62,7 +62,13 @@ export const PROGRAM_EXAMPLES = [
 export const TESTIMONY_EXAMPLES = [
   {
     quote:
-      'Hafalan Al-Quran saya semakin banyak dan bacaan Al-Quran saya semakin lancar. Semoga Bimbingan Al-Quran di Utsmani semakin berkembang dan diminati banyak orang.',
+      'Hafalan Al-Quran saya semakin banyak dan bacaan Al-Quran saya semakin lancar. Semoga Bimbingan Al-Quran di Utsmani semakin berkembang dan diminati banyak orang.Hafalan Al-Quran saya semakin banyak dan bacaan Al-Quran saya semakin lancar. Semoga Bimbingan Al-Quran di Utsmani semakin berkembang dan diminati banyak orang.Hafalan Al-Quran saya semakin banyak dan bacaan Al-Quran saya semakin lancar. Semoga Bimbingan Al-Quran di Utsmani semakin berkembang dan diminati banyak orang.Hafalan Al-Quran saya semakin banyak dan bacaan Al-Quran saya semakin lancar. Semoga Bimbingan Al-Quran di Utsmani semakin berkembang dan diminati banyak orang.Hafalan Al-Quran saya semakin banyak dan bacaan Al-Quran saya semakin lancar. Semoga Bimbingan Al-Quran di Utsmani semakin berkembang dan diminati banyak orang.Hafalan Al-Quran saya semakin banyak dan bacaan Al-Quran saya semakin lancar. Semoga Bimbingan Al-Quran di Utsmani semakin berkembang dan diminati banyak orang.',
+    nama: 'Muhammad Syauqi',
+    role: 'Kelas 4 sd, peserta tahsin...',
+    profilePicture: 'https://picsum.photos/100/100',
+  },
+  {
+    quote: '111111111',
     nama: 'Muhammad Syauqi',
     role: 'Kelas 4 sd, peserta tahsin...',
     profilePicture: 'https://picsum.photos/100/100',
@@ -77,6 +83,18 @@ export const TESTIMONY_EXAMPLES = [
   {
     quote:
       'Hafalan Al-Quran saya semakin banyak dan bacaan Al-Quran saya semakin lancar. Semoga Bimbingan Al-Quran di Utsmani semakin berkembang dan diminati banyak orang.',
+    nama: 'Muhammad Syauqi',
+    role: 'Kelas 4 sd, peserta tahsin...',
+    profilePicture: 'https://picsum.photos/100/100',
+  },
+  {
+    quote: 'ckenkecnceknck',
+    nama: 'Muhammad Syauqi',
+    role: 'Kelas 4 sd, peserta tahsin...',
+    profilePicture: 'https://picsum.photos/100/100',
+  },
+  {
+    quote: 'qqqqqq',
     nama: 'Muhammad Syauqi',
     role: 'Kelas 4 sd, peserta tahsin...',
     profilePicture: 'https://picsum.photos/100/100',
