@@ -16,46 +16,60 @@ export const BRANCH_LIST = [
   'LBQ AL-UTSMANI Cabang Sorong, Papua',
   'LBQ AL-UTSMANI MAKASSAR',
 ]
+export interface ProgramProps {
+  id: string
+  name: string
+  cover_image: string
+  title: string
+}
 export const PROGRAM_EXAMPLES = [
   {
+    id: '1',
     name: 'Bimbingan di Dalam Lembaga',
-    url: '/',
-    image_link: 'https://picsum.photos/100/100',
+    title: 'Bimbingan di Dalam Lembaga',
+    cover_image: 'https://picsum.photos/100/100',
   },
   {
+    id: '1',
     name: 'Bimbingan di Dalam Lembaga',
-    url: '/',
-    image_link: 'https://picsum.photos/100/100',
+    title: 'Bimbingan di Dalam Lembaga',
+    cover_image: 'https://picsum.photos/100/100',
   },
   {
+    id: '1',
     name: 'Bimbingan di Dalam Lembaga',
-    url: '/',
-    image_link: 'https://picsum.photos/100/100',
+    title: 'Bimbingan di Dalam Lembaga',
+    cover_image: 'https://picsum.photos/100/100',
   },
   {
+    id: '1',
     name: 'Bimbingan di Dalam Lembaga',
-    url: '/',
-    image_link: 'https://picsum.photos/100/100',
+    title: 'Bimbingan di Dalam Lembaga',
+    cover_image: 'https://picsum.photos/100/100',
   },
   {
+    id: '1',
     name: 'Bimbingan di Dalam Lembaga',
-    url: '/',
-    image_link: 'https://picsum.photos/100/100',
+    title: 'Bimbingan di Dalam Lembaga',
+    cover_image: 'https://picsum.photos/100/100',
   },
   {
+    id: '1',
     name: 'Bimbingan di Dalam Lembaga',
-    url: '/',
-    image_link: 'https://picsum.photos/100/100',
+    title: 'Bimbingan di Dalam Lembaga',
+    cover_image: 'https://picsum.photos/100/100',
   },
   {
+    id: '1',
     name: 'Bimbingan di Dalam Lembaga',
-    url: '/',
-    image_link: 'https://picsum.photos/100/100',
+    title: 'Bimbingan di Dalam Lembaga',
+    cover_image: 'https://picsum.photos/100/100',
   },
   {
+    id: '1',
     name: 'Bimbingan di Dalam Lembaga',
-    url: '/',
-    image_link: 'https://picsum.photos/100/100',
+    title: 'Bimbingan di Dalam Lembaga',
+    cover_image: 'https://picsum.photos/100/100',
   },
 ]
 

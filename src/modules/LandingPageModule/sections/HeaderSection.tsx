@@ -1,3 +1,5 @@
+import Image from 'next/image'
+
 export const HeaderSection: React.FC = () => {
   return (
     <>
@@ -13,10 +15,12 @@ export const HeaderSection: React.FC = () => {
             </div>
             <div className="w-[45%] flex items-center justify-center">
               <div className="relative w-full">
-                <img
+                <Image
                   src="/fotobersama.png"
                   alt="foto_bersama"
                   className="w-full h-auto object-contain"
+                  height={1000}
+                  width={1000}
                 />
               </div>
             </div>

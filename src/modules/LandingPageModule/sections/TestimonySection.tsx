@@ -12,7 +12,7 @@ export const TestimonySection: React.FC = () => {
   const testimonyCards = TESTIMONY_EXAMPLES
 
   return (
-    <section className="container flex flex-col gap-6 items-center text-brown">
+    <section className="container flex flex-col gap-6 items-center text-brown px-10">
       <div>
         <h2 className="font-bold text-5xl text-center">
           Apa kata mereka tentang Al-Utsmani?
@@ -49,8 +49,8 @@ export const TestimonySection: React.FC = () => {
               </CarouselItem>
             ))}
           </CarouselContent>
-          <CarouselPrevious className="ml-3">Prev</CarouselPrevious>
-          <CarouselNext className="mr-3">Next</CarouselNext>
+          <CarouselPrevious className="ml-10 md:ml-5">Prev</CarouselPrevious>
+          <CarouselNext className="mr-10 md:mr-5">Next</CarouselNext>
         </Carousel>
       </div>
     </section>
