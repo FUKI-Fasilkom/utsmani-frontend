@@ -5,15 +5,15 @@ import { FaShareAlt, FaClock, FaUser, FaQuoteLeft } from 'react-icons/fa'
 
 export const QuoteDetailModule: React.FC = async () => {
   return (
-    <div className="container flex flex-col gap-14 items-center w-full mb-20 lg:mb-40">
+    <div className="flex flex-col gap-14 items-center w-full mb-20 lg:mb-40">
       <Image
         src={'https://picsum.photos/1400/700'}
         height={658}
         width={1442}
         alt="backgorund image for quotes"
-        className="w-full object-cover"
+        className="w-full object-cover max-h-[400px]"
       />
-      <div className="space-y-[60px] w-full">
+      <div className="space-y-[60px] w-full container">
         <div className="flex justify-between">
           <div className="space-y-4">
             <h2 className="mb-3 text-brown font-bold text-3xl">Quotes</h2>
