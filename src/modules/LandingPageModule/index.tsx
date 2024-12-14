@@ -10,6 +10,7 @@ import {
   WakafSection,
   WhySection,
 } from './sections'
+// import { PROGRAM_EXAMPLES } from './constant'
 
 export const LandingPageModule: React.FC = async () => {
   const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/program`)
@@ -22,6 +23,7 @@ export const LandingPageModule: React.FC = async () => {
       <WhySection />
       <AboutSection />
       <ProgramSection programs={responseJson.contents} />
+      {/* <ProgramSection programs={PROGRAM_EXAMPLES} /> */}
       <WakafSection />
       <ActivitySection />
       <TestimonySection />

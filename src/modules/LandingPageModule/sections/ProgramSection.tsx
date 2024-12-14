@@ -6,7 +6,7 @@ export const ProgramSection: React.FC<ProgramSectionProps> = ({ programs }) => {
   return (
     <section className="container items-center flex flex-col px-4 gap-8">
       <div className="mb-8">
-        <h2 className="text-center text-brown font-bold text-5xl leading-[72px]">
+        <h2 className="text-center text-brown font-bold text-3xl md:text-5xl leading-[48px] md:leading-[72px]">
           Program Unggulan Pesantren Tahfizh Al-Quran Al Utsmani
         </h2>
       </div>
@@ -15,7 +15,7 @@ export const ProgramSection: React.FC<ProgramSectionProps> = ({ programs }) => {
           <Link
             href={`/program/${program.id}`}
             key={index}
-            className="w-[288px] h-[272px] border-2 border-brown rounded-[40px] overflow-hidden flex items-center justify-center relative"
+            className="w-[240px] h-[240px] border-2 border-brown rounded-[40px] overflow-hidden flex items-center justify-center relative"
           >
             <Image
               src={program.cover_image}

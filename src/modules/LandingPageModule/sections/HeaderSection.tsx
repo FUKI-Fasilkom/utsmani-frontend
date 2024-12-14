@@ -1,9 +1,11 @@
+import Image from 'next/image'
+
 export const HeaderSection: React.FC = () => {
   return (
     <>
       <section
         id="header"
-        className="relative bg-[#75482f] text-center text-white pb-32"
+        className="relative bg-[#75482f] text-center text-white pb-3"
       >
         <div className="flex items-center justify-center px-8 max-w-[1269px] h-[350px] mx-auto pt-16">
           <div className="flex items-center justify-center gap-8 w-full max-w-[1000px]">
@@ -13,10 +15,12 @@ export const HeaderSection: React.FC = () => {
             </div>
             <div className="w-[45%] flex items-center justify-center">
               <div className="relative w-full">
-                <img
+                <Image
                   src="/fotobersama.png"
                   alt="foto_bersama"
                   className="w-full h-auto object-contain"
+                  height={1000}
+                  width={1000}
                 />
               </div>
             </div>
@@ -42,8 +46,8 @@ export const HeaderSection: React.FC = () => {
         </div>
       </section>
 
-      <div className="mx-auto w-[914px] h-[224px] py-4 flex items-center justify-center text-center text-[32px] text-[#6C4534] bg-white rounded-[20px] shadow-lg mt-8 font-poppins">
-        <p className="text-center font-bold">
+      <div className="lg:mx-auto lg:w-[914px] lg:h-[224px]  py-4 px-2 flex items-center justify-center text-center  text-[#6C4534] bg-white rounded-[20px] shadow-lg mt-8 font-poppins mx-3 md:mx-6">
+        <p className="text-center font-bold text-[24px] lg:text-[32px]">
           Alhamdulillah atas izin Allah SWT. PTQ Al-Utsmani dengan metode
           Utsmani telah teruji Mudah dan Efektif sejak tahun 1415 H/1995 M
         </p>
