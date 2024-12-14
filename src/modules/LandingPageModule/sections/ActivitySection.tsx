@@ -98,20 +98,20 @@ export const ActivitySection: React.FC = () => {
             </CarouselItem>
           ))}
         </CarouselContent>
-        <button onClick={prevBtn}>
+        <div onClick={prevBtn}>
           <CarouselPrevious
             size="md"
             className="border-2 bg-[#6C4534] text-white"
             //   id="previous-button-1"
           />
-        </button>
-        <button onClick={nextBtn}>
+        </div>
+        <div onClick={nextBtn}>
           <CarouselNext
             size="md"
             className="border-2 bg-[#6C4534] text-white"
             //   id="next-button-1"
           />
-        </button>
+        </div>
         <div className="w-full flex gap-2 justify-center items-center">
           <div className="w-1/3 rounded-full justify-center items-center flex gap-3">
             {test.map((item) =>
@@ -132,7 +132,10 @@ export const ActivitySection: React.FC = () => {
       </Carousel>
 
       {/* kegiatan bawah */}
-      <Carousel opts={{ loop: true }} className="w-full relative flex flex-col">
+      <Carousel
+        opts={{ loop: true }}
+        className="w-full max-w-screen-2xl relative flex flex-col"
+      >
         <CarouselContent className="w-full py-10">
           {ACTIVITY_EXAMPLES.map((activity, index) => (
             <CarouselItem
@@ -163,20 +166,20 @@ export const ActivitySection: React.FC = () => {
             </CarouselItem>
           ))}
         </CarouselContent>
-        <button onClick={prevBtn2}>
+        <div onClick={prevBtn2}>
           <CarouselPrevious
             size="md"
             className="border-2 bg-[#6C4534] text-white"
             //   id="previous-button-1"
           />
-        </button>
-        <button onClick={nextBtn2}>
+        </div>
+        <div onClick={nextBtn2}>
           <CarouselNext
             size="md"
             className="border-2 bg-[#6C4534] text-white"
             //   id="next-button-1"
           />
-        </button>
+        </div>
         <div className="w-full flex gap-2 justify-center items-center">
           <div className="w-1/3 rounded-full justify-center items-center flex gap-3">
             {test.map((item) =>

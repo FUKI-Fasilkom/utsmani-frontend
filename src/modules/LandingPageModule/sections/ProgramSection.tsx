@@ -7,7 +7,7 @@ export const ProgramSection: React.FC<ProgramSectionProps> = ({ programs }) => {
     <section className="container items-center flex flex-col px-4 gap-8">
       <div className="mb-8">
         <h2 className="text-center text-brown font-bold text-3xl md:text-5xl leading-[48px] md:leading-[72px]">
-          Program Unggulan Pesantren Tahfizh Al-Quran Al Utsmani
+          Program Unggulan <br /> Pesantren Tahfizh Al-Quran Al Utsmani
         </h2>
       </div>
       <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-y-8 gap-x-5">
@@ -24,9 +24,11 @@ export const ProgramSection: React.FC<ProgramSectionProps> = ({ programs }) => {
               width={288}
               height={272}
             />
-            <span className="absolute bottom-4 font-bold text-2xl text-center text-white1">
-              {program.name}
-            </span>
+            <div className="py-4 px-2 absolute bottom-0 w-full flex justify-center">
+              <span className=" font-bold text-2xl text-center text-white1">
+                {program.title}
+              </span>
+            </div>
           </Link>
         ))}
       </div>

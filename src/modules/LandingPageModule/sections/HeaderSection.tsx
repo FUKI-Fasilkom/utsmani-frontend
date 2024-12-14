@@ -3,10 +3,7 @@ import Image from 'next/image'
 export const HeaderSection: React.FC = () => {
   return (
     <>
-      <section
-        id="header"
-        className="relative bg-[#75482f] text-center text-white pb-3"
-      >
+      <section className="relative bg-[#75482f] text-center text-white pb-3 min-h-[500px]">
         <div className="flex items-center justify-center px-8 max-w-[1269px] h-[350px] mx-auto pt-16">
           <div className="flex items-center justify-center gap-8 w-full max-w-[1000px]">
             <div className="text-center w-[45%]">

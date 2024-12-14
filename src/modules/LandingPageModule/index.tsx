@@ -23,7 +23,6 @@ export const LandingPageModule: React.FC = async () => {
       <WhySection />
       <AboutSection />
       <ProgramSection programs={responseJson.contents} />
-      {/* <ProgramSection programs={PROGRAM_EXAMPLES} /> */}
       <WakafSection />
       <ActivitySection />
       <TestimonySection />

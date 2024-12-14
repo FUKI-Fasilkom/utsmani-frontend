@@ -6,7 +6,7 @@ import { Facebook, Instagram } from '@/components/icons'
 
 export const BranchSection: React.FC = () => {
   return (
-    <section className="container p-[80px] flex flex-col gap-y-9 md:flex-row md:gap-x-9">
+    <section className="max-w-screen-xl mx-auto container pb-20 flex flex-col gap-y-9 md:flex-row md:gap-x-9">
       <BranchListSection />
       <OurContactSection />
     </section>
