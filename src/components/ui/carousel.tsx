@@ -223,6 +223,48 @@ const CarouselPrevious = React.forwardRef<
 })
 CarouselPrevious.displayName = 'CarouselPrevious'
 
+const CarouselPreviousProgram = React.forwardRef<
+  HTMLButtonElement,
+  React.ComponentProps<typeof Button>
+>(({ className, variant = 'primary', size = 'md', ...props }, ref) => {
+  const { orientation, scrollPrev, canScrollPrev } = useCarousel()
+
+  return (
+    <Button
+      ref={ref}
+      variant={variant}
+      size={size}
+      className={cn(
+        'absolute  h-8 w-8 rounded-full',
+        orientation === 'horizontal'
+          ? '-left-12 top-1/2 -translate-y-1/2'
+          : '-top-12 left-1/2 -translate-x-1/2 rotate-90',
+        className
+      )}
+      disabled={!canScrollPrev}
+      onClick={scrollPrev}
+      {...props}
+    >
+      <p className="text-center text-4xl">
+        <svg
+          width="18"
+          height="28"
+          viewBox="0 0 18 28"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="M17.3366 3.6725L14.1641 0.5L0.664062 14L14.1641 27.5L17.3366 24.3275L7.03156 14L17.3366 3.6725Z"
+            fill="#ffffff"
+          />
+        </svg>
+      </p>
+      <span className="sr-only">Previous slide</span>
+    </Button>
+  )
+})
+CarouselPreviousProgram.displayName = 'CarouselPreviousProgram'
+
 const CarouselNext = React.forwardRef<
   HTMLButtonElement,
   React.ComponentProps<typeof Button>
@@ -252,6 +294,48 @@ const CarouselNext = React.forwardRef<
 })
 CarouselNext.displayName = 'CarouselNext'
 
+const CarouselNextProgram = React.forwardRef<
+  HTMLButtonElement,
+  React.ComponentProps<typeof Button>
+>(({ className, variant = 'primary', size = 'md', ...props }, ref) => {
+  const { orientation, scrollNext, canScrollNext } = useCarousel()
+
+  return (
+    <Button
+      ref={ref}
+      variant={variant}
+      size={size}
+      className={cn(
+        'absolute h-8 w-8 rounded-full',
+        orientation === 'horizontal'
+          ? '-right-12 top-1/2 -translate-y-1/2'
+          : '-bottom-12 left-1/2 -translate-x-1/2 rotate-90',
+        className
+      )}
+      disabled={!canScrollNext}
+      onClick={scrollNext}
+      {...props}
+    >
+      <p className="text-center text-4xl">
+        <svg
+          width="18"
+          height="28"
+          viewBox="0 0 18 28"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="M3.83656 0.499023L0.664062 3.67152L10.9691 13.999L0.664062 24.3265L3.83656 27.499L17.3366 13.999L3.83656 0.499023Z"
+            fill="#ffffff"
+          />
+        </svg>
+      </p>
+      <span className="sr-only">Next slide</span>
+    </Button>
+  )
+})
+CarouselNextProgram.displayName = 'CarouselNextProgram'
+
 export {
   type CarouselApi,
   Carousel,
@@ -259,4 +343,6 @@ export {
   CarouselItem,
   CarouselPrevious,
   CarouselNext,
+  CarouselNextProgram,
+  CarouselPreviousProgram,
 }
