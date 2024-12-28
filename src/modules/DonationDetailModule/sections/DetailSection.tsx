@@ -5,12 +5,9 @@ import { Donation } from '@/modules/DonationModule/interface'
 import React from 'react'
 import CountdownTimer from '../module-elements/Countdown'
 import { Button } from '@/components/ui/button'
-import Link from 'next/link'
 
 export const DetailSection = () => {
-  const [donation, setDonation] = React.useState<Donation>(
-    DUMMY_DONATION_LIST[0]
-  )
+  const [donation, _] = React.useState<Donation>(DUMMY_DONATION_LIST[0])
 
   const getPercentageAmount = (donation: Donation) => {
     return (donation.current_amount / donation.target_amount) * 100
