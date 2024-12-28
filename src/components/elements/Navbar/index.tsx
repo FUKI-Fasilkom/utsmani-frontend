@@ -3,6 +3,7 @@
 import { Button } from '@/components/ui/button'
 import { MenuIcon } from 'lucide-react'
 import Image from 'next/image'
+import Link from 'next/link'
 import { useState } from 'react'
 
 export const Navbar: React.FC = () => {
@@ -95,8 +96,12 @@ export const Navbar: React.FC = () => {
           </ul>
         </div>
         <div className="gap-3 lg:gap-5 hidden md:flex">
-          <Button variant={'tertiary'}>Masuk</Button>
-          <Button>Daftar</Button>
+          <Link href="/login">
+            <Button variant={'tertiary'}>Masuk</Button>
+          </Link>
+          <Link href="/register">
+            <Button>Daftar</Button>
+          </Link>
         </div>
         <div className="block md:hidden">
           <button onClick={openNavbar}>
