@@ -40,7 +40,7 @@ export const DUMMY_DONATION_LIST: Donation[] = [
     current_amount: 50000000,
     deadline: '2021-12-01T00:00:00.000',
     description:
-      'Wakaf untuk membangun masjid Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
+      "Pesantren Tahfizh Al-Qur'an Al-Utsmani merencanakan perluasan gedung pusat dan melanjutkan pembangunan di beberapa daerah seperti Medan, Padang, Bogor, Cirebon, Kalimantan Selatan, Sulawesi, dan Papua.\nBiaya yang dibutuhkan adalah Rp. 20.020.000.000,- (Dua puluh miliar dua puluh juta rupiah).\nKami membutuhkan 1.000.000 donatur untuk berkontribusi dalam gerakan wakaf pembangunan pesantren tahfizh Al-Qu'’an sebesar Rp. 20.020,- atau kelipatannya.",
     image_url: '/assets/images/wakaf-thumbnail.png',
     donor_count: 10,
   },
