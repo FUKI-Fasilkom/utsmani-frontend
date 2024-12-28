@@ -22,6 +22,7 @@ const config: Config = {
       colors: {
         brown: '#6C4534',
         white1: '#FFFBF7',
+        'cream-1': '#F6EFE7',
       },
     },
   },
