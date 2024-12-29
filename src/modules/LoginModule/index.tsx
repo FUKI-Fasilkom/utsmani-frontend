@@ -14,31 +14,41 @@ import { z } from 'zod'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { Input } from '@/components/ui/input'
 import { Button } from '@/components/ui/button'
+import Link from 'next/link'
+import { useAuthContext } from '@/components/context'
+import { useRouter } from 'next/navigation'
 
 // Schema untuk validasi menggunakan Zod
 const loginSchema = z.object({
-  email: z
-    .string()
-    .email('Masukkan email yang valid')
-    .nonempty('Email/No Telepon wajib diisi'),
+  username: z.string().nonempty('Email/No Telepon wajib diisi'),
   password: z.string().min(6, 'Password minimal 6 karakter'),
 })
 
 type LoginFormValues = z.infer<typeof loginSchema>
 
 export const LoginModule: React.FC = () => {
+  const router = useRouter()
+  const { login } = useAuthContext()
+
   // Menggunakan useForm dengan schema Zod
   const form = useForm<LoginFormValues>({
     resolver: zodResolver(loginSchema),
     defaultValues: {
-      email: '',
+      username: '',
       password: '',
     },
   })
 
-  const onSubmit = (data: LoginFormValues) => {
+  const onSubmit = async (data: LoginFormValues) => {
     console.log('Data login:', data)
     // Tambahkan logika login di sini (misalnya, API call)
+    try {
+      const loginResponse = await login(data)
+      console.log(loginResponse)
+      router.push('/')
+    } catch (err) {
+      console.error(err)
+    }
   }
 
   return (
@@ -61,7 +71,7 @@ export const LoginModule: React.FC = () => {
             <form onSubmit={form.handleSubmit(onSubmit)} className="w-full">
               {/* Email/No Telepon Field */}
               <FormField
-                name="email"
+                name="username"
                 control={form.control}
                 render={({ field }) => (
                   <FormItem>
@@ -107,9 +117,9 @@ export const LoginModule: React.FC = () => {
           </Form>
           <span className="mt-4 font-light text-center">
             Belum punya akun?{' '}
-            <a href="/register" className="text-[#6C4534] font-semibold">
+            <Link href="/register" className="text-[#6C4534] font-semibold">
               Daftar
-            </a>
+            </Link>
           </span>
         </div>
       </div>

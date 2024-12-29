@@ -8,6 +8,7 @@ import {
   CarouselNextProgram,
   CarouselPreviousProgram,
 } from '@/components/ui/carousel'
+import Link from 'next/link'
 
 type ProgramDetail = {
   id: number
@@ -146,14 +147,14 @@ export const ProgramDetailModule: React.FC<ProgramDetailModuleProps> = async ({
                     key={program.id}
                     className="basis-1/4 w-[300px] h-[200px] flex justify-center items-center relative rounded-2xl overflow-hidden shadow-[4px_4px_8px_4px_rgba(0,0,0,0.15)] border-4 border-white"
                   >
-                    <a href={`/program/${program.id}`}>
+                    <Link href={`/program/${program.id}`}>
                       <Image
                         src={program.cover_image}
                         alt=""
                         fill
                         className="object-cover"
                       />
-                    </a>
+                    </Link>
                   </CarouselItem>
                 ))}
               </CarouselContent>
