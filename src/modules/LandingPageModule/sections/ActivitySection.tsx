@@ -8,7 +8,7 @@ import {
   CarouselPrevious,
 } from '@/components/ui/carousel'
 import Image from 'next/image'
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { ACTIVITY_EXAMPLES } from '../constant'
 export const ActivitySection: React.FC = () => {
   /**
@@ -16,14 +16,13 @@ export const ActivitySection: React.FC = () => {
    * contohnya: ACTIVITY_EXAMPLES
    */
   let test = []
-  const lenData = 10
   for (let i = 0; i < 10; i++) {
     test.push(i)
   }
 
   // TODO: useState bisa dikasih tipe data valuenya
   const [selected1, setSelected1] = useState<number>(0)
-  const [selected2, setSelected2] = useState(1)
+  const [selected2, setSelected2] = useState<number>(0)
 
   /**
    * Fungsi untuk tombol prev
@@ -33,6 +32,13 @@ export const ActivitySection: React.FC = () => {
       setSelected1(selected1 - 1)
     } else {
       setSelected1(ACTIVITY_EXAMPLES.length - 1)
+    }
+  }
+  const prevBtn2 = () => {
+    if (selected2 > 0) {
+      setSelected2(selected2 - 1)
+    } else {
+      setSelected2(ACTIVITY_EXAMPLES.length - 1)
     }
   }
 
@@ -46,101 +52,13 @@ export const ActivitySection: React.FC = () => {
       setSelected1(0)
     }
   }
-
-  /**
-   * fungsi refreshCarousel udah gk dibutuhin karena skrng
-   * perubahan class nya tinggal cek dari state selected1
-   * aja langsung di elementnya
-   * (Silahkan cek element carouselnya dibawah 👇👇)
-   */
-  //   const refreshCarousel = () => {
-  //     document
-  //       .getElementById(`item-${selected1 - 1}-atas`)
-  //       ?.classList.add('rotate-y-30')
-  //     document
-  //       .getElementById(`item-${selected1}-atas`)
-  //       ?.classList.remove('rotate-y-30')
-  //     document
-  //       .getElementById(`item-${selected1}-atas`)
-  //       ?.classList.remove('-rotate-y-30')
-  //     document
-  //       .getElementById(`item-${selected1 + 1}-atas`)
-  //       ?.classList.add('-rotate-y-30')
-  //   }
-
-  // TODO: Kalau TODO di dalam useEffect berhasil diimplementasi dengan baik, harusnya useEffect bisa dihapus 👍
-  useEffect(() => {
-    /**
-     * Skrng udah gk butuh ini lagi karena skrng cuma ngandelin state selected1 doang
-     */
-    // function refreshCarouselAtas() {
-    //   document
-    //     .getElementById(`item-${selected1 - 1}-atas`)
-    //     ?.classList.add('rotate-y-30')
-    //   document
-    //     .getElementById(`item-${selected1}-atas`)
-    //     ?.classList.remove('rotate-y-30')
-    //   document
-    //     .getElementById(`item-${selected1}-atas`)
-    //     ?.classList.remove('-rotate-y-30')
-    //   document
-    //     .getElementById(`item-${selected1 + 1}-atas`)
-    //     ?.classList.add('-rotate-y-30')
-    // }
-    // refreshCarouselAtas()
-
-    /**
-     * fungsi ini bisa diganti dengan cara define function,
-     * lalu taro functionnya di onClick element
-     */
-    // document
-    //   .getElementById('previous-button-1')
-    //   ?.addEventListener('click', (e) => {
-    //     e.preventDefault()
-    //   })
-    // document.getElementById('next-button-1')?.addEventListener('click', (e) => {
-    //   e.preventDefault()
-    //   if (selected1 < lenData) {
-    //     setSelected1(selected1 + 1)
-    //     refreshCarouselAtas()
-    //   }
-    // })
-
-    // TODO: Jangan pakai fungsi refresh
-    function refreshCarouselBawah() {
-      document
-        .getElementById(`item-${selected2 - 1}-bawah`)
-        ?.classList.add('rotate-y-30')
-      document
-        .getElementById(`item-${selected2}-bawah`)
-        ?.classList.remove('rotate-y-30')
-      document
-        .getElementById(`item-${selected2}-bawah`)
-        ?.classList.remove('-rotate-y-30')
-      document
-        .getElementById(`item-${selected2 + 1}-bawah`)
-        ?.classList.add('-rotate-y-30')
+  const nextBtn2 = () => {
+    if (selected2 < ACTIVITY_EXAMPLES.length - 1) {
+      setSelected2(selected2 + 1)
+    } else {
+      setSelected2(0)
     }
-    refreshCarouselBawah()
-
-    // TODO: Ganti addEventListener dengan onClick
-    document
-      .getElementById('previous-button-2')
-      ?.addEventListener('click', (e) => {
-        e.preventDefault()
-        if (selected2 > 1) {
-          setSelected2(selected2 - 1)
-          refreshCarouselBawah()
-        }
-      })
-    document.getElementById('next-button-2')?.addEventListener('click', (e) => {
-      e.preventDefault()
-      if (selected2 < lenData) {
-        setSelected2(selected2 + 1)
-        refreshCarouselBawah()
-      }
-    })
-  }, [selected2, selected1])
+  }
 
   return (
     <section className="w-full flex flex-col px-16 gap-6 justify-center items-center">
@@ -180,20 +98,20 @@ export const ActivitySection: React.FC = () => {
             </CarouselItem>
           ))}
         </CarouselContent>
-        <button onClick={prevBtn}>
+        <div onClick={prevBtn}>
           <CarouselPrevious
             size="md"
             className="border-2 bg-[#6C4534] text-white"
             //   id="previous-button-1"
           />
-        </button>
-        <button onClick={nextBtn}>
+        </div>
+        <div onClick={nextBtn}>
           <CarouselNext
             size="md"
             className="border-2 bg-[#6C4534] text-white"
             //   id="next-button-1"
           />
-        </button>
+        </div>
         <div className="w-full flex gap-2 justify-center items-center">
           <div className="w-1/3 rounded-full justify-center items-center flex gap-3">
             {test.map((item) =>
@@ -214,33 +132,54 @@ export const ActivitySection: React.FC = () => {
       </Carousel>
 
       {/* kegiatan bawah */}
-      <Carousel className="w-full relative flex flex-col">
+      <Carousel
+        opts={{ loop: true }}
+        className="w-full max-w-screen-2xl relative flex flex-col"
+      >
         <CarouselContent className="w-full py-10">
-          {test.map((item) => (
+          {ACTIVITY_EXAMPLES.map((activity, index) => (
             <CarouselItem
-              className="basis-1/3 w-[444px] h-[304px] flex justify-center items-center perspective-1600"
-              key={item}
+              className="basis-1/3 w-[444px] h-[304px] flex justify-center items-center perspective-1600 relative"
+              key={activity.id}
             >
-              {/* Bisa coba explore element Image milik nextjs: https://nextjs.org/docs/pages/api-reference/components/image */}
               <div
-                className="w-full h-full bg-[url(https://images.pexels.com/photos/346529/pexels-photo-346529.jpeg)] flex justify-center items-center text-white text-justify transform-style-3d transform-cpu transition-all rounded-[1.25rem] bg-cover"
-                id={`item-${item}-bawah`}
+                className={`w-full h-full flex justify-center overflow-hidden items-center  transform-style-3d transform-cpu transition-all rounded-[1.25rem] bg-cover 
+                    ${
+                      index === selected2 - 1 || // Untuk slide sebelum
+                      (index === ACTIVITY_EXAMPLES.length - 1 &&
+                        selected2 === 0) // Untuk slide sebelum, tapi posisi selected1 di index paling awal
+                        ? 'rotate-y-30'
+                        : index === selected2 + 1 || // Untuk slide setelah
+                            (index === ACTIVITY_EXAMPLES.length - 2 &&
+                              selected2 === ACTIVITY_EXAMPLES.length - 1) // Untuk slide setelah, tapi posisi selected di index terakhir
+                          ? '-rotate-y-30'
+                          : ''
+                    }`}
               >
-                {item}
+                <Image
+                  src={activity.image_url}
+                  alt="Aktifitas"
+                  fill
+                  className="object-cover"
+                />
               </div>
             </CarouselItem>
           ))}
         </CarouselContent>
-        <CarouselPrevious
-          size="md"
-          className="border-2 bg-[#6C4534] text-white"
-          id="previous-button-2"
-        />
-        <CarouselNext
-          size="md"
-          className="border-2 bg-[#6C4534] text-white"
-          id="next-button-2"
-        />
+        <div onClick={prevBtn2}>
+          <CarouselPrevious
+            size="md"
+            className="border-2 bg-[#6C4534] text-white"
+            //   id="previous-button-1"
+          />
+        </div>
+        <div onClick={nextBtn2}>
+          <CarouselNext
+            size="md"
+            className="border-2 bg-[#6C4534] text-white"
+            //   id="next-button-1"
+          />
+        </div>
         <div className="w-full flex gap-2 justify-center items-center">
           <div className="w-1/3 rounded-full justify-center items-center flex gap-3">
             {test.map((item) =>

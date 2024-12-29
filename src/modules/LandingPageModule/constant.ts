@@ -1,52 +1,88 @@
 export const VAR_NAME = ''
 
+export const BRANCH_LIST = [
+  'LBQ AL-UTSMANI PUSAT (Condet)',
+  'LBQ AL-UTSMANI Cabang Dukuh',
+  'LBQ AL-UTSMANI Cabang Pinang Ranti',
+  'LBQ AL-UTSMANI Cabang Jatisampurna',
+  'LBQ AL-UTSMANI Cabang Jatiasih',
+  'PTQ AL-UTSMANI Cabang Megamendung, Bogor',
+  'PTQ AL-UTSMANI Cabang Tamansari, Bogor',
+  'RTQ AL-UTSMANI Cabang Cirebon',
+  'LBQ AL-UTSMANI Cabang Medan',
+  'RTQ AL-UTSMANI Cabang TABING BANDA GADANG, Padang',
+  'RQ AL-UTSMANI Cabang Air Tawar, Padang',
+  'RQ AL-UTSMANI Cabang Banjar Baru, Kalimantan Selatan',
+  'LBQ AL-UTSMANI Cabang Sorong, Papua',
+  'LBQ AL-UTSMANI MAKASSAR',
+]
+export interface ProgramProps {
+  id: string
+  name: string
+  cover_image: string
+  title: string
+}
 export const PROGRAM_EXAMPLES = [
   {
+    id: '1',
     name: 'Bimbingan di Dalam Lembaga',
-    url: '/',
-    image_link: 'https://picsum.photos/100/100',
+    title: 'Bimbingan di Dalam Lembaga',
+    cover_image: 'https://picsum.photos/100/100',
   },
   {
+    id: '1',
     name: 'Bimbingan di Dalam Lembaga',
-    url: '/',
-    image_link: 'https://picsum.photos/100/100',
+    title: 'Bimbingan di Dalam Lembaga',
+    cover_image: 'https://picsum.photos/100/100',
   },
   {
+    id: '1',
     name: 'Bimbingan di Dalam Lembaga',
-    url: '/',
-    image_link: 'https://picsum.photos/100/100',
+    title: 'Bimbingan di Dalam Lembaga',
+    cover_image: 'https://picsum.photos/100/100',
   },
   {
+    id: '1',
     name: 'Bimbingan di Dalam Lembaga',
-    url: '/',
-    image_link: 'https://picsum.photos/100/100',
+    title: 'Bimbingan di Dalam Lembaga',
+    cover_image: 'https://picsum.photos/100/100',
   },
   {
+    id: '1',
     name: 'Bimbingan di Dalam Lembaga',
-    url: '/',
-    image_link: 'https://picsum.photos/100/100',
+    title: 'Bimbingan di Dalam Lembaga',
+    cover_image: 'https://picsum.photos/100/100',
   },
   {
+    id: '1',
     name: 'Bimbingan di Dalam Lembaga',
-    url: '/',
-    image_link: 'https://picsum.photos/100/100',
+    title: 'Bimbingan di Dalam Lembaga',
+    cover_image: 'https://picsum.photos/100/100',
   },
   {
+    id: '1',
     name: 'Bimbingan di Dalam Lembaga',
-    url: '/',
-    image_link: 'https://picsum.photos/100/100',
+    title: 'Bimbingan di Dalam Lembaga',
+    cover_image: 'https://picsum.photos/100/100',
   },
   {
+    id: '1',
     name: 'Bimbingan di Dalam Lembaga',
-    url: '/',
-    image_link: 'https://picsum.photos/100/100',
+    title: 'Bimbingan di Dalam Lembaga',
+    cover_image: 'https://picsum.photos/100/100',
   },
 ]
 
 export const TESTIMONY_EXAMPLES = [
   {
     quote:
-      'Hafalan Al-Quran saya semakin banyak dan bacaan Al-Quran saya semakin lancar. Semoga Bimbingan Al-Quran di Utsmani semakin berkembang dan diminati banyak orang.',
+      'Hafalan Al-Quran saya semakin banyak dan bacaan Al-Quran saya semakin lancar. Semoga Bimbingan Al-Quran di Utsmani semakin berkembang dan diminati banyak orang.Hafalan Al-Quran saya semakin banyak dan bacaan Al-Quran saya semakin lancar. Semoga Bimbingan Al-Quran di Utsmani semakin berkembang dan diminati banyak orang.Hafalan Al-Quran saya semakin banyak dan bacaan Al-Quran saya semakin lancar. Semoga Bimbingan Al-Quran di Utsmani semakin berkembang dan diminati banyak orang.Hafalan Al-Quran saya semakin banyak dan bacaan Al-Quran saya semakin lancar. Semoga Bimbingan Al-Quran di Utsmani semakin berkembang dan diminati banyak orang.Hafalan Al-Quran saya semakin banyak dan bacaan Al-Quran saya semakin lancar. Semoga Bimbingan Al-Quran di Utsmani semakin berkembang dan diminati banyak orang.Hafalan Al-Quran saya semakin banyak dan bacaan Al-Quran saya semakin lancar. Semoga Bimbingan Al-Quran di Utsmani semakin berkembang dan diminati banyak orang.',
+    nama: 'Muhammad Syauqi',
+    role: 'Kelas 4 sd, peserta tahsin...',
+    profilePicture: 'https://picsum.photos/100/100',
+  },
+  {
+    quote: '111111111',
     nama: 'Muhammad Syauqi',
     role: 'Kelas 4 sd, peserta tahsin...',
     profilePicture: 'https://picsum.photos/100/100',
@@ -61,6 +97,18 @@ export const TESTIMONY_EXAMPLES = [
   {
     quote:
       'Hafalan Al-Quran saya semakin banyak dan bacaan Al-Quran saya semakin lancar. Semoga Bimbingan Al-Quran di Utsmani semakin berkembang dan diminati banyak orang.',
+    nama: 'Muhammad Syauqi',
+    role: 'Kelas 4 sd, peserta tahsin...',
+    profilePicture: 'https://picsum.photos/100/100',
+  },
+  {
+    quote: 'ckenkecnceknck',
+    nama: 'Muhammad Syauqi',
+    role: 'Kelas 4 sd, peserta tahsin...',
+    profilePicture: 'https://picsum.photos/100/100',
+  },
+  {
+    quote: 'qqqqqq',
     nama: 'Muhammad Syauqi',
     role: 'Kelas 4 sd, peserta tahsin...',
     profilePicture: 'https://picsum.photos/100/100',

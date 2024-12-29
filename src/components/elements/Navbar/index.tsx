@@ -33,6 +33,9 @@ export const Navbar: React.FC = () => {
               <a href="/program">Program</a>
             </li>
             <li>
+              <a href="/news-quotes">Berita</a>
+            </li>
+            <li>
               <a href="/wakaf">Wakaf</a>
             </li>
             <li>
@@ -63,6 +66,14 @@ export const Navbar: React.FC = () => {
                 className="w-full text-center block p-3 border-y"
               >
                 Program
+              </a>
+            </li>
+            <li>
+              <a
+                href="/news-quotes"
+                className="w-full text-center block p-3 border-y"
+              >
+                Berita
               </a>
             </li>
             <li>
