@@ -1,18 +1,18 @@
 import React from 'react'
 import {
-  HeaderSection,
-  AboutSection,
+  AboutUsSection,
   DetailSection,
+  HeaderSection,
   StructureSection,
 } from './sections'
 
 export const AboutModule: React.FC = async () => {
   return (
-    <>
+    <div className="flex flex-col gap-20">
       <HeaderSection />
-      <AboutSection />
+      <AboutUsSection />
       <DetailSection />
       <StructureSection />
-    </>
+    </div>
   )
 }

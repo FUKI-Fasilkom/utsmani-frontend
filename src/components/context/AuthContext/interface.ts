@@ -1,4 +1,5 @@
 import { CustomFetchBaseResponse } from '@/components/utils/customFetch/interface'
+import { CertificateProps } from '@/modules/ProfileModule/interface'
 import { ReactNode } from 'react'
 
 export interface AuthContextProviderProps {
@@ -11,38 +12,23 @@ export interface AuthContextInterface {
   isAuthenticated: boolean
   setIsAuthenticated: React.Dispatch<React.SetStateAction<boolean>>
   getUser: () => Promise<GetUserResponse | undefined>
+  login: (credentials: {
+    username: string
+    password: string
+  }) => Promise<LoginResponse>
 }
 
 export interface User {
-  name?: string
-  isOnboarded: boolean
-  email?: string
-  phone?: string
-  line?: string
-  gender?: 'MALE' | 'FEMALE'
-  institution?: string
-  provinceId?: string
-  provinceName?: string
-  cityId?: string
-  cityName?: string
-  knowFrom?: string
-  interests?: { id: string; name: string }[]
-  userPlayground: {
-    id: string
-    createdAt: string
-    updatedAt: string
-    userId: string
-    username: string
-    point: number
-    score: number
-    token: number
-  }
-  userEvents: {
-    eventId: string
-  }[]
-  education?: string | null
-  birthDate?: string | null
-  discordId?: string
+  address: string
+  certificates: CertificateProps
+  education_level: string
+  email: string
+  fullname: string
+  gender: 'MALE' | 'FEMALE'
+  is_email_verified: boolean
+  is_phone_number_verified: boolean
+  phone_number: boolean
+  profile_picture: string | null
 }
 
 export interface UserResponseInterface extends User {
@@ -69,8 +55,20 @@ export interface UserInterface {
 }
 
 export interface LoginResponse extends CustomFetchBaseResponse {
-  accessToken: string
-  user: User
+  status: number
+  message: string
+  contents: {
+    access_token: string
+    refresh_token: string
+    user: {
+      id: number
+      username: string
+      fullname: string
+    }
+  }
 }
 
-export interface GetUserResponse extends CustomFetchBaseResponse, User {}
+export interface GetUserResponse extends CustomFetchBaseResponse {
+  contents: User
+  code: string
+}

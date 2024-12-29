@@ -1,15 +1,29 @@
 'use client'
 
+import { useAuthContext } from '@/components/context'
+import { User } from '@/components/context/AuthContext/interface'
 import { Button } from '@/components/ui/button'
-import { MenuIcon } from 'lucide-react'
+import { deleteCookie } from 'cookies-next'
+import { MenuIcon, UserIcon } from 'lucide-react'
 import Image from 'next/image'
+import Link from 'next/link'
+import { useRouter } from 'next/navigation'
 import { useState } from 'react'
 
 export const Navbar: React.FC = () => {
+  const router = useRouter()
+  const { isAuthenticated, setIsAuthenticated, setUser } = useAuthContext()
   const [openNav, setOpenNav] = useState<boolean>(false)
   const openNavbar = () => {
     setOpenNav(!openNav)
   }
+  const logout = () => {
+    deleteCookie('AT')
+    setIsAuthenticated(false)
+    setUser({} as User)
+    router.push('/login')
+  }
+
   return (
     <nav className="w-full bg-[#FCF9F4] py-2">
       <div className="container flex items-center justify-between">
@@ -24,22 +38,19 @@ export const Navbar: React.FC = () => {
         <div className="hidden md:block">
           <ul className="flex md:gap-3 lg:gap-8 font-medium">
             <li>
-              <a href="/">Beranda</a>
+              <Link href="/">Beranda</Link>
             </li>
             <li>
-              <a href="/profile">Profil</a>
+              <Link href="/about">Tentang Kami</Link>
             </li>
             <li>
-              <a href="/program">Program</a>
+              <Link href="/program">Program</Link>
             </li>
             <li>
-              <a href="/news-quotes">Berita</a>
+              <Link href="/news-quotes">Berita</Link>
             </li>
             <li>
-              <a href="/wakaf">Wakaf</a>
-            </li>
-            <li>
-              <a href="/kontak">Kontak</a>
+              <Link href="/wakaf">Wakaf</Link>
             </li>
           </ul>
         </div>
@@ -48,55 +59,87 @@ export const Navbar: React.FC = () => {
         >
           <ul className="flex md:gap-3 flex-col lg:gap-8 font-medium ">
             <li>
-              <a href="/" className="w-full text-center block p-3 border-y">
+              <Link href="/" className="w-full text-center block p-3 border-y">
                 Beranda
-              </a>
+              </Link>
             </li>
             <li>
-              <a
-                href="/profile"
+              <Link
+                href="/about"
                 className="w-full text-center block p-3 border-y"
               >
-                Profil
-              </a>
+                Tentang Kami
+              </Link>
             </li>
             <li>
-              <a
+              <Link
                 href="/program"
                 className="w-full text-center block p-3 border-y"
               >
                 Program
-              </a>
+              </Link>
             </li>
             <li>
-              <a
+              <Link
                 href="/news-quotes"
                 className="w-full text-center block p-3 border-y"
               >
                 Berita
-              </a>
+              </Link>
             </li>
             <li>
-              <a
+              <Link
                 href="/wakaf"
                 className="w-full text-center block p-3 border-y"
               >
                 Wakaf
-              </a>
-            </li>
-            <li>
-              <a
-                href="/kontak"
-                className="w-full text-center block p-3 border-y"
-              >
-                Kontak
-              </a>
+              </Link>
             </li>
           </ul>
         </div>
         <div className="gap-3 lg:gap-5 hidden md:flex">
-          <Button variant={'tertiary'}>Masuk</Button>
-          <Button>Daftar</Button>
+          {isAuthenticated ? (
+            <div className="relative group">
+              {/* User Icon */}
+              <div className="border-[2.5px] rounded-full border-[#6C4534] p-1 cursor-pointer">
+                <UserIcon color="#6C4534" />
+              </div>
+
+              {/* Dropdown */}
+              <div className="absolute right-0 w-48 bg-white border border-gray-300 rounded-lg shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-opacity duration-200 z-20">
+                <ul className="py-1 text-sm text-gray-700">
+                  {/* Link ke Profile */}
+                  <li>
+                    <Link
+                      href={'/profile'}
+                      className="w-full block text-left px-4 py-2 hover:bg-gray-100"
+                    >
+                      Profile
+                    </Link>
+                  </li>
+
+                  {/* Logout */}
+                  <li>
+                    <button
+                      onClick={logout}
+                      className="w-full text-left px-4 py-2 hover:bg-gray-100"
+                    >
+                      Logout
+                    </button>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          ) : (
+            <>
+              <Link href="/login">
+                <Button variant={'tertiary'}>Masuk</Button>
+              </Link>
+              <Link href="/register">
+                <Button>Daftar</Button>
+              </Link>
+            </>
+          )}
         </div>
         <div className="block md:hidden">
           <button onClick={openNavbar}>

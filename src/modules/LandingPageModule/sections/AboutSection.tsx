@@ -1,5 +1,6 @@
 /* eslint-disable prettier/prettier */
 import Image from 'next/image'
+import Link from 'next/link'
 export const AboutSection: React.FC = () => {
   return (
     <section className="w-full md:py-[5.5rem] lg:px-28">
@@ -15,12 +16,12 @@ export const AboutSection: React.FC = () => {
             belajar tahsin, tajwid, dan tahfizh Al-Quran serta mengajar di
             berbagai lembaga di seluruh Indonesia.
           </p>
-          <a
+          <Link
             href="./profile"
             className="my-2 lg:mt-8 rounded-full px-[3.25rem] py-3 bg-[#6C4534] text-[#F6EFE7] font-semibold text-lg cursor-pointer hover:scale-105 transition-all max-lg:self-center"
           >
             Selengkapnya
-          </a>
+          </Link>
         </div>
         <div className="lg:w-1/2 h-[346px] my-2 rounded-[40px] bg-[#6C4534] flex justify-center items-center max-md:order-first">
           <Image
