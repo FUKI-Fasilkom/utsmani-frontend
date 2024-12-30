@@ -22,7 +22,7 @@ interface Filters {
   quotes: boolean
 }
 
-export const NewsQuotesModule: React.FC = () => {
+export const NewsQuotesModule: React.FC = async () => {
   const [items, setItems] = useState<NewsQuoteItem[]>([])
   const [filteredItems, setFilteredItems] = useState<NewsQuoteItem[]>([])
   const [searchQuery, setSearchQuery] = useState('')
@@ -83,8 +83,8 @@ export const NewsQuotesModule: React.FC = () => {
   return (
     <div className="flex flex-col gap-14 items-center w-full mb-20 lg:mb-40">
       <div className="flex w-full">
-        <div className="w-1/2 bg-brown grid place-items-center text-center">
-          <h1 className="text-white1 text-6xl md:text-7xl xl:text-8xl font-bold">
+        <div className="max-sm:py-6 w-full sm:w-1/2 bg-brown grid place-items-center text-center">
+          <h1 className="text-white1 text-5xl md:text-7xl xl:text-8xl font-bold">
             Berita & Quotes
           </h1>
         </div>
@@ -94,14 +94,14 @@ export const NewsQuotesModule: React.FC = () => {
           height={536}
           width={1442}
           alt="background image for quotes"
-          className=" object-cover max-h-[536px] min-h-[300px] w-1/2"
+          className=" object-cover max-h-[536px] min-h-[300px] w-1/2 max-sm:hidden"
         />
       </div>
       <div className="flex flex-col gap-12 items-center w-full container">
         <div className="flex gap-3 h-[60px]">
           <Input
             placeholder="Search..."
-            className="h-full px-10 text-2xl placeholder:text-2xl"
+            className="h-full px-10 text-base md:text-lg md:placeholder:text-lg xl:text-2xl xl:placeholder:text-2xl"
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
           />
@@ -109,7 +109,7 @@ export const NewsQuotesModule: React.FC = () => {
             <DropdownMenuTrigger className="w-fit rounded-[12px] p-1">
               <div className="flex justify-center items-center h-full w-fit [&_svg]:pointer-events-auto [&_svg]:size-6 bg-gradient-to-l from-[#DFA26C] to-[#A26840] text-neutral-50 grayscale-100 rounded-lg px-4">
                 <SlidersHorizontal
-                  strokeWidth={4}
+                  strokeWidth={3}
                   size={6}
                   className="size-6"
                 />
