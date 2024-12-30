@@ -111,15 +111,16 @@ export const FilterControls = () => {
                 })
                 router.push(`?${queryString}`)
               }}
-            ></RadioGroup>
-            <div className="flex items-center gap-2">
-              <RadioGroupItem value="terbaru" id="terbaru" />
-              <Label htmlFor="terbaru">Terbaru</Label>
-            </div>
-            <div className="flex items-center gap-2">
-              <RadioGroupItem value="terlama" id="terlama" />
-              <Label htmlFor="terlama">Terlama</Label>
-            </div>
+            >
+              <div className="flex items-center gap-2">
+                <RadioGroupItem value="terbaru" id="terbaru" />
+                <Label htmlFor="terbaru">Terbaru</Label>
+              </div>
+              <div className="flex items-center gap-2">
+                <RadioGroupItem value="terlama" id="terlama" />
+                <Label htmlFor="terlama">Terlama</Label>
+              </div>
+            </RadioGroup>
           </div>
         </DropdownMenuContent>
       </DropdownMenu>
