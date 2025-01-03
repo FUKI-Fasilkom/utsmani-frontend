@@ -8,6 +8,7 @@ import {
 } from '@/components/ui/carousel'
 import Image from 'next/image'
 import { Button } from '@/components/ui/button'
+import Link from 'next/link'
 
 type Program = {
   id: number
@@ -174,7 +175,7 @@ export const ProgramModule: React.FC = async () => {
           </h1>
           <div className="grid grid-cols-4 gap-5 py-12">
             {programs.map((program: Program) => (
-              <a href={`program/${program.id}`} key={program.id}>
+              <Link href={`/program/${program.id}`} key={program.id}>
                 <div className="w-[288px] h-[272px] border-2 rounded-[40px] relative overflow-hidden cursor-pointer border-[#6C4534] hover:scale-105 transition-all">
                   <p className="absolute z-10 p-6 bottom-0 left-0 text-white font-bold text-2xl drop-shadow-xl text-center">
                     {program.title}
@@ -186,7 +187,7 @@ export const ProgramModule: React.FC = async () => {
                     className="object-cover"
                   />
                 </div>
-              </a>
+              </Link>
             ))}
           </div>
         </div>

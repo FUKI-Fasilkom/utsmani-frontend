@@ -1,4 +1,4 @@
-export * from './HeaderSection'
-export * from './AboutSection'
+export * from './AboutUsSection'
 export * from './DetailSection'
+export * from './HeaderSection'
 export * from './StructureSection'

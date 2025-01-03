@@ -13,7 +13,6 @@ import React, { useState, useEffect } from 'react'
 import { Checkbox } from '@/components/ui/checkbox'
 import { Label } from '@/components/ui/label'
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group'
-// import { DUMMY_ITEMS } from './constant'
 import { Clock } from 'lucide-react'
 import { NewsQuoteItem } from './interface'
 import Link from 'next/link'
@@ -39,11 +38,13 @@ export const NewsQuotesModule: React.FC = () => {
         const response = await fetch(
           `${process.env.NEXT_PUBLIC_API_URL}/blog/news-quotes/`
         )
+        console.log('response', response)
         const data = await response.json()
         const contents = await data.contents
         setItems(contents)
         setFilteredItems(contents)
       } catch (error) {
+        console.log(error)
         console.error('Error fetching data:', error)
       }
     }
@@ -92,7 +93,7 @@ export const NewsQuotesModule: React.FC = () => {
           src={'https://picsum.photos/1400/700'}
           height={536}
           width={1442}
-          alt="backgorund image for quotes"
+          alt="background image for quotes"
           className=" object-cover max-h-[536px] min-h-[300px] w-1/2"
         />
       </div>
@@ -199,7 +200,11 @@ export const NewsQuotesModule: React.FC = () => {
                 className="self-center text-white1 mt-auto text-base px-[36px] py-[18px]"
                 asChild
               >
-                <Link href={`blog/news-quotes/${item.id}`}>Selengkapnya</Link>
+                <Link
+                  href={`/news-quotes/${item.type.toLocaleLowerCase()}/${item.id}`}
+                >
+                  Selengkapnya
+                </Link>
               </Button>
             </div>
           ))}

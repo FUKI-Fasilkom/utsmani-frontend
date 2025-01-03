@@ -1,12 +1,6 @@
 'use client'
 
-import React, {
-  createContext,
-  useContext,
-  useEffect,
-  useRef,
-  useState,
-} from 'react'
+import React, { createContext, useContext, useEffect, useState } from 'react'
 import {
   AuthContextInterface,
   AuthContextProviderProps,
@@ -14,11 +8,10 @@ import {
   LoginResponse,
   User,
 } from './interface'
-import { useRouter, useSearchParams } from 'next/navigation'
 import { customFetch, customFetchBody } from '@/components/utils/customFetch'
 import { toast } from '@/components/ui/sonner'
 import { getCookie, setCookie } from 'cookies-next'
-import { useBaseUrlWithPath } from '@/components/hooks/useBaseUrlWithPath'
+import { useRouter } from 'next/navigation'
 
 const AuthContext = createContext({} as AuthContextInterface)
 
@@ -27,47 +20,52 @@ export const useAuthContext = () => useContext(AuthContext)
 export const AuthContextProvider: React.FC<AuthContextProviderProps> = ({
   children,
 }) => {
-  const developmentLock = useRef(false)
-  const searchParams = useSearchParams()
-  const router = useRouter()
-  const fullUrl = useBaseUrlWithPath()
-
   const [user, setUser] = useState({} as User)
   const [isAuthenticated, setIsAuthenticated] = useState(false)
+  const router = useRouter()
 
-  async function login({ ticket }: { ticket: string }) {
+  async function login({
+    username,
+    password,
+  }: {
+    username: string
+    password: string
+  }) {
     const response = await customFetch<LoginResponse>('/auth/login/', {
       method: 'POST',
       body: customFetchBody({
-        ticket,
-        service: fullUrl,
+        username,
+        password,
       }),
     })
+    console.log(response)
 
-    if (response.success) {
+    if (response.status === 200) {
       setIsAuthenticated(true)
-      setCookie('AT', response.accessToken)
+      setCookie('AT', response.contents.access_token)
       return response
     } else {
       setUser({} as User)
       setIsAuthenticated(false)
-      throw Error()
+      throw new Error(response.message)
     }
   }
 
   async function getUser() {
     try {
-      const response = await customFetch<GetUserResponse>('/auth/user/', {
+      const response = await customFetch<GetUserResponse>('/auth/profile/', {
         isAuthorized: true,
       })
-
-      if (response.success) {
-        const { ...userInfo } = response
-
-        setUser(userInfo)
+      console.log(response)
+      if (response.status === 200) {
+        setUser(response.contents)
         setIsAuthenticated(true)
-
         return response
+      } else if (response.code === 'token_not_valid') {
+        toast.error('Silahkan login kembali!')
+        setUser({} as User)
+        setIsAuthenticated(false)
+        router.push('/login')
       } else {
         toast.error(`Oops. User tidak ditemukan!`)
         setUser({} as User)
@@ -82,31 +80,11 @@ export const AuthContextProvider: React.FC<AuthContextProviderProps> = ({
   }
 
   useEffect(() => {
-    const token = getCookie('AT')
-    setIsAuthenticated(!!token)
-
-    if (!developmentLock.current || process.env.NODE_ENV === 'production') {
-      if (searchParams.toString().includes('ticket') && !!fullUrl) {
-        const ticket = searchParams.get('ticket')
-        toast.promise(login({ ticket: ticket as string }), {
-          loading: 'Logging in...',
-          success: () => {
-            router.refresh()
-            return 'Login berhasil!'
-          },
-          error: (err) => `Oops. Login gagal! ${err.message}`,
-        })
-      } else if (token && !user?.email) {
-        getUser()
-      }
+    const accessToken = getCookie('AT')
+    if (accessToken) {
+      getUser()
     }
-
-    return () => {
-      if (process.env.NODE_ENV !== 'production' && !!fullUrl) {
-        developmentLock.current = true
-      }
-    }
-  }, [searchParams, fullUrl])
+  }, [])
 
   const contextValue = {
     user,
@@ -114,6 +92,7 @@ export const AuthContextProvider: React.FC<AuthContextProviderProps> = ({
     isAuthenticated,
     setIsAuthenticated,
     getUser,
+    login,
   }
 
   return (
