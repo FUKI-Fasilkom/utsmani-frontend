@@ -18,6 +18,7 @@ import {
   ProgramProps,
 } from './interface'
 import { RegisterButton } from './module-elements/RegisterButton'
+import { toast } from 'sonner'
 
 async function getProgramDetail(id: string) {
   const programId = id
@@ -36,7 +37,7 @@ async function getProgramDetail(id: string) {
 
     return programDetail
   } catch (error) {
-    console.log('Error fetching program detail:', error)
+    toast.error('Terjadi kesalahan dalam mengambil data!')
   }
 }
 async function getPrograms() {

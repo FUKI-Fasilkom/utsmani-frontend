@@ -38,7 +38,6 @@ export const AuthContextProvider: React.FC<AuthContextProviderProps> = ({
         password,
       }),
     })
-    console.log(response)
 
     if (response.status === 200) {
       setIsAuthenticated(true)
@@ -56,7 +55,6 @@ export const AuthContextProvider: React.FC<AuthContextProviderProps> = ({
       const response = await customFetch<GetUserResponse>('/auth/profile/', {
         isAuthorized: true,
       })
-      console.log(response)
       if (response.status === 200) {
         setUser(response.contents)
         setIsAuthenticated(true)
@@ -72,7 +70,6 @@ export const AuthContextProvider: React.FC<AuthContextProviderProps> = ({
         setIsAuthenticated(false)
       }
     } catch (error) {
-      console.error(error)
       toast.error(`Oops. User tidak ditemukan!`)
       setUser({} as User)
       setIsAuthenticated(false)

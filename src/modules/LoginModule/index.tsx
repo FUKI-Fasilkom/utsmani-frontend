@@ -40,11 +40,9 @@ export const LoginModule: React.FC = () => {
   })
 
   const onSubmit = async (data: LoginFormValues) => {
-    console.log('Data login:', data)
     // Tambahkan logika login di sini (misalnya, API call)
     try {
-      const loginResponse = await login(data)
-      console.log(loginResponse)
+      await login(data)
       router.push('/')
     } catch (err) {
       console.error(err)

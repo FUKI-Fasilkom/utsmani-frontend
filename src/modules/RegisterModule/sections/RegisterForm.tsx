@@ -62,7 +62,6 @@ export const RegisterForm: React.FC<RegisterFormProps> = ({
   })
 
   const onSubmit = async (data: RegisterFormValues) => {
-    console.log('Data register:', data)
     try {
       const response = await fetch(
         `${process.env.NEXT_PUBLIC_API_URL}/auth/register/`,
