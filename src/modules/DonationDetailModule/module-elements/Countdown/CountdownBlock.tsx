@@ -10,11 +10,11 @@ export const CountdownBlock: React.FC<CountdownBlockProps> = ({
   value,
 }) => {
   return (
-    <div className="flex flex-col items-center">
-      <div className="bg-gray-100 w-20 h-20 flex justify-center items-center rounded-md shadow">
-        <span className="text-brown-700 text-2xl font-bold">{value}</span>
+    <div className="flex flex-col items-center w-full">
+      <span>{label}</span>
+      <div className="bg-gray-100 w-full aspect-square flex justify-center items-center rounded-2xl drop-shadow-lg">
+        <span className="text-5xl font-bold">{value}</span>
       </div>
-      <span className="text-brown-700 text-sm mt-2">{label}</span>
     </div>
   )
 }

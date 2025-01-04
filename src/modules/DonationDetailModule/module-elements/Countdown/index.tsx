@@ -12,19 +12,12 @@ const CountdownTimer: React.FC<CountdownTimerProps> = ({
   minutes,
 }) => {
   return (
-    <div className="flex flex-col items-center space-y-4">
-      <h1 className="text-brown-700 text-lg font-bold">Waktu Donasi tersisa</h1>
-      <div className="flex space-x-4">
-        <CountdownBlock label="Hari" value={days} />
-        <span className="text-brown-700 text-2xl font-bold flex items-center">
-          :
-        </span>
-        <CountdownBlock label="Jam" value={hours} />
-        <span className="text-brown-700 text-2xl font-bold flex items-center">
-          :
-        </span>
-        <CountdownBlock label="Menit" value={minutes} />
-      </div>
+    <div className="w-full flex space-x-4 items-center px-4">
+      <CountdownBlock label="Hari" value={days} />
+      <span className="text-5xl font-bold flex items-center">:</span>
+      <CountdownBlock label="Jam" value={hours} />
+      <span className="text-5xl font-bold flex items-center">:</span>
+      <CountdownBlock label="Menit" value={minutes} />
     </div>
   )
 }
