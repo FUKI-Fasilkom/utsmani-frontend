@@ -32,6 +32,12 @@ const registerSchema = z.object({
   gender: z.string().nonempty('Jenis Kelamin wajib dipilih'),
   education_level: z.string().nonempty('Pendidikan Terakhir wajib dipilih'),
   address: z.string().nonempty('Alamat Lengkap wajib diisi'),
+  birthdate: z
+    .string()
+    .refine(
+      (date) => !isNaN(Date.parse(date)),
+      'Tanggal lahir tidak valid (format: YYYY-MM-DD)'
+    ),
 })
 
 type RegisterFormValues = z.infer<typeof registerSchema>
@@ -51,6 +57,7 @@ export const RegisterForm: React.FC<RegisterFormProps> = ({
       gender: '',
       education_level: '',
       address: '',
+      birthdate: '', // Default value untuk tanggal lahir
     },
   })
 
@@ -218,6 +225,25 @@ export const RegisterForm: React.FC<RegisterFormProps> = ({
                   className="bg-[#F3F7F9]"
                   type="text"
                   placeholder="Alamat Lengkap"
+                />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+
+        {/* Birthdate Field */}
+        <FormField
+          name="birthdate"
+          control={form.control}
+          render={({ field }) => (
+            <FormItem className="mt-4">
+              <FormControl>
+                <Input
+                  {...field}
+                  className="bg-[#F3F7F9]"
+                  type="date"
+                  placeholder="Tanggal Lahir"
                 />
               </FormControl>
               <FormMessage />

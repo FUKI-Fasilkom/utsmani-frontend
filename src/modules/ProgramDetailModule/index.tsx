@@ -9,37 +9,30 @@ import {
   CarouselPreviousProgram,
 } from '@/components/ui/carousel'
 import Link from 'next/link'
+import { getCookie } from 'cookies-next'
+import { cookies } from 'next/headers'
+import { CustomButton } from './module-elements/CustomButton'
+import {
+  ProgramDetailModuleProps,
+  ProgramDetailProps,
+  ProgramProps,
+} from './interface'
+import { RegisterButton } from './module-elements/RegisterButton'
 
-type ProgramDetail = {
-  id: number
-  title: string
-  cover_image: string
-  headline: string
-  description: string
-  min_registration_age: number
-  max_registration_age: number
-  education_level_requirement: object
-  cp_name_1: string
-  cp_name_2: string
-  cp_wa_number_1: string
-  cp_wa_number_2: string
-}
-type ProgramDetailModuleProps = {
-  id: string
-}
-type Program = {
-  id: number
-  title: string
-  cover_image: string
-}
 async function getProgramDetail(id: string) {
   const programId = id
   try {
     const response = await fetch(
-      `${process.env.NEXT_PUBLIC_API_URL}/program/${programId}`
+      `${process.env.NEXT_PUBLIC_API_URL}/program/${programId}`,
+      {
+        headers: {
+          Authorization: `Bearer ${getCookie('AT', { cookies })}`,
+        },
+        cache: 'no-store',
+      }
     )
     const responseJson = await response.json()
-    const programDetail = (await responseJson.contents) as ProgramDetail
+    const programDetail = (await responseJson.contents) as ProgramDetailProps
 
     return programDetail
   } catch (error) {
@@ -58,7 +51,6 @@ export const ProgramDetailModule: React.FC<ProgramDetailModuleProps> = async ({
 }) => {
   const programDetail = await getProgramDetail(id)
   const programs = await getPrograms()
-
   return (
     <main className="flex">
       {programDetail ? (
@@ -82,9 +74,10 @@ export const ProgramDetailModule: React.FC<ProgramDetailModuleProps> = async ({
               <p className="text-xl font-medium text-[#6C4534] text-justify">
                 {programDetail.description}
               </p>
-              <button className="text-white bg-[#6C4534] w-[17rem] h-16 rounded-full font-semibold text-xl mt-2">
-                Daftar Sekarang
-              </button>
+              <RegisterButton
+                programId={programDetail.id}
+                userStatus={programDetail.user_status}
+              />
             </div>
           </div>
           <div className="flex p-28 gap-[4.5rem]">
@@ -106,9 +99,7 @@ export const ProgramDetailModule: React.FC<ProgramDetailModuleProps> = async ({
                   <li key={index}>{waktu}</li>
                 ))}
               </div>
-              <button className="text-xl text-white font-semibold w-80 h-16 bg-[#6C4534] rounded-full">
-                Daftar {programDetail.title}
-              </button>
+              <CustomButton title={programDetail.title} />
             </div>
             <div className="w-1/2 flex flex-col items-center gap-6 px-[4.2rem]">
               <h1 className="text-[#5B3B1E] text-[2.5rem] font-bold">
@@ -142,7 +133,7 @@ export const ProgramDetailModule: React.FC<ProgramDetailModuleProps> = async ({
               opts={{ loop: true }}
             >
               <CarouselContent className="flex gap-2 py-10 px-7">
-                {programs.map((program: Program) => (
+                {programs.map((program: ProgramProps) => (
                   <CarouselItem
                     key={program.id}
                     className="basis-1/4 w-[300px] h-[200px] flex justify-center items-center relative rounded-2xl overflow-hidden shadow-[4px_4px_8px_4px_rgba(0,0,0,0.15)] border-4 border-white"
