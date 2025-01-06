@@ -1,17 +1,28 @@
-import React from 'react'
+'use client'
+import React, { useEffect, useState } from 'react'
 import { Donor } from '../interface'
 import { formatDuration, convertToRupiah } from '../utils'
 import Image from 'next/image'
 import { UserRound } from 'lucide-react'
+import { DONOR_LIST } from '../constant'
+import { WrapperCard } from '../module-elements'
 
 type DonorSectionProps = {
-  donors: Donor[]
+  id: string
 }
 
-export const DonorSection: React.FC<DonorSectionProps> = ({ donors }) => {
+export const DonorSection: React.FC<DonorSectionProps> = () => {
+  const [donors, setDonors] = useState<Donor[]>([])
+
+  useEffect(() => {
+    setDonors(DONOR_LIST)
+  }, [])
+
   return (
-    <section className="px-10 py-12 text-brown rounded-[32px] shadow-[0px_4px_12px_0px_rgba(0,0,0,0.25)]">
-      <h2 className="text-2xl font-semibold">Donatur ({donors.length})</h2>
+    <WrapperCard className="text-brown">
+      <h2 className="text-lg md:text-xl lg:text-2xl font-semibold">
+        Donatur ({donors.length})
+      </h2>
       <div className="flex flex-col gap-5 mt-5 h-[400px] overflow-y-auto scrollbar-thin scrollbar-thumb-brown scrollbar-track-[#eedac6] scrollbar-thumb-rounded-full scrollbar-track-rounded-full">
         {donors.map((donor) => (
           <div
@@ -34,7 +45,7 @@ export const DonorSection: React.FC<DonorSectionProps> = ({ donors }) => {
             )}
 
             {/* Donor Information */}
-            <div className="flex flex-col">
+            <div className="flex flex-col text-sm md:text-base">
               <span className="font-semibold">{donor.name}</span>
               <span>
                 Berdonasi sebesar{' '}
@@ -42,13 +53,13 @@ export const DonorSection: React.FC<DonorSectionProps> = ({ donors }) => {
                   {convertToRupiah(donor.amount)}
                 </span>
               </span>
-              <span className="text-sm">
+              <span className="text-xs md:text-sm">
                 {formatDuration(donor.created_at)} yang lalu
               </span>
             </div>
           </div>
         ))}
       </div>
-    </section>
+    </WrapperCard>
   )
 }

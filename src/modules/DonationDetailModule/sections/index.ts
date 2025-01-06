@@ -1,4 +1,6 @@
-export * from './DetailSection'
+export * from './SideSection'
 export * from './DonationCarouselSection'
 export * from './DonorSection'
 export * from './ContactPersonSection'
+export * from './DescriptionSection'
+export * from './DonationDetailSkeleton'

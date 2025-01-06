@@ -1,3 +1,8 @@
+interface Image {
+  id: number
+  url: string
+}
+
 export interface Donation {
   id: string
   created_at: string
@@ -8,6 +13,11 @@ export interface Donation {
   current_amount: number
   deadline: string
   description: string
-  image_url: string
+  banner: Image
+  images?: Image[]
   donor_count: number
+  cp_name: string
+  cp_detail: string
+  cp_wa_number: string | null
+  cp_email: string | null
 }

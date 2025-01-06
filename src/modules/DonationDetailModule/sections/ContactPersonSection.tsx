@@ -2,12 +2,13 @@ import { Mail } from 'lucide-react'
 import Link from 'next/link'
 import React from 'react'
 import { FaWhatsapp } from 'react-icons/fa'
+import { WrapperCard } from '../module-elements'
 
 interface ContactPersonSectionProps {
   name: string
   detail: string
-  wa_number?: string
-  email?: string
+  wa_number: string | null
+  email: string | null
 }
 
 export const ContactPersonSection: React.FC<ContactPersonSectionProps> = ({
@@ -17,14 +18,14 @@ export const ContactPersonSection: React.FC<ContactPersonSectionProps> = ({
   email,
 }) => {
   return (
-    <section className="px-10 py-12 text-brown rounded-[32px] shadow-[0px_4px_12px_0px_rgba(0,0,0,0.25)]">
-      <h2 className="text-2xl font-semibold">Narahubung</h2>
+    <WrapperCard className="text-brown">
+      <h2 className="text-lg md:text-xl lg:text-2xl font-semibold">Narahubung</h2>
       <div className="flex flex-col gap-4 mt-5">
         <div className="flex flex-col">
-          <p className="text-2xl font-bold text-brown">{name}</p>
-          <p className="text-xl">{detail}</p>
+          <p className="text-lg md:text-xl lg:text-2xl font-bold text-brown">{name}</p>
+          <p className="md:text-lg lg:text-xl">{detail}</p>
         </div>
-        <div className="flex flex-col gap-2">
+        <div className="flex flex-col gap-2 md:text-lg lg:text-xl">
           {wa_number && (
             <Link
               href={`https://wa.me/${wa_number}`}
@@ -42,6 +43,6 @@ export const ContactPersonSection: React.FC<ContactPersonSectionProps> = ({
           )}
         </div>
       </div>
-    </section>
+    </WrapperCard>
   )
 }

@@ -12,11 +12,15 @@ const CountdownTimer: React.FC<CountdownTimerProps> = ({
   minutes,
 }) => {
   return (
-    <div className="w-full flex space-x-4 items-center px-4">
+    <div className="w-full flex space-x-4 items-center justify-center px-4">
       <CountdownBlock label="Hari" value={days} />
-      <span className="text-5xl font-bold flex items-center">:</span>
+      <span className="text-3xl md:text-4xl lg:text-5xl font-bold flex items-center">
+        :
+      </span>
       <CountdownBlock label="Jam" value={hours} />
-      <span className="text-5xl font-bold flex items-center">:</span>
+      <span className="text-3xl md:text-4xl lg:text-5xl font-bold flex items-center">
+        :
+      </span>
       <CountdownBlock label="Menit" value={minutes} />
     </div>
   )
