@@ -17,6 +17,7 @@ import { Button } from '@/components/ui/button'
 import Link from 'next/link'
 import { useAuthContext } from '@/components/context'
 import { useRouter } from 'next/navigation'
+import { toast } from 'sonner'
 
 // Schema untuk validasi menggunakan Zod
 const loginSchema = z.object({
@@ -40,13 +41,15 @@ export const LoginModule: React.FC = () => {
   })
 
   const onSubmit = async (data: LoginFormValues) => {
-    console.log('Data login:', data)
     // Tambahkan logika login di sini (misalnya, API call)
     try {
-      const loginResponse = await login(data)
-      console.log(loginResponse)
+      await login(data)
       router.push('/')
-    } catch (err) {
+    } catch (err: any) {
+      if (err.message === 'Nomor telepon Anda belum diverifikasi.') {
+        toast.error('Silahkan verifikasi nomor hp anda!')
+        router.push('/login/verification')
+      }
       console.error(err)
     }
   }
