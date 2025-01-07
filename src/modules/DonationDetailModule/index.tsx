@@ -8,6 +8,12 @@ import {
   DonorSection,
 } from './sections'
 import { Donation } from '../DonationModule/interface'
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+} from '@/components/ui/dialog'
 
 export const DonationDetailModule: React.FC<{ id: string }> = async ({
   id,
@@ -39,7 +45,7 @@ export const DonationDetailModule: React.FC<{ id: string }> = async ({
   }
 
   return (
-    <>
+    <Dialog>
       <HeroSection banner={donation.banner.image_url} />
       <main className="container py-10 flex flex-col lg:flex-row">
         <SideSection donation={donation} />
@@ -55,8 +61,13 @@ export const DonationDetailModule: React.FC<{ id: string }> = async ({
             wa_number={donation.cp_wa_number}
             email={donation.cp_email}
           />
+          <DialogContent>
+            <DialogHeader>
+              <DialogTitle>Donasi Sekarang</DialogTitle>
+            </DialogHeader>
+          </DialogContent>
         </section>
       </main>
-    </>
+    </Dialog>
   )
 }
