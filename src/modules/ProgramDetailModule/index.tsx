@@ -126,7 +126,7 @@ export const ProgramDetailModule: React.FC<ProgramDetailModuleProps> = async ({
           </div>
           <div className="flex flex-col relative justify-center items-center gap-3">
             <h1 className="rounded-full bg-[#6C4534] text-white font-semibold text-3xl w-fit text-center px-7 py-4 z-10">
-              Kegiatan Lainnya
+              Program Lainnya
             </h1>
             <hr className="absolute h-1 bg-[#6C4534] w-1/2 z-0 top-8" />
             <Carousel

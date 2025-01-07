@@ -1,1 +1,84 @@
-export const VAR_NAME = ''
+import { Donor } from './interface'
+
+export const DONOR_LIST: Donor[] = [
+  {
+    id: 1,
+    name: 'John Doe',
+    avatar: 'https://randomuser.me/api/portraits/men/1.jpg',
+    amount: 150000,
+    created_at: '2024-12-01T10:20:30Z',
+    updated_at: '2024-12-01T10:20:30Z',
+  },
+  {
+    id: 2,
+    name: 'Jane Smith',
+    avatar: 'https://randomuser.me/api/portraits/women/2.jpg',
+    amount: 200000,
+    created_at: '2024-11-15T08:15:45Z',
+    updated_at: '2024-11-15T08:15:45Z',
+  },
+  {
+    id: 3,
+    name: 'Michael Brown',
+    avatar: null, // Donor without an avatar
+    amount: 100000,
+    created_at: '2024-10-22T14:35:50Z',
+    updated_at: '2024-10-22T14:35:50Z',
+  },
+  {
+    id: 4,
+    name: 'Emily Johnson',
+    avatar: 'https://randomuser.me/api/portraits/women/4.jpg',
+    amount: 250000,
+    created_at: '2024-09-30T12:00:00Z',
+    updated_at: '2024-09-30T12:00:00Z',
+  },
+  {
+    id: 5,
+    name: 'William Davis',
+    avatar: 'https://randomuser.me/api/portraits/men/5.jpg',
+    amount: 300000,
+    created_at: '2024-08-18T09:25:15Z',
+    updated_at: '2024-08-18T09:25:15Z',
+  },
+  {
+    id: 6,
+    name: 'Olivia Martinez',
+    avatar: null,
+    amount: 175000,
+    created_at: '2024-07-05T16:45:30Z',
+    updated_at: '2024-07-05T16:45:30Z',
+  },
+  {
+    id: 7,
+    name: 'James Wilson',
+    avatar: 'https://randomuser.me/api/portraits/men/7.jpg',
+    amount: 220000,
+    created_at: '2024-06-12T11:10:05Z',
+    updated_at: '2024-06-12T11:10:05Z',
+  },
+  {
+    id: 8,
+    name: 'Sophia Anderson',
+    avatar: 'https://randomuser.me/api/portraits/women/8.jpg',
+    amount: 130000,
+    created_at: '2024-05-20T13:55:40Z',
+    updated_at: '2024-05-20T13:55:40Z',
+  },
+  {
+    id: 9,
+    name: 'Benjamin Thomas',
+    avatar: null,
+    amount: 180000,
+    created_at: '2024-04-28T07:30:25Z',
+    updated_at: '2024-04-28T07:30:25Z',
+  },
+  {
+    id: 10,
+    name: 'Ava Taylor',
+    avatar: 'https://randomuser.me/api/portraits/women/10.jpg',
+    amount: 210000,
+    created_at: '2024-03-15T19:05:50Z',
+    updated_at: '2024-03-15T19:05:50Z',
+  },
+]

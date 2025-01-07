@@ -1,1 +1,2 @@
-export * from '.'
+export * from './icons'
+export * from './DonationCard'
