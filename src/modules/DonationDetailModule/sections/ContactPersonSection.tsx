@@ -19,10 +19,14 @@ export const ContactPersonSection: React.FC<ContactPersonSectionProps> = ({
 }) => {
   return (
     <WrapperCard className="text-brown">
-      <h2 className="text-lg md:text-xl lg:text-2xl font-semibold">Narahubung</h2>
+      <h2 className="text-lg md:text-xl lg:text-2xl font-semibold">
+        Narahubung
+      </h2>
       <div className="flex flex-col gap-4 mt-5">
         <div className="flex flex-col">
-          <p className="text-lg md:text-xl lg:text-2xl font-bold text-brown">{name}</p>
+          <p className="text-lg md:text-xl lg:text-2xl font-bold text-brown">
+            {name}
+          </p>
           <p className="md:text-lg lg:text-xl">{detail}</p>
         </div>
         <div className="flex flex-col gap-2 md:text-lg lg:text-xl">

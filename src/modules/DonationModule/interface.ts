@@ -1,6 +1,6 @@
-interface Image {
+export interface ImageType {
   id: number
-  url: string
+  image_url: string
 }
 
 export interface Donation {
@@ -8,16 +8,23 @@ export interface Donation {
   created_at: string
   updated_at: string
   title: string
-  category: string
+  category: DonationCategory
   target_amount: number
   current_amount: number
   deadline: string
   description: string
-  banner: Image
-  images?: Image[]
+  banner: ImageType
+  images?: ImageType[]
   donor_count: number
   cp_name: string
   cp_detail: string
   cp_wa_number: string | null
   cp_email: string | null
+}
+
+export enum DonationCategory {
+  WAKAF = 'Wakaf',
+  INFAQ_SEDEKAH = 'Infaq/Sedekah',
+  ORANGTUA_ASUH = 'Orangtua Asuh',
+  UTSMANI_PEDULI = 'Utsmani Peduli',
 }

@@ -1,4 +1,4 @@
-type Unit = 'tahun' | 'bulan' | 'hari' | 'jam' | 'menit';
+type Unit = 'tahun' | 'bulan' | 'hari' | 'jam' | 'menit'
 
 /**
  * Calculates the duration based on the specified unit and accumulation flag.
@@ -21,56 +21,53 @@ export function getDuration(
   unit: Unit,
   accumulated: boolean = true
 ): number {
-  const targetDate = new Date(timestamp);
-  const now = new Date();
-
-  console.log(targetDate, now);
-  
+  const targetDate = new Date(timestamp)
+  const now = new Date()
 
   // Calculate the difference in milliseconds
-  let durationMs = targetDate.getTime() - now.getTime();
+  let durationMs = targetDate.getTime() - now.getTime()
 
   // If the target date is in the past, return 0
   if (durationMs <= 0) {
-    return 0;
+    return 0
   }
 
   // Define the number of milliseconds in each unit
   const unitMs: { [key in Unit]: number } = {
     tahun: 365 * 24 * 60 * 60 * 1000, // 1 tahun = 365 hari
-    bulan: 30 * 24 * 60 * 60 * 1000,  // 1 bulan = 30 hari
-    hari: 24 * 60 * 60 * 1000,        // 1 hari = 24 jam
-    jam: 60 * 60 * 1000,              // 1 jam = 60 menit
-    menit: 60 * 1000,                  // 1 menit = 60 detik
-  };
+    bulan: 30 * 24 * 60 * 60 * 1000, // 1 bulan = 30 hari
+    hari: 24 * 60 * 60 * 1000, // 1 hari = 24 jam
+    jam: 60 * 60 * 1000, // 1 jam = 60 menit
+    menit: 60 * 1000, // 1 menit = 60 detik
+  }
 
   if (accumulated) {
     // Return the total duration in the specified unit
-    return Math.floor(durationMs / unitMs[unit]);
+    return Math.floor(durationMs / unitMs[unit])
   } else {
     // Define the order of units from largest to smallest
-    const units: Unit[] = ['tahun', 'bulan', 'hari', 'jam', 'menit'];
-    let remaining = durationMs;
+    const units: Unit[] = ['tahun', 'bulan', 'hari', 'jam', 'menit']
+    let remaining = durationMs
 
     for (const u of units) {
       if (u === unit) {
         // Return the duration in the specified unit after subtracting larger units
-        return Math.floor(remaining / unitMs[unit]);
+        return Math.floor(remaining / unitMs[unit])
       }
       // Subtract the current unit's duration from the remaining duration
-      remaining %= unitMs[u];
+      remaining %= unitMs[u]
     }
 
     // If the unit is not found, return 0
-    return 0;
+    return 0
   }
 }
 
 export const formatDuration = (timestamp: string): string => {
-  const units: Unit[] = ['tahun', 'bulan', 'hari', 'jam', 'menit'];
+  const units: Unit[] = ['tahun', 'bulan', 'hari', 'jam', 'menit']
 
   for (const unit of units) {
-    const interval = getDuration(timestamp, unit, false);
+    const interval = getDuration(timestamp, unit, false)
     if (interval >= 1) {
       return interval === 1 ? `1 ${unit}` : `${interval} ${unit}`
     }

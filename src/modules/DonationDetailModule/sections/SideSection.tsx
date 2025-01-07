@@ -1,5 +1,5 @@
 import { Progress } from '@/components/ui/progress'
-import { Donation } from '@/modules/DonationModule/interface'
+import { Donation, DonationCategory } from '@/modules/DonationModule/interface'
 import React from 'react'
 import CountdownTimer from '../module-elements/Countdown'
 import { convertToRupiah } from '../utils/currency'
@@ -25,7 +25,11 @@ export const SideSection: React.FC<SideSectionProps> = ({ donation }) => {
   return (
     <WrapperCard className="lg:sticky lg:top-4 h-min w-full lg:w-5/12 shrink-0 flex flex-col gap-y-2">
       <span className="text-brown text-base md:text-lg lg:text-xl font-semibold">
-        {donation.category}
+        {
+          DonationCategory[
+            donation.category.toUpperCase() as keyof typeof DonationCategory
+          ]
+        }
       </span>
       <h1 className="text-brown text-3xl md:text-4xl lg:text-[40px] font-semibold">
         {donation.title}
