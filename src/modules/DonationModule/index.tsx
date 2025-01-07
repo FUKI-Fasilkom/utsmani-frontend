@@ -1,5 +1,12 @@
 import React from 'react'
+import { CategorySection, DonationListSection, HeroSection } from './sections'
 
 export const DonationModule: React.FC = async () => {
-  return <>Donation Page</>
+  return (
+    <>
+      <HeroSection />
+      <CategorySection />
+      <DonationListSection />
+    </>
+  )
 }

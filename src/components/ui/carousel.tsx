@@ -336,6 +336,96 @@ const CarouselNextProgram = React.forwardRef<
 })
 CarouselNextProgram.displayName = 'CarouselNextProgram'
 
+type CarouselDotProps = {
+  isActive: boolean
+  onClick: () => void
+  index: number
+} & React.ComponentProps<typeof Button>
+
+const CarouselDot = React.forwardRef<HTMLButtonElement, CarouselDotProps>(
+  ({ isActive, onClick, className, ...props }, ref) => {
+    return (
+      <Button
+        ref={ref}
+        size="sm"
+        variant={'secondary'}
+        className={cn(
+          'h-3 rounded-full mx-2 p-0 transition-all duration-300',
+          isActive ? 'w-8 bg-brown' : 'w-3 bg-brown/60',
+          className
+        )}
+        onClick={onClick}
+        aria-label={`Go to slide ${props.index + 1}`}
+        {...props}
+      />
+    )
+  }
+)
+
+CarouselDot.displayName = 'CarouselDot'
+
+type CarouselDotsProps = {
+  className?: string
+} & React.HTMLAttributes<HTMLDivElement>
+
+const CarouselDots = React.forwardRef<HTMLDivElement, CarouselDotsProps>(
+  ({ className, ...props }, ref) => {
+    const { api } = useCarousel()
+    const [selectedIndex, setSelectedIndex] = React.useState(0)
+    const [dots, setDots] = React.useState<number[]>([])
+
+    React.useEffect(() => {
+      if (!api) return
+
+      const handleSelect = () => {
+        setSelectedIndex(api.selectedScrollSnap())
+      }
+
+      handleSelect() // Initialize
+
+      api.on('select', handleSelect)
+      api.on('reInit', handleSelect)
+
+      // Set up dots based on the number of slides
+      const totalDots = api.slideNodes().length
+      setDots(Array.from({ length: totalDots }, (_, i) => i))
+
+      return () => {
+        api.off('select', handleSelect)
+        api.off('reInit', handleSelect)
+      }
+    }, [api])
+
+    const goTo = (index: number) => {
+      if (!api) return
+      api.scrollTo(index)
+    }
+
+    if (dots.length === 0) return null
+
+    return (
+      <div
+        ref={ref}
+        className={cn('flex justify-center mt-4', className)}
+        role="tablist"
+        aria-label="Carousel Pagination"
+        {...props}
+      >
+        {dots.map((dotIndex) => (
+          <CarouselDot
+            key={dotIndex}
+            isActive={dotIndex === selectedIndex}
+            onClick={() => goTo(dotIndex)}
+            index={dotIndex}
+          />
+        ))}
+      </div>
+    )
+  }
+)
+
+CarouselDots.displayName = 'CarouselDots'
+
 export {
   type CarouselApi,
   Carousel,
@@ -345,4 +435,5 @@ export {
   CarouselNext,
   CarouselNextProgram,
   CarouselPreviousProgram,
+  CarouselDots,
 }

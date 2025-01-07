@@ -13,6 +13,7 @@ const config: Config = {
         'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
         'gradient-conic':
           'conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))',
+        'gradient-1': 'linear-gradient(to right, #a0653c, #c99a71)',
       },
       borderRadius: {
         lg: 'var(--radius)',
@@ -22,12 +23,14 @@ const config: Config = {
       colors: {
         brown: '#6C4534',
         white1: '#FFFBF7',
+        'cream-1': '#F6EFE7',
       },
     },
   },
   plugins: [
     require('tailwindcss-animate'),
     require('@xpd/tailwind-3dtransforms'),
+    require('tailwind-scrollbar'),
   ],
 }
 export default config
