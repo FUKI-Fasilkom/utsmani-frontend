@@ -76,7 +76,7 @@ export const DonationListSection: React.FC = () => {
 
   useEffect(() => {
     fetchDonations(currentPage)
-  }, [currentPage, fetchDonations])
+  }, [currentPage])
 
   const handlePageClick = (page: number) => {
     if (page < 1 || page > totalPages) return

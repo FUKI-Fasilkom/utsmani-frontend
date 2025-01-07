@@ -14,12 +14,12 @@ export const TestimonySection: React.FC = () => {
   return (
     <section className="container flex flex-col gap-6 items-center text-brown px-10">
       <div>
-        <h2 className="font-bold text-5xl text-center">
+        <h2 className="font-bold text-3xl md:text-4xl xl:text-5xl text-center">
           Apa kata mereka tentang Al-Utsmani?
         </h2>
       </div>
       <div className="flex justify-center w-full">
-        <Carousel className="w-full">
+        <Carousel className="w-full" opts={{ loop: true }}>
           <CarouselContent className="flex w-full">
             {testimonyCards.map((testimony, index) => (
               <CarouselItem

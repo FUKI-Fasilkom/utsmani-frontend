@@ -7,7 +7,6 @@ import {
   DonationCarouselSection,
   DonorSection,
 } from './sections'
-import { DUMMY_DONATION_LIST } from '../DonationModule/constant'
 import { Donation } from '../DonationModule/interface'
 
 export const DonationDetailModule: React.FC<{ id: string }> = async ({

@@ -23,18 +23,18 @@ export const WakafSection: React.FC = () => {
             BERWAKAF
           </h2>
         </div>
-        <div className="py-8 px-16  text-start rounded-3xl drop-shadow-sm shadow-lg ring-[1px] ring-gray-100 flex flex-col items-center gap-8">
-          <p className="text-center lg:leading-8 italic font-semibold  lg:text-xl text-brown">
+        <div className="py-8 px-4 md:px-6 xl:px-16  text-start rounded-3xl drop-shadow-sm shadow-lg ring-[1px] ring-gray-100 flex flex-col items-center gap-8">
+          <p className="text-center text-base md:text-lg xl:leading-8 italic font-semibold  xl:text-xl text-brown inset-y-2">
             <q>
               Jika seseorang meninggal dunia, maka terputuslah amalannya kecuali
               tiga perkara (yaitu); sedekah jariyah, ilmu yang bermanfaat, dan
               doa anak yang sholihah
             </q>
-            <br />
-            (HR. Muslim)
+            <br className="" />
+            <span className="mt-2 block">(HR. Muslim)</span>
           </p>
           <Link href={'/donation'}>
-            <Button variant={'secondary'} size={'lg'}>
+            <Button variant={'secondary'} size={'lg'} className="md:text-lg ">
               Mari Berwakaf
             </Button>
           </Link>

@@ -1,4 +1,3 @@
-import { Donation, DonationCategory } from './interface'
 import {
   CategoryInfaqIcon,
   CategoryOrtuAsuhIcon,
