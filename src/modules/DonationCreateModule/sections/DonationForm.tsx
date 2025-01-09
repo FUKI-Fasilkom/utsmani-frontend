@@ -16,6 +16,7 @@ import { Button } from '@/components/ui/button'
 import { Switch } from '@/components/ui/switch'
 import { DONATION_AMOUNT_SHORCUTS } from '../../DonationCreateModule/constants'
 import { convertToRupiah } from '@/modules/DonationDetailModule/utils'
+import { emailRegex, whatsappRegex } from '../utils/regex'
 
 const formatNumber = (num: number): string => {
   return new Intl.NumberFormat('id-ID').format(num)
@@ -40,10 +41,6 @@ const donationSchema = z.object({
     .nonempty('Mohon isi nomor WhatsApp atau email Anda')
     .refine(
       (val) => {
-        const emailRegex =
-          /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@(([^<>()[\]\\.,;:\s@"]+\.)+[^<>()[\]\\.,;:\s@"]{2,})$/i
-
-        const whatsappRegex = /^\+?[1-9]\d{1,14}$/
         return emailRegex.test(val) || whatsappRegex.test(val)
       },
       {
