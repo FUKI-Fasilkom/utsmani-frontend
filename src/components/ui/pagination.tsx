@@ -54,6 +54,7 @@ const PaginationLink = ({
         variant: isActive ? 'secondary' : 'tertiary',
         size,
       }),
+      'cursor-pointer',
       className
     )}
     {...props}

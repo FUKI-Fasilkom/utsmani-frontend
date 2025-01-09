@@ -17,8 +17,8 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ banner }) => {
       />
       <div className="w-1/2 flex justify-center items-center">
         <h1 className="text-[28px] md:text-[48px] lg:text-[80px] text-white1 font-bold text-center">
-          WAKAF <br />
-          Al-Utsmani
+          Sedekah <br />
+          Jariyah
         </h1>
       </div>
     </section>

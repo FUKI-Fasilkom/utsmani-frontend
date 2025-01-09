@@ -20,7 +20,7 @@ import { useRouter, useSearchParams } from 'next/navigation'
 export const DonationListSection: React.FC = () => {
   const [donations, setDonations] = useState<Donation[]>([])
   const [isLoading, setIsLoading] = useState<boolean>(false)
-  const [error, setError] = useState<string | null>(null)
+  const [_, setError] = useState<string | null>(null)
   const [totalPages, setTotalPages] = useState<number>(1)
 
   const pageSize = 6
@@ -64,7 +64,7 @@ export const DonationListSection: React.FC = () => {
       setTotalPages(calculatedTotalPages)
 
       if (page > calculatedTotalPages && calculatedTotalPages > 0) {
-        router.push(`/wakaf?page=${calculatedTotalPages}`)
+        router.push(`/sedekah-jariyah?page=${calculatedTotalPages}`)
       }
     } catch (err: any) {
       console.error(err)
@@ -80,12 +80,11 @@ export const DonationListSection: React.FC = () => {
 
   const handlePageClick = (page: number) => {
     if (page < 1 || page > totalPages) return
-    router.push(`/wakaf?page=${page}`)
+    router.push(`/sedekah-jariyah?page=${page}`)
   }
 
   return (
     <section className="bg-cream-1 lg:py-[28px]">
-      {/* Donations List */}
       <div className="container flex flex-wrap px-4 lg:px-10">
         {/* Loading Skeletons */}
         {isLoading &&
@@ -175,27 +174,6 @@ export const DonationListSection: React.FC = () => {
             className="h-8 w-8 animate-spin text-gray-500"
             aria-label="Loading donations"
           />
-        </div>
-      )}
-
-      {/* Error Message with Retry Button */}
-      {error && (
-        <div className="flex flex-col items-center mt-8">
-          <p className="text-red-500 mb-4">{error}</p>
-          <button
-            onClick={() => fetchDonations(currentPage)}
-            className="px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600"
-            aria-label="Retry fetching donations"
-          >
-            Retry
-          </button>
-        </div>
-      )}
-
-      {/* End of Donations Message */}
-      {!isLoading && donations.length > 0 && currentPage === totalPages && (
-        <div className="flex justify-center mt-4">
-          <p className="text-gray-500">You have reached the end.</p>
         </div>
       )}
     </section>
