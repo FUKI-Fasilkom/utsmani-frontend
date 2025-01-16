@@ -19,13 +19,17 @@ type Unit = 'tahun' | 'bulan' | 'hari' | 'jam' | 'menit'
 export function getDuration(
   timestamp: string,
   unit: Unit,
-  accumulated: boolean = true
+  accumulated: boolean = true,
+  past: boolean = false
 ): number {
   const targetDate = new Date(timestamp)
   const now = new Date()
 
   // Calculate the difference in milliseconds
   let durationMs = targetDate.getTime() - now.getTime()
+  if (past) {
+    durationMs *= -1
+  }
 
   // If the target date is in the past, return 0
   if (durationMs <= 0) {
@@ -63,11 +67,14 @@ export function getDuration(
   }
 }
 
-export const formatDuration = (timestamp: string): string => {
+export const formatDuration = (
+  timestamp: string,
+  past: boolean = false
+): string => {
   const units: Unit[] = ['tahun', 'bulan', 'hari', 'jam', 'menit']
 
   for (const unit of units) {
-    const interval = getDuration(timestamp, unit, false)
+    const interval = getDuration(timestamp, unit, false, past)
     if (interval >= 1) {
       return interval === 1 ? `1 ${unit}` : `${interval} ${unit}`
     }

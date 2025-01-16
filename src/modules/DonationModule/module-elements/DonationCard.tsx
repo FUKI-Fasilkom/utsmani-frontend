@@ -51,7 +51,7 @@ export const DonationCard: React.FC<DonationCardProps> = ({ donation }) => {
             </span>
             <span>
               <span className="font-bold">
-                {getDuration(donation.deadline, 'hari', true)}
+                {getDuration(donation.deadline, 'hari', true, false)}
               </span>{' '}
               sisa hari
             </span>

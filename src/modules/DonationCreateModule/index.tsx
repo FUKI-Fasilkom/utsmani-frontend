@@ -22,7 +22,7 @@ export const DonationCreateModule: React.FC<{ id: string }> = async ({
       const data = (await response.json()) as Donation
       return data
     } catch (error) {
-      console.log(error)
+      console.error(error)
     }
     return null
   }
