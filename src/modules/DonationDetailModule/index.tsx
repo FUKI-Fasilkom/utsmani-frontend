@@ -51,7 +51,7 @@ export const DonationDetailModule: React.FC<{ id: string }> = async ({
         <SideSection donation={donation} />
         <section className="flex flex-col px-2 lg:px-[72px] gap-y-9 mt-10">
           <DescriptionSection description={donation.description} />
-          {donation.images && (
+          {donation.images && donation.images.length > 0 && (
             <DonationCarouselSection images={donation.images} />
           )}
           <DonorSection id={id} />

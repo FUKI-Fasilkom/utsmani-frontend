@@ -17,7 +17,7 @@ export const DonationCard: React.FC<DonationCardProps> = ({ donation }) => {
 
   return (
     <Link
-      href={`/sedekah-jariyah/${donation.id}`}
+      href={`/sedekah-jariyah/${donation.id}.${donation.slug}`}
       className="block bg-white rounded-2xl p-3 drop-shadow-lg"
     >
       <Image

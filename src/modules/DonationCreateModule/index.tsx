@@ -46,7 +46,7 @@ export const DonationCreateModule: React.FC<{ id: string }> = async ({
           <CardTitle>{donation.title}</CardTitle>
         </CardHeader>
         <CardContent>
-          <DonationForm />
+          <DonationForm donationId={id} />
         </CardContent>
       </Card>
     </main>
