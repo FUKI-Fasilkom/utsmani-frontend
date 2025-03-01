@@ -17,7 +17,7 @@ export const AboutSection: React.FC = () => {
             berbagai lembaga di seluruh Indonesia.
           </p>
           <Link
-            href="./profile"
+            href="/about"
             className="my-2 lg:mt-8 rounded-full px-[3.25rem] py-3 bg-[#6C4534] text-[#F6EFE7] font-semibold text-lg cursor-pointer hover:scale-105 transition-all max-lg:self-center"
           >
             Selengkapnya

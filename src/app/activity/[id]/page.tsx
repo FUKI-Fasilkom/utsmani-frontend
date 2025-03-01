@@ -6,5 +6,5 @@ export default async function ActivityDetail({
   params: Promise<{ id: string }>
 }) {
   const id = (await params).id
-  return <ActivityDetailModule id={id} />
+  return <ActivityDetailModule id={id} type="ACTIVITY" />
 }
