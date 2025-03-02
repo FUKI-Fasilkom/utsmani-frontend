@@ -22,13 +22,13 @@ import { toast } from 'sonner'
 
 async function getProgramDetail(id: string) {
   const programId = id
+  const at = getCookie('AT', { cookies })
   try {
+    const headers = at ? { Authorization: `Bearer ${at}` } : undefined
     const response = await fetch(
       `${process.env.NEXT_PUBLIC_API_URL}/program/${programId}`,
       {
-        headers: {
-          Authorization: `Bearer ${getCookie('AT', { cookies })}`,
-        },
+        headers,
         cache: 'no-store',
       }
     )
