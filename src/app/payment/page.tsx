@@ -1,5 +1,5 @@
-import PaymentMethodModule from '@/modules/PaymentMethodModule'
+import PaymentModule from '@/modules/PaymentModule'
 
 export default function PaymentMethodPage() {
-  return <PaymentMethodModule></PaymentMethodModule>
+  return <PaymentModule></PaymentModule>
 }
