@@ -53,7 +53,7 @@ export const Navbar: React.FC = () => {
               <Link href="/news-quotes">Berita</Link>
             </li>
             <li>
-              <Link href="/wakaf">Wakaf</Link>
+              <Link href="/sedekah-jariyah">Sedekah Jariyah</Link>
             </li>
           </ul>
         </div>

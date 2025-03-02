@@ -5,5 +5,5 @@ export default async function DonationDetail({
 }: {
   params: Promise<{ id: string }>
 }) {
-  return <DonationDetailModule id={(await params).id} />
+  return <DonationDetailModule id={(await params).id.split('.')[0]} />
 }

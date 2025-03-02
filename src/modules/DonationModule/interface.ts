@@ -8,6 +8,7 @@ export interface Donation {
   created_at: string
   updated_at: string
   title: string
+  slug: string
   category: DonationCategory
   target_amount: number
   current_amount: number

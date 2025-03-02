@@ -17,7 +17,7 @@ export const DonationCard: React.FC<DonationCardProps> = ({ donation }) => {
 
   return (
     <Link
-      href={`/wakaf/${donation.id}`}
+      href={`/sedekah-jariyah/${donation.id}.${donation.slug}`}
       className="block bg-white rounded-2xl p-3 drop-shadow-lg"
     >
       <Image
@@ -35,9 +35,14 @@ export const DonationCard: React.FC<DonationCardProps> = ({ donation }) => {
             ]
           }
         </span>
-        <span className="text-brown font-semibold text-xs md:text-sm lg:text-lg">
-          {donation.title}
-        </span>
+        <div className="min-h-[2.25rem] md:min-h-[2.625rem] lg:min-h-[3.375rem] flex items-center overflow-hidden">
+          <span
+            className="text-brown font-semibold text-xs md:text-sm lg:text-lg line-clamp-2 w-full"
+            title={donation.title} // Optional: Displays full title on hover
+          >
+            {donation.title}
+          </span>
+        </div>
 
         <div className="text-[10px] md:text-xs lg:text-sm text-brown mt-2 flex flex-col gap-y-1">
           <div className="flex justify-between">
@@ -46,7 +51,7 @@ export const DonationCard: React.FC<DonationCardProps> = ({ donation }) => {
             </span>
             <span>
               <span className="font-bold">
-                {getDuration(donation.deadline, 'hari', true)}
+                {getDuration(donation.deadline, 'hari', true, false)}
               </span>{' '}
               sisa hari
             </span>
