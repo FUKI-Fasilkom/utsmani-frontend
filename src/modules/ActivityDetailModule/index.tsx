@@ -11,6 +11,7 @@ import {
   CarouselPreviousProgram,
 } from '@/components/ui/carousel'
 import Link from 'next/link'
+import { ActivityProps, ProgramProps } from '../LandingPageModule/interface'
 
 type ActivityDetail = {
   id: string
@@ -28,35 +29,33 @@ type ActivityDetail = {
     created_at: string
     updated_at: string
   }[]
+  programs: { id: string; title: string; cover_image: string; name: string }[]
 }
 
 type ActivityDetailModuleProps = {
   id: string
+  type: 'BRANCH' | 'ACTIVITY' | 'NEWS'
 }
 
-type Program = {
-  id: number
-  title: string
-  cover_image: string
-}
-
-async function getPrograms() {
-  const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/program`)
+async function getOtherActivities() {
+  const response = await fetch(
+    `${process.env.NEXT_PUBLIC_API_URL}/blog/activity`
+  )
   const responseJson = await response.json()
   const programs = await responseJson.contents
   return programs
 }
 
-async function getActivityDetail(id: string) {
+async function getDetail(id: string, type: 'BRANCH' | 'ACTIVITY' | 'NEWS') {
   const activityId = id
   try {
     const response = await fetch(
-      `${process.env.NEXT_PUBLIC_API_URL}/blog/activity/${activityId}`
+      `${process.env.NEXT_PUBLIC_API_URL}/blog/${type === 'NEWS' ? 'news-quotes/news' : type.toLocaleLowerCase()}/${activityId}`
     )
     const responseJson = await response.json()
-    const activityDetail = (await responseJson.contents) as ActivityDetail
+    const detail = (await responseJson.contents) as ActivityDetail
 
-    return activityDetail
+    return detail
   } catch (error) {
     console.log('Error fetching program detail:', error)
   }
@@ -64,13 +63,13 @@ async function getActivityDetail(id: string) {
 
 export const ActivityDetailModule: React.FC<
   ActivityDetailModuleProps
-> = async ({ id }) => {
-  const activityDetail = await getActivityDetail(id)
-  const programs = await getPrograms()
-  return activityDetail ? (
+> = async ({ id, type }) => {
+  const detail = await getDetail(id, type)
+  const activities = await getOtherActivities()
+  return (
     <div className="flex flex-col gap-14 items-center mb-20 lg:mb-40">
       <Image
-        src={activityDetail?.cover_image ?? ''}
+        src={detail?.cover_image ?? ''}
         height={658}
         width={1442}
         alt="background image for quotes"
@@ -79,23 +78,29 @@ export const ActivityDetailModule: React.FC<
       <div className="space-y-[60px] container flex flex-col justify-center items-center">
         <div className="w-full flex justify-between">
           <div className="space-y-4">
-            <h2 className="mb-3 text-brown font-bold text-3xl">Kegiatan</h2>
-            <h1 className="font-semibold text-5xl">{activityDetail?.title}</h1>
+            <h2 className="mb-3 text-brown font-bold text-3xl">
+              {type === 'BRANCH'
+                ? 'Cabang Al-Utsmani'
+                : type === 'ACTIVITY'
+                  ? 'Kegiatan'
+                  : 'Berita'}
+            </h2>
+            <h1 className="font-semibold text-5xl">{detail?.title}</h1>
             <p className="text-brown italic font-medium text-base space-x-12">
               <span className="items-center space-x-1">
                 <FaClock className="inline pb-1 pr-1" />
                 Posted on{' '}
                 <strong>
-                  {new Date(
-                    activityDetail?.created_at ?? ''
-                  ).toLocaleDateString('id-ID')}
+                  {new Date(detail?.created_at ?? '').toLocaleDateString(
+                    'id-ID'
+                  )}
                 </strong>
               </span>
               {/* Keep author section as is since it's not in the API response */}
               <span className="items-center space-x-1">
                 <FaUser className="inline pb-1 pr-1" />
                 Posted by
-                <strong>Nama Admin</strong>
+                <strong>Admin</strong>
               </span>
             </p>
           </div>
@@ -105,7 +110,7 @@ export const ActivityDetailModule: React.FC<
         </div>
         <div>
           <p className="text-justify text-lg font-medium text-[#2e1a0f]">
-            {activityDetail?.content}
+            {detail?.content}
           </p>
         </div>
         <div className="flex flex-col relative justify-center items-center w-screen">
@@ -115,7 +120,7 @@ export const ActivityDetailModule: React.FC<
           <hr className="h-1 bg-[#6C4534] w-1/2 z-0" />
           <div className="flex justify-center bg-[#EEDAC6] w-full">
             <div className="grid grid-cols-3 gap-3 px-44 py-24 justify-center items-center w-fit">
-              {activityDetail.images.map((image) => (
+              {detail?.images?.map((image) => (
                 <div
                   key={image.id}
                   className="relative w-[22rem] h-52 bg-white rounded-2xl overflow-hidden shadow-[4px_4px_8px_4px_rgba(0,0,0,0.15)]"
@@ -133,40 +138,65 @@ export const ActivityDetailModule: React.FC<
         </div>
         <div className="flex flex-col relative justify-center items-center gap-3">
           <h1 className="rounded-full bg-[#6C4534] text-white font-semibold text-3xl w-fit text-center px-7 py-4 z-10">
-            Kegiatan Lainnya
+            {type === 'BRANCH' ? 'Program' : 'Kegiatan Lainnya'}
           </h1>
           <hr className="absolute h-1 bg-[#6C4534] w-1/2 z-0 top-8" />
-          <Carousel
-            className="flex justify-center items-center relative mb-16"
-            opts={{ loop: true }}
-          >
-            <CarouselContent className="flex gap-2 py-10 px-7">
-              {programs.map((program: Program) => (
-                <CarouselItem
-                  key={program.id}
-                  className="basis-1/4 w-[300px] h-[200px] flex justify-center items-center relative rounded-2xl overflow-hidden shadow-[4px_4px_8px_4px_rgba(0,0,0,0.15)] border-4 border-white"
-                >
-                  <Link href={`/program/${program.id}`}>
-                    <Image
-                      src={program.cover_image}
-                      alt=""
-                      fill
-                      className="object-cover"
-                    />
-                  </Link>
-                </CarouselItem>
-              ))}
-            </CarouselContent>
-            <CarouselPreviousProgram
-              variant={'secondary'}
-              className="h-12 w-12"
-            />
-            <CarouselNextProgram variant={'secondary'} className="h-12 w-12" />
-          </Carousel>
+
+          {type === 'BRANCH' ? (
+            detail?.programs.map((program: ProgramProps, index) => (
+              <Link
+                href={`/program/${program.id}`}
+                key={index}
+                className="w-[240px] h-[240px] border-2 border-brown rounded-[40px] overflow-hidden flex items-center justify-center relative"
+              >
+                <Image
+                  src={program.cover_image}
+                  alt={program.title}
+                  className="object-cover w-full h-full"
+                  width={288}
+                  height={272}
+                />
+                <div className="py-4 px-2 absolute bottom-0 w-full flex justify-center">
+                  <span className=" font-bold text-2xl text-center text-white1">
+                    {program.title}
+                  </span>
+                </div>
+              </Link>
+            ))
+          ) : (
+            <Carousel
+              className="flex justify-center items-center relative mb-16"
+              opts={{ loop: true }}
+            >
+              <CarouselContent className="flex gap-2 py-10 px-7">
+                {activities.map((activity: ActivityProps) => (
+                  <CarouselItem
+                    key={activity.id}
+                    className="basis-1/4 w-[300px] h-[200px] flex justify-center items-center relative rounded-2xl overflow-hidden shadow-[4px_4px_8px_4px_rgba(0,0,0,0.15)] border-4 border-white"
+                  >
+                    <Link href={`/activity/${activity.id}`}>
+                      <Image
+                        src={activity.cover_image}
+                        alt=""
+                        fill
+                        className="object-cover"
+                      />
+                    </Link>
+                  </CarouselItem>
+                ))}
+              </CarouselContent>
+              <CarouselPreviousProgram
+                variant={'secondary'}
+                className="h-12 w-12"
+              />
+              <CarouselNextProgram
+                variant={'secondary'}
+                className="h-12 w-12"
+              />
+            </Carousel>
+          )}
         </div>
       </div>
     </div>
-  ) : (
-    <>test</>
   )
 }
