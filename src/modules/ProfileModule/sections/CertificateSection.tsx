@@ -64,7 +64,7 @@ export const CertificateSection: React.FC<CertificateSectionProps> = ({
     <section className="flex flex-col relative items-center gap-3 bg-[#EEDAC6] min-h-96">
       {/* Heading */}
       <h2 className="rounded-full bg-[#6C4534] text-white font-semibold text-3xl w-fit text-center px-7 py-4 -top-8 relative z-10">
-        Sertifikat
+        Sertifikat & Rapor
       </h2>
       <hr className="absolute h-1 bg-[#6C4534] w-1/2 z-0 -top-0.5" />
 
