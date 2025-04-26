@@ -10,6 +10,7 @@ import {
   WakafSection,
   WhySection,
 } from './sections'
+import { YouTubeSection } from './sections/YoutubeSection'
 
 export const LandingPageModule: React.FC = async () => {
   const [responseProgram, responseActivity, responseBranch] = await Promise.all(
@@ -34,6 +35,7 @@ export const LandingPageModule: React.FC = async () => {
       <TestimonySection />
       <JoinUsSection />
       <BranchSection branches={branches.contents} />
+      <YouTubeSection />
     </div>
   )
 }
