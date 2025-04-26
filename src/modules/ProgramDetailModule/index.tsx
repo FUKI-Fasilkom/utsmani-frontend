@@ -56,13 +56,14 @@ export const ProgramDetailModule: React.FC<ProgramDetailModuleProps> = async ({
     <main className="flex">
       {programDetail ? (
         <div className="flex flex-col">
-          <div className="flex w-full h-[536px] bg-[#F8EAD9] overflow-hidden justify-center items-center">
-            <div className="w-1/2 h-full relative">
+          <div className="flex w-full h-[536px] bg-[#F8EAD9] justify-left items-center">
+            <div className="w-full max-w-screen-sm h-full relative">
               <Image
                 src={programDetail.cover_image}
                 alt={programDetail.title}
-                fill
-                className="object-cover pr-16"
+                width={1000}
+                height={1000}
+                className="object-cover pr-16 w-full h-full"
               />
             </div>
             <div className="w-1/2 flex flex-col gap-6 pr-12">
@@ -72,9 +73,7 @@ export const ProgramDetailModule: React.FC<ProgramDetailModuleProps> = async ({
               <h1 className="text-4xl font-bold text-[#6C4534]">
                 {programDetail.headline}
               </h1>
-              <p className="text-xl font-medium text-[#6C4534] text-justify">
-                {programDetail.description}
-              </p>
+
               <RegisterButton
                 programId={programDetail.id}
                 userStatus={programDetail.user_status}

@@ -7,8 +7,13 @@ export interface ProgramProps {
   title: string
 }
 
-export interface ProgramSectionProps {
+interface BranchProgram {
+  branch: string
   programs: ProgramProps[]
+}
+
+export interface ProgramSectionProps {
+  branchPrograms: BranchProgram[]
 }
 
 export interface ActivityProps {

@@ -2,7 +2,10 @@ import { ProgramProps, ProgramSectionProps } from '../interface'
 import Image from 'next/image'
 import Link from 'next/link'
 
-export const ProgramSection: React.FC<ProgramSectionProps> = ({ programs }) => {
+export const ProgramSection: React.FC<ProgramSectionProps> = ({
+  branchPrograms,
+}) => {
+  const programs = branchPrograms.flatMap((branch) => branch.programs)
   return (
     <section className="container items-center flex flex-col px-4 gap-8">
       <div className="mb-8">
