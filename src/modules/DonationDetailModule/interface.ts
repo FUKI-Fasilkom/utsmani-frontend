@@ -5,4 +5,6 @@ export type Donor = {
   amount: number
   created_at: string
   updated_at: string
+  is_anonymous: boolean
+  donation: number
 }

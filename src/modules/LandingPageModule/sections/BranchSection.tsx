@@ -1,29 +1,34 @@
 import Link from 'next/link'
-import { BRANCH_LIST } from '../constant'
 import TikTokIcon from '@/components/icons/TikTok'
 import { Mail, MapPin, Phone } from 'lucide-react'
 import { Facebook, Instagram } from '@/components/icons'
+import { BranchSectionProps } from '../interface'
 
-export const BranchSection: React.FC = () => {
+export const BranchSection: React.FC<BranchSectionProps> = ({ branches }) => {
   return (
     <section className="max-w-screen-xl mx-auto container pb-20 flex flex-col gap-y-9 md:flex-row md:gap-x-9">
-      <BranchListSection />
+      <BranchListSection branches={branches} />
       <OurContactSection />
     </section>
   )
 }
 
-const BranchListSection: React.FC = () => {
+const BranchListSection: React.FC<BranchSectionProps> = ({ branches }) => {
   return (
     <section className="w-full md:w-[60%] flex flex-col bg-white drop-shadow-lg rounded-[20px] text-[#6C4534] px-[32px] py-[40px]">
       <h2 className="font-bold text-4xl mb-[24px] text-center">
         Cabang Al-Utsmani
       </h2>
       <ol className="font-semibold text-lg">
-        {BRANCH_LIST.map((branch, index) => (
+        {branches.map((branch, index) => (
           <li key={index}>
-            <span className="inline-block w-6 text-right">{index + 1}. </span>
-            <span>{' ' + branch}</span>
+            <Link
+              href={`/branch/${branch.id}`}
+              className="flex items-center gap-x-2"
+            >
+              <span className="inline-block w-6 text-right">{index + 1}. </span>
+              <span>{branch.title}</span>
+            </Link>
           </li>
         ))}
       </ol>

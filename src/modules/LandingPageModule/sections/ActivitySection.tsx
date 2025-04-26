@@ -9,20 +9,19 @@ import {
 } from '@/components/ui/carousel'
 import Image from 'next/image'
 import { useState } from 'react'
-import { ACTIVITY_EXAMPLES } from '../constant'
-export const ActivitySection: React.FC = () => {
-  /**
-   * Bikin dummy gini boleh-boleh aja, tapi better pake constant.ts
-   * contohnya: ACTIVITY_EXAMPLES
-   */
+import { ActivitySectionProps } from '../interface'
+import Link from 'next/link'
+
+export const ActivitySection: React.FC<ActivitySectionProps> = ({
+  activities,
+}) => {
   let test = []
-  for (let i = 0; i < 10; i++) {
+  for (let i = 0; i < activities.length; i++) {
     test.push(i)
   }
-
   // TODO: useState bisa dikasih tipe data valuenya
   const [selected1, setSelected1] = useState<number>(0)
-  const [selected2, setSelected2] = useState<number>(0)
+  //   const [selected2, setSelected2] = useState<number>(0)
 
   /**
    * Fungsi untuk tombol prev
@@ -31,34 +30,34 @@ export const ActivitySection: React.FC = () => {
     if (selected1 > 0) {
       setSelected1(selected1 - 1)
     } else {
-      setSelected1(ACTIVITY_EXAMPLES.length - 1)
+      setSelected1(activities.length - 1)
     }
   }
-  const prevBtn2 = () => {
-    if (selected2 > 0) {
-      setSelected2(selected2 - 1)
-    } else {
-      setSelected2(ACTIVITY_EXAMPLES.length - 1)
-    }
-  }
+  //   const prevBtn2 = () => {
+  //     if (selected2 > 0) {
+  //       setSelected2(selected2 - 1)
+  //     } else {
+  //       setSelected2(ACTIVITY_EXAMPLES.length - 1)
+  //     }
+  //   }
 
   /**
    * Fungsi untuk tombol next
    */
   const nextBtn = () => {
-    if (selected1 < ACTIVITY_EXAMPLES.length - 1) {
+    if (selected1 < activities.length - 1) {
       setSelected1(selected1 + 1)
     } else {
       setSelected1(0)
     }
   }
-  const nextBtn2 = () => {
-    if (selected2 < ACTIVITY_EXAMPLES.length - 1) {
-      setSelected2(selected2 + 1)
-    } else {
-      setSelected2(0)
-    }
-  }
+  //   const nextBtn2 = () => {
+  //     if (selected2 < ACTIVITY_EXAMPLES.length - 1) {
+  //       setSelected2(selected2 + 1)
+  //     } else {
+  //       setSelected2(0)
+  //     }
+  //   }
 
   return (
     <section className="w-full flex flex-col px-16 gap-6 justify-center items-center">
@@ -69,32 +68,35 @@ export const ActivitySection: React.FC = () => {
       {/* kegiatan atas */}
       <Carousel opts={{ loop: true }} className="w-full relative flex flex-col">
         <CarouselContent className="w-full py-10">
-          {ACTIVITY_EXAMPLES.map((activity, index) => (
+          {activities.map((activity, index) => (
             <CarouselItem
-              className="basis-1/3 w-[444px] h-[304px] flex justify-center items-center perspective-1600 relative"
+              className="basis-1/3 w-[444px] h-[304px] flex justify-center items-center perspective-1600 relative group"
               key={activity.id}
             >
-              <div
-                className={`w-full h-full flex justify-center overflow-hidden items-center  transform-style-3d transform-cpu transition-all rounded-[1.25rem] bg-cover 
-                    ${
-                      index === selected1 - 1 || // Untuk slide sebelum
-                      (index === ACTIVITY_EXAMPLES.length - 1 &&
-                        selected1 === 0) // Untuk slide sebelum, tapi posisi selected1 di index paling awal
-                        ? 'rotate-y-30'
-                        : index === selected1 + 1 || // Untuk slide setelah
-                            (index === ACTIVITY_EXAMPLES.length - 2 &&
-                              selected1 === ACTIVITY_EXAMPLES.length - 1) // Untuk slide setelah, tapi posisi selected di index terakhir
-                          ? '-rotate-y-30'
-                          : ''
-                    }`}
+              <Link
+                href={`/activity/${activity.id}`}
+                className={`w-full h-full flex justify-center overflow-hidden items-center transform-style-3d transform-cpu transition-all rounded-[1.25rem] bg-cover 
+              ${
+                index === selected1 - 1 || // Untuk slide sebelum
+                (index === activities.length - 1 && selected1 === 0) // Untuk slide sebelum, tapi posisi selected1 di index paling awal
+                  ? 'rotate-y-30'
+                  : index === selected1 + 1 || // Untuk slide setelah
+                      (index === activities.length - 2 &&
+                        selected1 === activities.length - 1) // Untuk slide setelah, tapi posisi selected di index terakhir
+                    ? '-rotate-y-30'
+                    : ''
+              }`}
               >
                 <Image
-                  src={activity.image_url}
+                  src={activity.cover_image}
                   alt="Aktifitas"
                   fill
                   className="object-cover"
                 />
-              </div>
+                <div className="absolute inset-0 bg-black bg-opacity-50 flex justify-center items-center opacity-0 group-hover:opacity-100 transition-opacity">
+                  <span className="text-white text-lg">{activity.title}</span>
+                </div>
+              </Link>
             </CarouselItem>
           ))}
         </CarouselContent>
@@ -132,7 +134,7 @@ export const ActivitySection: React.FC = () => {
       </Carousel>
 
       {/* kegiatan bawah */}
-      <Carousel
+      {/* <Carousel
         opts={{ loop: true }}
         className="w-full max-w-screen-2xl relative flex flex-col"
       >
@@ -197,7 +199,7 @@ export const ActivitySection: React.FC = () => {
             )}
           </div>
         </div>
-      </Carousel>
+      </Carousel> */}
     </section>
   )
 }

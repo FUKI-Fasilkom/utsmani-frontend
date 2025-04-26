@@ -1,17 +1,27 @@
 'use client'
 import { Button } from '@/components/ui/button'
 import { Share2 } from 'lucide-react'
+import { useRouter, usePathname } from 'next/navigation'
 import React from 'react'
 
 export const CTAButtons = () => {
+  const router = useRouter()
+  const pathname = usePathname()
+
+  const handleDonateClick = () => {
+    const sanitizedPath = pathname.endsWith('/')
+      ? pathname.slice(0, -1)
+      : pathname
+    const donatePath = `${sanitizedPath}/donate`
+    router.push(donatePath)
+  }
+
   return (
     <div className="flex flex-col gap-y-4">
       <Button
         className="h-10 md:text-lg md:h-12"
         variant={'secondary'}
-        onClick={() => {
-          console.log('Donasi Sekarang clicked')
-        }}
+        onClick={handleDonateClick}
       >
         Donasi Sekarang
       </Button>

@@ -6,7 +6,7 @@ export const CategorySection = () => {
   return (
     <section className="container text-brown flex flex-col items-center py-8 md:py-12 lg:py-16 gap-y-4 md:gap-y-8 lg:gap-y-10">
       <h2 className="font-bold text-lg md:text-[40px]">
-        Pilih Kategori Wakafmu
+        Pilih Kategori Sedekahmu
       </h2>
       <div className="flex justify-center gap-6 md:gap-20">
         {CATEGORY_MENU.map((category) => (

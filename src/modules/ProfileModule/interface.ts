@@ -1,6 +1,9 @@
+import { Education } from '../RegisterModule/interface'
+
 export interface CertificateProps {
   title: string
   certificate_image: string
+  report_image: string | null
   obtained_at: string
 }
 
@@ -15,4 +18,6 @@ export interface PersonalDataSectionProps {
   address: string
   education_level: string
   gender: 'MALE' | 'FEMALE'
+  educationList: Education[]
+  profile_picture: string
 }

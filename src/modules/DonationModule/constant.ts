@@ -7,24 +7,24 @@ import {
 
 export const CATEGORY_MENU = [
   {
-    title: 'Infaq/ Sedekah',
+    title: 'Infaq',
     icon: CategoryInfaqIcon,
-    path: '/wakaf?category=infaq',
+    path: '/sedekah-jariyah?category=infaq',
   },
   {
     title: 'Wakaf',
     icon: CategoryWakafIcon,
-    path: '/wakaf?category=wakaf',
+    path: '/sedekah-jariyah?category=wakaf',
   },
   {
     title: 'Orangtua Asuh',
     icon: CategoryOrtuAsuhIcon,
-    path: '/wakaf?category=ortu-asuh',
+    path: '/sedekah-jariyah?category=ortu-asuh',
   },
   {
     title: 'Utsmani Peduli',
     icon: CategoryUtsmaniPeduliIcon,
-    path: '/wakaf?category=utsmani-peduli',
+    path: '/sedekah-jariyah?category=utsmani-peduli',
   },
 ]
 

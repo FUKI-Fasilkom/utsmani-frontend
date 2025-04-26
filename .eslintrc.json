@@ -32,7 +32,8 @@
         "endOfLine": "auto"
       }
     ],
-    "prefer-const": "off"
+    "prefer-const": "off",
+    "no-useless-escape": "off"
   },
   "settings": { "react": { "version": "detect" } }
 }

@@ -10,24 +10,32 @@ import {
   WakafSection,
   WhySection,
 } from './sections'
-// import { PROGRAM_EXAMPLES } from './constant'
+import { YouTubeSection } from './sections/YoutubeSection'
 
 export const LandingPageModule: React.FC = async () => {
-  const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/program`)
-  const responseJson = await response.json()
+  const [responseProgram, responseActivity, responseBranch] = await Promise.all(
+    [
+      fetch(`${process.env.NEXT_PUBLIC_API_URL}/program`),
+      fetch(`${process.env.NEXT_PUBLIC_API_URL}/blog/activity`),
+      fetch(`${process.env.NEXT_PUBLIC_API_URL}/blog/branch`),
+    ]
+  )
+  const activities = await responseActivity.json()
+  const programs = await responseProgram.json()
+  const branches = await responseBranch.json()
 
-  //   console.log(responseJson)
   return (
     <div className="flex flex-col gap-20">
       <HeaderSection />
       <WhySection />
       <AboutSection />
-      <ProgramSection programs={responseJson.contents} />
+      <ProgramSection programs={programs.contents} />
       <WakafSection />
-      <ActivitySection />
+      <ActivitySection activities={activities.contents} />
       <TestimonySection />
       <JoinUsSection />
-      <BranchSection />
+      <BranchSection branches={branches.contents} />
+      <YouTubeSection />
     </div>
   )
 }
