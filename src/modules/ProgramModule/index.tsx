@@ -10,6 +10,11 @@ import Image from 'next/image'
 import { Button } from '@/components/ui/button'
 import Link from 'next/link'
 
+type BranchProgram = {
+  branch: string
+  programs: Program[]
+}
+
 type Program = {
   id: number
   title: string
@@ -40,22 +45,24 @@ export const ProgramModule: React.FC = async () => {
           opts={{ loop: true }}
         >
           <CarouselContent className="flex gap-3">
-            {programs.map((program: Program) => (
-              <CarouselItem
-                key={program.id}
-                className="w-[576px] h-[379px] flex justify-center items-center relative rounded-[55px] overflow-hidden"
-              >
-                <p className="absolute z-10 bottom-6 left-6 text-white p-5 font-bold text-4xl drop-shadow-lg max-w-[400px]">
-                  {program.title}
-                </p>
-                <Image
-                  src={program.cover_image}
-                  alt=""
-                  fill
-                  className="object-cover"
-                />
-              </CarouselItem>
-            ))}
+            {programs.flatMap((branch: BranchProgram) =>
+              branch.programs.map((program: Program) => (
+                <CarouselItem
+                  key={program.id}
+                  className="w-[576px] h-[379px] flex justify-center items-center relative rounded-[55px] overflow-hidden"
+                >
+                  <p className="absolute z-10 bottom-6 left-6 text-white p-5 font-bold text-4xl drop-shadow-lg max-w-[400px]">
+                    {program.title}
+                  </p>
+                  <Image
+                    src={program.cover_image}
+                    alt=""
+                    fill
+                    className="object-cover"
+                  />
+                </CarouselItem>
+              ))
+            )}
           </CarouselContent>
           <CarouselPreviousProgram className="absolute -left-6 h-12 w-12" />
           <CarouselNextProgram className="absolute -right-6 h-12 w-12" />
@@ -170,26 +177,30 @@ export const ProgramModule: React.FC = async () => {
           </div>
         </div>
         <div className="p-20">
-          <h1 className="text-5xl font-bold text-[#6C4534] text-center leading-relaxed p-6">
-            Program Unggulan <br /> Pesantren Tahfizh Al-Quran Al-Utsmani
-          </h1>
-          <div className="grid grid-cols-4 gap-5 py-12">
-            {programs.map((program: Program) => (
-              <Link href={`/program/${program.id}`} key={program.id}>
-                <div className="w-[288px] h-[272px] border-2 rounded-[40px] relative overflow-hidden cursor-pointer border-[#6C4534] hover:scale-105 transition-all">
-                  <p className="absolute z-10 p-6 bottom-0 left-0 text-white font-bold text-2xl drop-shadow-xl text-center">
-                    {program.title}
-                  </p>
-                  <Image
-                    src={program.cover_image}
-                    alt=""
-                    fill
-                    className="object-cover"
-                  />
-                </div>
-              </Link>
-            ))}
-          </div>
+          {programs.map((program: BranchProgram) => (
+            <div key={program.branch}>
+              <h1 className="text-5xl font-bold text-[#6C4534] text-center leading-relaxed p-6">
+                Program Unggulan <br /> {program.branch}
+              </h1>
+              <div className="grid grid-cols-4 gap-5 py-12">
+                {program.programs.map((program: Program) => (
+                  <Link href={`/program/${program.id}`} key={program.id}>
+                    <div className="w-[288px] h-[272px] border-2 rounded-[40px] relative overflow-hidden cursor-pointer border-[#6C4534] hover:scale-105 transition-all">
+                      <p className="absolute z-10 p-6 bottom-0 left-0 text-white font-bold text-2xl drop-shadow-xl text-center">
+                        {program.title}
+                      </p>
+                      <Image
+                        src={program.cover_image}
+                        alt=""
+                        fill
+                        className="object-cover"
+                      />
+                    </div>
+                  </Link>
+                ))}
+              </div>
+            </div>
+          ))}
         </div>
       </div>
     </main>
