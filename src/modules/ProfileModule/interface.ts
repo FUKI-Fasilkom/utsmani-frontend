@@ -2,8 +2,8 @@ import { Education } from '../RegisterModule/interface'
 
 export interface CertificateProps {
   title: string
-  certificate_image: string
-  report_image: string | null
+  certificate_images: string[]
+  report_files: string[] | null
   obtained_at: string
 }
 
