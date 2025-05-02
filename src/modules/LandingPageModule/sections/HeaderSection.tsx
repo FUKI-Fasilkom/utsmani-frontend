@@ -94,8 +94,8 @@ export const HeaderSection: React.FC = async () => {
         </div>
       </section>
 
-      <div className="lg:mx-auto lg:w-[914px] lg:h-[224px]  py-4 px-2 flex items-center justify-center text-center  text-[#6C4534] bg-white rounded-[20px] shadow-lg mt-8 font-poppins mx-3 md:mx-6">
-        <p className="text-center font-bold text-[24px] lg:text-[32px]">
+      <div className="lg:mx-auto lg:w-[914px] lg:h-[224px]  p-4 flex items-center justify-center text-center  text-[#6C4534] bg-white rounded-[20px] shadow-lg mt-8 font-poppins mx-3 md:mx-6">
+        <p className="text-center font-semibold text-[18px] md:text-[24px] lg:text-[32px]">
           Alhamdulillah atas izin Allah SWT. PTQ Al-Utsmani dengan metode
           Utsmani telah teruji Mudah dan Efektif sejak tahun 1415 H/1995 M
         </p>

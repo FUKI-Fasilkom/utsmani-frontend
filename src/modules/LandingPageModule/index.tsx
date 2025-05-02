@@ -25,7 +25,7 @@ export const LandingPageModule: React.FC = async () => {
   const branches = await responseBranch.json()
 
   return (
-    <div className="flex flex-col gap-20">
+    <div className="flex flex-col gap-10 md:gap-20">
       <HeaderSection />
       <WhySection />
       <AboutSection />

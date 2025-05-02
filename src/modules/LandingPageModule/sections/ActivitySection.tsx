@@ -60,32 +60,22 @@ export const ActivitySection: React.FC<ActivitySectionProps> = ({
   //   }
 
   return (
-    <section className="w-full flex flex-col px-16 gap-6 justify-center items-center">
-      <h1 className="h-[75px] text-[3rem] font-bold leading-normal text-center text-[#6C4534]">
+    <section className="w-full flex flex-col px-16 gap-3 lg:gap-6 justify-center items-center">
+      <h1 className="text-center text-[#6C4534] heading-2 font-bold">
         Kegiatan
       </h1>
 
       {/* kegiatan atas */}
       <Carousel opts={{ loop: true }} className="w-full relative flex flex-col">
         <CarouselContent className="w-full py-10">
-          {activities.map((activity, index) => (
+          {activities.map((activity) => (
             <CarouselItem
-              className="basis-1/3 w-[444px] h-[304px] flex justify-center items-center perspective-1600 relative group"
+              className="basis-full md:basis-1/2 lg:basis-1/3 w-[444px] h-[304px] flex justify-center items-center perspective-1600 relative group"
               key={activity.id}
             >
               <Link
                 href={`/activity/${activity.id}`}
-                className={`w-full h-full flex justify-center overflow-hidden items-center transform-style-3d transform-cpu transition-all rounded-[1.25rem] bg-cover 
-              ${
-                index === selected1 - 1 || // Untuk slide sebelum
-                (index === activities.length - 1 && selected1 === 0) // Untuk slide sebelum, tapi posisi selected1 di index paling awal
-                  ? 'rotate-y-30'
-                  : index === selected1 + 1 || // Untuk slide setelah
-                      (index === activities.length - 2 &&
-                        selected1 === activities.length - 1) // Untuk slide setelah, tapi posisi selected di index terakhir
-                    ? '-rotate-y-30'
-                    : ''
-              }`}
+                className={`w-full h-full flex justify-center overflow-hidden items-center transform-style-3d transform-cpu transition-all rounded-[1.25rem] bg-cover`}
               >
                 <Image
                   src={activity.cover_image}
@@ -94,7 +84,9 @@ export const ActivitySection: React.FC<ActivitySectionProps> = ({
                   className="object-cover"
                 />
                 <div className="absolute inset-0 bg-black bg-opacity-50 flex justify-center items-center opacity-0 group-hover:opacity-100 transition-opacity">
-                  <span className="text-white text-lg">{activity.title}</span>
+                  <span className="text-white text-lg text-center">
+                    {activity.title}
+                  </span>
                 </div>
               </Link>
             </CarouselItem>

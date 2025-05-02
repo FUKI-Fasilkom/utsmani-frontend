@@ -6,10 +6,10 @@ export const AboutSection: React.FC = () => {
     <section className="w-full md:py-[5.5rem] lg:px-28">
       <div className="flex flex-col lg:flex-row w-full h-full rounded-[20px] shadow-[2px_4px_6px_0px_rgba(0,0,0,0.25)] p-12 gap-[5.25rem] justify-between">
         <div className="lg:w-1/2 flex flex-col justify-start items-start gap-5">
-          <h1 className=" text-5xl font-bold text-[#6C4534] leading-normal max-lg:mx-auto">
+          <h1 className="heading-2 font-bold text-[#6C4534] leading-normal max-lg:mx-auto">
             Tentang Kami
           </h1>
-          <p className="text-lg text-[#6C4534] font-semibold text-justify leading-normal">
+          <p className="paragpaph text-[#6C4534] font-medium text-justify leading-normal">
             Lembaga Bimbingan Al-Qur’an Al-Utsmani memulai pembelajaran Al-Quran
             pada tahun 1415 H bertepatan dengan tahun 1995 M. Jumlah peserta
             didik terus bertambah setiap tahun dan sudah banyak alumni yang
