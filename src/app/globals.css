@@ -48,8 +48,6 @@
     @apply text-base md:text-lg lg:text-xl font-medium;
   }
 
-
-
   .paragraph {
     @apply text-base md:text-lg lg:text-lg leading-relaxed font-normal;
   }
@@ -70,10 +68,8 @@
     @apply text-xs md:text-sm lg:text-sm leading-tight font-normal;
   }
 
-
-
   .title {
-    @apply text-4xl md:text-5xl lg:text-6xl font-bold leading-tight ;
+    @apply text-4xl md:text-5xl lg:text-6xl font-bold leading-tight;
   }
 
   .subtitle {

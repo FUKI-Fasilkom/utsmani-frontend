@@ -3,7 +3,6 @@ export const WhySection: React.FC = () => {
     'Memperbaiki bacaan Al Quran sesuai dengan tuntunan Rasulullah',
     'Dibimbing oleh para ustadz dan ustadzah teruji profesional',
     'Menggunakan Metode Utsmani yang teruji mudah dan efektif',
-    'Menggunakan Metode Utsmani yang teruji mudah dan efektif',
     'Mendapatkan rapot dan sertifikat',
     'Berkesempatan besar mengikuti Wisuda Al Qur&apos;an',
   ]
