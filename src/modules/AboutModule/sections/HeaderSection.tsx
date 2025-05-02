@@ -1,11 +1,15 @@
 import Image from 'next/image'
 
-export const HeaderSection: React.FC = () => {
+interface HeaderSectionProps {
+  imageUrl: string
+}
+
+export const HeaderSection: React.FC<HeaderSectionProps> = ({ imageUrl }) => {
   return (
     <>
       <section className="relative  h-[600px] text-center text-white">
         <Image
-          src="/header-profile.png"
+          src={imageUrl}
           alt="Header Profile"
           fill
           className="object-cover"

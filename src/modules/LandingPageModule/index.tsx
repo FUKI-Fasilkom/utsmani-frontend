@@ -15,9 +15,9 @@ import { YouTubeSection } from './sections/YoutubeSection'
 export const LandingPageModule: React.FC = async () => {
   const [responseProgram, responseActivity, responseBranch] = await Promise.all(
     [
-      fetch(`${process.env.NEXT_PUBLIC_API_URL}/program`),
-      fetch(`${process.env.NEXT_PUBLIC_API_URL}/blog/activity`),
-      fetch(`${process.env.NEXT_PUBLIC_API_URL}/blog/branch`),
+      fetch(`${process.env.NEXT_PUBLIC_API_URL}/program/`),
+      fetch(`${process.env.NEXT_PUBLIC_API_URL}/blog/activity/`),
+      fetch(`${process.env.NEXT_PUBLIC_API_URL}/blog/branch/`),
     ]
   )
   const activities = await responseActivity.json()
