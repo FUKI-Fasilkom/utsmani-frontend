@@ -25,10 +25,11 @@ export const CertificateSection: React.FC<CertificateSectionProps> = ({
   certificates,
 }) => {
   const [isDialogOpen, setIsDialogOpen] = useState<boolean>(false)
-  const [selectedImage, setSelectedImage] = useState<{
-    url: string
+  const [selectedImages, setSelectedImages] = useState<{
+    urls: string[]
     title: string
     type: 'certificate' | 'report'
+    currentIndex: number
   } | null>(null)
 
   const formatDate = (dateString: string | undefined) => {
@@ -47,17 +48,39 @@ export const CertificateSection: React.FC<CertificateSectionProps> = ({
     certificate: CertificateProps,
     type: 'certificate' | 'report'
   ) => {
-    const imageUrl =
+    const imageUrls =
       type === 'certificate'
-        ? certificate.certificate_image
-        : certificate.report_image // Assuming you have this field in your interface
+        ? certificate.certificate_images || ['/placeholder.svg']
+        : certificate.report_files || ['/placeholder.svg']
 
-    setSelectedImage({
-      url: imageUrl || '/placeholder.svg',
+    setSelectedImages({
+      urls: imageUrls,
       title: certificate.title,
       type: type,
+      currentIndex: 0,
     })
     setIsDialogOpen(true)
+  }
+
+  const nextImage = () => {
+    if (selectedImages) {
+      setSelectedImages({
+        ...selectedImages,
+        currentIndex:
+          (selectedImages.currentIndex + 1) % selectedImages.urls.length,
+      })
+    }
+  }
+
+  const prevImage = () => {
+    if (selectedImages) {
+      setSelectedImages({
+        ...selectedImages,
+        currentIndex:
+          (selectedImages.currentIndex - 1 + selectedImages.urls.length) %
+          selectedImages.urls.length,
+      })
+    }
   }
 
   return (
@@ -87,7 +110,10 @@ export const CertificateSection: React.FC<CertificateSectionProps> = ({
                   {/* Gambar Sertifikat */}
                   <div className="relative w-full aspect-video">
                     <Image
-                      src={certificate.certificate_image || '/placeholder.svg'}
+                      src={
+                        certificate.certificate_images?.[0] ||
+                        '/placeholder.svg'
+                      }
                       alt={certificate.title}
                       fill
                       className="object-cover"
@@ -104,24 +130,27 @@ export const CertificateSection: React.FC<CertificateSectionProps> = ({
 
                   {/* Buttons for viewing certificate or report */}
                   <div className="flex gap-2 mt-3 mb-4">
-                    <Button
-                      variant="secondary"
-                      size={'sm'}
-                      onClick={() =>
-                        handleImageView(certificate, 'certificate')
-                      }
-                    >
-                      Lihat Sertifikat
-                    </Button>
-                    {certificate.report_image && (
+                    {certificate.certificate_images?.length > 0 && (
                       <Button
                         variant="secondary"
                         size={'sm'}
-                        onClick={() => handleImageView(certificate, 'report')}
+                        onClick={() =>
+                          handleImageView(certificate, 'certificate')
+                        }
                       >
-                        Lihat Rapor
+                        Lihat Sertifikat
                       </Button>
                     )}
+                    {certificate.report_files &&
+                      certificate.report_files?.length > 0 && (
+                        <Button
+                          variant="secondary"
+                          size={'sm'}
+                          onClick={() => handleImageView(certificate, 'report')}
+                        >
+                          Lihat Rapor
+                        </Button>
+                      )}
                   </div>
                 </div>
               </CarouselItem>
@@ -145,8 +174,13 @@ export const CertificateSection: React.FC<CertificateSectionProps> = ({
             {/* Title and Close button container */}
             <div className="absolute top-4 left-0 right-0 flex justify-between items-center px-4 z-50">
               <DialogTitle className="text-white bg-[#6C4534]/90 px-6 py-3 rounded-full text-lg font-semibold">
-                {selectedImage?.type === 'certificate' ? 'Sertifikat' : 'Rapor'}{' '}
-                - {selectedImage?.title}
+                {selectedImages?.type === 'certificate'
+                  ? 'Sertifikat'
+                  : 'Rapor'}{' '}
+                - {selectedImages?.title}{' '}
+                {selectedImages &&
+                  selectedImages.urls.length > 1 &&
+                  `(${selectedImages.currentIndex + 1}/${selectedImages.urls.length})`}
               </DialogTitle>
               <button
                 onClick={() => setIsDialogOpen(false)}
@@ -158,18 +192,41 @@ export const CertificateSection: React.FC<CertificateSectionProps> = ({
             </div>
 
             {/* Image viewer */}
-            {selectedImage && (
+            {selectedImages && (
               <div className="relative max-w-5xl max-h-[90vh] w-full h-full flex flex-col items-center justify-center p-4">
                 <div className="relative w-full h-full">
                   <Image
-                    src={selectedImage.url || '/placeholder.svg'}
-                    alt={`${selectedImage.title} - ${selectedImage.type === 'certificate' ? 'Sertifikat' : 'Rapor'}`}
+                    src={
+                      selectedImages.urls[selectedImages.currentIndex] ||
+                      '/placeholder.svg'
+                    }
+                    alt={`${selectedImages.title} - ${selectedImages.type === 'certificate' ? 'Sertifikat' : 'Rapor'}`}
                     className="object-contain"
                     fill
                     sizes="(max-width: 768px) 100vw, 80vw"
                     priority
                   />
                 </div>
+
+                {/* Navigation buttons for multiple images */}
+                {selectedImages.urls.length > 1 && (
+                  <div className="absolute bottom-6 left-0 right-0 flex justify-center gap-4">
+                    <Button
+                      variant="secondary"
+                      onClick={prevImage}
+                      className="bg-brown/80 hover:bg-brown"
+                    >
+                      Sebelumnya
+                    </Button>
+                    <Button
+                      variant="secondary"
+                      onClick={nextImage}
+                      className="bg-brown/80 hover:bg-brown"
+                    >
+                      Berikutnya
+                    </Button>
+                  </div>
+                )}
               </div>
             )}
           </div>

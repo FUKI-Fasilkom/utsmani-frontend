@@ -1,7 +1,7 @@
 import Link from 'next/link'
 import TikTokIcon from '@/components/icons/TikTok'
 import { Mail, MapPin, Phone } from 'lucide-react'
-import { Facebook, Instagram } from '@/components/icons'
+import { Facebook, Instagram, Youtube } from '@/components/icons'
 import { BranchSectionProps } from '../interface'
 
 export const BranchSection: React.FC<BranchSectionProps> = ({ branches }) => {
@@ -53,6 +53,11 @@ const OurContactSection: React.FC = () => {
       url: 'https://www.facebook.com/LBQUTSMANI',
       icon: Facebook,
     },
+    {
+      name: 'Youtube',
+      url: 'https://www.youtube.com/@al-utsmaniofficial',
+      icon: Youtube,
+    },
   ]
   return (
     <section className="w-full md:w-[40%] bg-[#6C4534] drop-shadow-lg rounded-[20px] text-[#F6EFE7] py-10 px-8">
@@ -66,7 +71,7 @@ const OurContactSection: React.FC = () => {
         referrerPolicy="no-referrer-when-downgrade"
         className="w-full rounded-[20px] mb-[24px]"
       ></iframe>
-      <div className="flex justify-center">
+      <div className="flex justify-center gap-2 items-center">
         {socialMediaList.map((socialMedia) => (
           <Link key={socialMedia.name} href={socialMedia.url}>
             <socialMedia.icon className="w-[54px]" />

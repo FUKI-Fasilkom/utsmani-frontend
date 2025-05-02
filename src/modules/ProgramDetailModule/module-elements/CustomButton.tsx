@@ -12,7 +12,7 @@ export const CustomButton: React.FC<{ title: string }> = ({ title }) => {
           behavior: 'smooth', // Animasi scroll yang halus
         })
       }}
-      className="text-xl text-white font-semibold w-80 h-16 bg-[#6C4534] rounded-full"
+      className="text-xl mx-auto lg:mx-0 whitespace-normal text-white font-semibold w-80 h-16 bg-[#6C4534] rounded-full"
     >
       Daftar {title}
     </Button>

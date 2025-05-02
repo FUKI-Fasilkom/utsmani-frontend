@@ -1,5 +1,6 @@
 export interface ProgramDetailProps {
   id: string
+  branch: string
   title: string
   cover_image: string
   headline: string

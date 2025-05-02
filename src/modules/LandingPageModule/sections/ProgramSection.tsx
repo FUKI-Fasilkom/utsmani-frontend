@@ -16,13 +16,13 @@ export const ProgramSection: React.FC<ProgramSectionProps> = ({
       <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-y-8 gap-x-5">
         {programs.map((program: ProgramProps, index) => (
           <Link
-            href={`/program/${program.id}`}
+            href={`/program/${program?.id}`}
             key={index}
             className="w-[240px] h-[240px] border-2 border-brown rounded-[40px] overflow-hidden flex items-center justify-center relative"
           >
             <Image
-              src={program.cover_image}
-              alt={program.title}
+              src={program?.cover_image}
+              alt={program?.title}
               className="object-cover w-full h-full"
               width={288}
               height={272}
