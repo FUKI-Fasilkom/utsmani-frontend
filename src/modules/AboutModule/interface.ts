@@ -11,6 +11,7 @@ interface SocialLink {
 
 export interface AboutPageData {
   banner: string
+  description: string
   vision: string
   missions: string[]
   legalities: Legalities[]

@@ -1,31 +1,20 @@
 import React from 'react'
+import DOMPurify from 'isomorphic-dompurify'
 
-export const AboutUsSection = () => {
+interface AboutUsSectionProps {
+  content: string
+}
+
+export const AboutUsSection: React.FC<AboutUsSectionProps> = ({ content }) => {
+  const sanitizedContent = DOMPurify.sanitize(content)
+
   return (
     <section className="container text-[#6C4534] mb-10">
       <h1 className="font-bold heading-1 text-center">Tentang Kami</h1>
-      <div className="drop-shadow-lg rounded-[20px] bg-white py-10 px-9 paragraph text-center flex flex-col gap-y-4 mt-4">
-        <p>
-          Lembaga Bimbingan Al-Qur&apos;an Al-Utsmani memulai pembelajaran
-          Al-Quran pada tahun 1415 H bertepatan dengan tahun 1995 M. Jumlah
-          peserta didik terus bertambah setiap tahun dan sudah banyak alumni
-          yang belajar tahsin, tajwid, dan tahfizh Al-Quran serta mengajar di
-          berbagai lembaga di seluruh Indonesia.
-        </p>
-        <p>
-          Pesantren Tahfizh Al-Quran Al-Utsmani memiliki harapan yang besar
-          kepada seluruh alumninya untuk mampu mengaplikasikan ilmunya di
-          kehidupan bermasyarakat, sehingga masyarakat mampu membaca Al-Quran
-          dengan baik dan benar terlebih mampu memampu memulai menghafal
-          Al-Utsmani. Setelah itu masyarakat diharapkan mampu istiqomah dalam
-          membaca Al-Quran agar memperoleh kebahagiaan di dunia dan akhirat.
-        </p>
-        <p>
-          Berangkat dari alasan tersebut, maka Lembaga Bimbingan Al-Quran
-          Al-Utsman berusaha semaksimal mungkin untuk mendidik pesertanya agar
-          memperoleh hasil yang maksimal.
-        </p>
-      </div>
+      <div
+        className="drop-shadow-lg rounded-[20px] bg-white py-10 px-9 paragraph text-center flex flex-col gap-y-4 mt-4"
+        dangerouslySetInnerHTML={{ __html: sanitizedContent }}
+      ></div>
     </section>
   )
 }

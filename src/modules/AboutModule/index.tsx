@@ -14,7 +14,7 @@ export const AboutModule: React.FC = async () => {
   return (
     <div className="flex flex-col gap-20">
       <HeaderSection imageUrl={data.banner} />
-      <AboutUsSection />
+      <AboutUsSection content={data.description} />
       <DetailSection data={data} />
       <StructureSection imageUrl={data.organizationStructure} />
     </div>

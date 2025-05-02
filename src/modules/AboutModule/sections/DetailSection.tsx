@@ -12,12 +12,12 @@ export const DetailSection: React.FC<DetailSectionProps> = ({ data }) => {
     <section className="container flex flex-col lg:flex-row gap-14 max-w-screen-lg">
       <div className="flex flex-col w-full lg:w-3/5 gap-8 text-[#F6EFE7] ">
         <div className="bg-[#6C4534] drop-shadow-lg shadow-black rounded-xl py-8 px-12 flex gap-2 flex-col items-center">
-          <h2 className="font-bold text-4xl">Visi</h2>
-          <p className="text-lg font-semibold text-center">{vision}</p>
+          <h2 className="font-bold heading-2">Visi</h2>
+          <p className="paragraph-lg font-semibold text-center">{vision}</p>
         </div>
         <div className="bg-[#6C4534] drop-shadow-lg rounded-xl py-8 px-12 flex gap-2 flex-col items-center">
-          <h2 className="font-bold text-4xl">Misi</h2>
-          <ul className="list-disc flex flex-col gap-2 pl-4 font-medium">
+          <h2 className="font-bold heading-2">Misi</h2>
+          <ul className="list-disc flex flex-col gap-2 pl-4 font-medium paragraph">
             {missions.map((item, index) => (
               <li key={index}>{item}</li>
             ))}
@@ -26,10 +26,10 @@ export const DetailSection: React.FC<DetailSectionProps> = ({ data }) => {
       </div>
       <div className="flex flex-col w-full lg:w-2/5 gap-12">
         <div className="flex flex-col gap-4">
-          <h2 className="font-bold text-4xl text-center text-[#6C4534]">
+          <h2 className="font-bold heading-2 text-center text-[#6C4534]">
             Legalitas
           </h2>
-          <div className="bg-white drop-shadow-lg font-semibold rounded-xl py-5 px-8 flex gap-2 flex-col items-center">
+          <div className="bg-white drop-shadow-lg font-semibold rounded-xl py-5 px-8 flex gap-2 flex-col items-center paragraph">
             {legalities.map((item, index) => (
               <div className="w-full" key={index}>
                 <h3 className="text-[#6C4534]">{item.label}</h3>
@@ -39,7 +39,7 @@ export const DetailSection: React.FC<DetailSectionProps> = ({ data }) => {
           </div>
         </div>
         <div className="flex flex-col gap-5">
-          <h2 className="font-bold text-4xl text-center text-[#6C4534]">
+          <h2 className="font-bold heading-2 text-center text-[#6C4534]">
             Alamat Pusat
           </h2>
           <div className="rounded-xl aspect-video w-full overflow-hidden">

@@ -7,7 +7,7 @@ interface HeaderSectionProps {
 export const HeaderSection: React.FC<HeaderSectionProps> = ({ imageUrl }) => {
   return (
     <>
-      <section className="relative  h-[600px] text-center text-white">
+      <section className="relative w-full aspect-[21/9] text-center text-white">
         <Image
           src={imageUrl}
           alt="Header Profile"

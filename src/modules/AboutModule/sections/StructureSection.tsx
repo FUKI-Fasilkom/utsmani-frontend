@@ -7,8 +7,8 @@ type Props = {
 
 export const StructureSection: React.FC<Props> = ({ imageUrl }) => {
   return (
-    <section>
-      <h2 className="font-bold text-[36px] text-center text-[#6C4534]">
+    <section className="flex flex-col gap-4">
+      <h2 className="font-bold heading-2 text-center text-[#6C4534]">
         Struktur Organisasi
       </h2>
       <Image
