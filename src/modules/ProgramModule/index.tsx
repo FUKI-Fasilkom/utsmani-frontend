@@ -22,7 +22,9 @@ type Program = {
 }
 
 async function getPrograms() {
-  const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/program`)
+  const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/program`, {
+    cache: 'no-store',
+  })
   const responseJson = await response.json()
   const programs = await responseJson.contents
   return programs
@@ -30,6 +32,7 @@ async function getPrograms() {
 
 export const ProgramModule: React.FC = async () => {
   const programs = await getPrograms()
+  console.log(programs)
   return (
     <main className="flex flex-col gap-20 w-screen">
       <div className="h-[530px] w-full bg-[#6C4534] p-10 flex justify-evenly">
