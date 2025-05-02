@@ -5,8 +5,6 @@ import {
   Carousel,
   CarouselContent,
   CarouselItem,
-  CarouselNextProgram,
-  CarouselPreviousProgram,
 } from '@/components/ui/carousel'
 import Link from 'next/link'
 import { getCookie, deleteCookie } from 'cookies-next'
@@ -20,6 +18,8 @@ import { RegisterButton } from './module-elements/RegisterButton'
 import { toast } from 'sonner'
 import { useRouter } from 'next/navigation'
 import { useEffect, useState } from 'react'
+import { Button } from '@/components/ui/button'
+import { FaWhatsapp } from 'react-icons/fa'
 
 export const ProgramDetailModule: React.FC<ProgramDetailModuleProps> = ({
   id,
@@ -30,6 +30,20 @@ export const ProgramDetailModule: React.FC<ProgramDetailModuleProps> = ({
   )
   const [programs, setPrograms] = useState<ProgramProps[]>([])
   const [loading, setLoading] = useState(true)
+
+  const getPrograms = async () => {
+    try {
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_API_URL}/program/branch/${programDetail?.branch}/programs`
+      )
+      const responseJson = await response.json()
+      setPrograms(responseJson.contents || [])
+    } catch (error) {
+      toast.error('Gagal memuat program lainnya')
+    } finally {
+      setLoading(false)
+    }
+  }
 
   useEffect(() => {
     const getProgramDetail = async () => {
@@ -60,23 +74,14 @@ export const ProgramDetailModule: React.FC<ProgramDetailModuleProps> = ({
       }
     }
 
-    const getPrograms = async () => {
-      try {
-        const response = await fetch(
-          `${process.env.NEXT_PUBLIC_API_URL}/program`
-        )
-        const responseJson = await response.json()
-        setPrograms(responseJson.contents || [])
-      } catch (error) {
-        toast.error('Gagal memuat program lainnya')
-      } finally {
-        setLoading(false)
-      }
-    }
-
     getProgramDetail()
-    getPrograms()
   }, [id, router])
+
+  useEffect(() => {
+    if (programDetail) {
+      getPrograms()
+    }
+  }, [programDetail])
 
   if (loading && !programDetail) {
     return <div>Loading...</div>
@@ -86,32 +91,52 @@ export const ProgramDetailModule: React.FC<ProgramDetailModuleProps> = ({
     <main className="flex">
       {programDetail ? (
         <div className="flex flex-col">
-          <div className="flex w-full h-[536px] bg-[#F8EAD9] justify-left items-center">
-            <div className="w-full max-w-screen-sm h-full relative">
+          <div className="flex flex-col lg:flex-row w-full lg:h-[536px] bg-[#F8EAD9] justify-left items-center">
+            <div className="w-full max-h-72 lg:max-h-none  lg:max-w-[40%] h-full relative">
               <Image
                 src={programDetail.cover_image}
                 alt={programDetail.title}
                 width={1000}
                 height={1000}
-                className="object-cover pr-16 w-full h-full"
+                className="object-cover lg:pr-16 w-full h-full"
               />
             </div>
-            <div className="w-1/2 flex flex-col gap-6 pr-12">
-              <h2 className="text-3xl font-bold text-[#A0653C]">
+            <div className="lg:w-1/2 flex flex-col gap-2 py-4 lg:gap-6 px-2 lg:pr-12">
+              <h2 className="text-center lg:text-start lg:text-3xl font-bold text-[#A0653C]">
                 {programDetail.title}
               </h2>
-              <h1 className="text-4xl font-bold text-[#6C4534]">
+              <h1 className="text-center lg:text-start lg:text-4xl font-bold text-[#6C4534]">
                 {programDetail.headline}
               </h1>
+              <div className="flex flex-col lg:flex-row  lg:items-center gap-2">
+                <RegisterButton
+                  programId={programDetail.id}
+                  userStatus={programDetail.user_status}
+                />
+                {programDetail.user_status === 'PENDING' && (
+                  <a
+                    href={
+                      programDetail.cp_wa_number_1
+                        ? `https://wa.me/${programDetail.cp_wa_number_1.replace(/^0/, '62').replace(/^\+/, '').replace(/[\s-]/g, '')}`
+                        : '#'
+                    }
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    <Button className="from-green-600 to-green-600 w-full font-semibold lg:text-lg mt-2 lg:py-6 lg:px-6 hover:from-green-700 hover:to-green-700 transition-all">
+                      <FaWhatsapp size={36} />
 
-              <RegisterButton
-                programId={programDetail.id}
-                userStatus={programDetail.user_status}
-              />
+                      <span className="flex items-center gap-2">
+                        Lakukan Pembayaran
+                      </span>
+                    </Button>
+                  </a>
+                )}
+              </div>
             </div>
           </div>
-          <div className="flex p-28 gap-[4.5rem]">
-            <div className="flex flex-col w-1/2 gap-8 max-w-[606px]">
+          <div className="flex flex-col lg:flex-row p-4 md:p-14 xl:p-28 gap-10 lg:gap-20 justify-center">
+            <div className="flex flex-col lg:w-1/2 gap-8 lg:max-w-[606px]">
               <p className="text-justify">{programDetail.description}</p>
               <div className="flex flex-col gap-1">
                 <h1 className="text-black font-bold text-2xl">Persyaratan</h1>
@@ -131,8 +156,8 @@ export const ProgramDetailModule: React.FC<ProgramDetailModuleProps> = ({
               </div>
               <CustomButton title={programDetail.title} />
             </div>
-            <div className="w-1/2 flex flex-col items-center gap-6 px-[4.2rem]">
-              <h1 className="text-[#5B3B1E] text-[2.5rem] font-bold">
+            <div className="lg:w-1/2 flex flex-col items-center gap-6 ">
+              <h1 className="text-[#5B3B1E] text-center text-xl sm:text-3xl leading-10 md:text-[2.5rem] font-bold">
                 JENJANG MUSTAWA
               </h1>
               {JENJANG_MUSTAWA.map((jenjang, index) => (
@@ -159,34 +184,34 @@ export const ProgramDetailModule: React.FC<ProgramDetailModuleProps> = ({
             </h1>
             <hr className="absolute h-1 bg-[#6C4534] w-1/2 z-0 top-8" />
             <Carousel
-              className="flex justify-center items-center relative mb-16"
+              className="flex justify-center items-center relative mb-16 w-full max-w-screen-xl"
               opts={{ loop: true }}
             >
               <CarouselContent className="flex gap-2 py-10 px-7">
                 {programs.map((program: ProgramProps) => (
                   <CarouselItem
                     key={program.id}
-                    className="basis-1/4 w-[300px] h-[200px] flex justify-center items-center relative rounded-2xl overflow-hidden shadow-[4px_4px_8px_4px_rgba(0,0,0,0.15)] border-4 border-white"
+                    className="basis-full sm:basis-1/2 md:basis-1/3 lg:basis-1/4 w-[300px] h-[200px] flex justify-center items-center relative rounded-2xl overflow-hidden shadow-[4px_4px_8px_4px_rgba(0,0,0,0.15)] border-4 border-white group"
                   >
-                    <Link href={`/program/${program.id}`}>
+                    <Link
+                      href={`/program/${program.id}`}
+                      className="w-full h-full"
+                    >
                       <Image
                         src={program.cover_image}
-                        alt=""
+                        alt={program.title}
                         fill
                         className="object-cover"
                       />
+                      <div className="absolute inset-0 bg-black bg-opacity-60 opacity-0 group-hover:opacity-100 flex items-center justify-center transition-opacity duration-300">
+                        <h3 className="text-white font-bold text-center px-4">
+                          {program.title}
+                        </h3>
+                      </div>
                     </Link>
                   </CarouselItem>
                 ))}
               </CarouselContent>
-              <CarouselPreviousProgram
-                variant={'secondary'}
-                className="h-12 w-12"
-              />
-              <CarouselNextProgram
-                variant={'secondary'}
-                className="h-12 w-12"
-              />
             </Carousel>
           </div>
         </div>
