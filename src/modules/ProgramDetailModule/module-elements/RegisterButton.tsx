@@ -29,7 +29,6 @@ export const RegisterButton: React.FC<{
       )
 
       const responseJson = await response.json()
-      console.log(responseJson)
       if (responseJson.status !== 201) throw new Error(responseJson.message)
       toast.success('Berhasil mendaftar!')
       router.refresh()

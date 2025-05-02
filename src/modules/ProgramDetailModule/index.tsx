@@ -1,4 +1,4 @@
-'use server'
+'use client'
 import Image from 'next/image'
 import { PERSYARATAN, MASA_BIMBINGAN, JENJANG_MUSTAWA } from './constant'
 import {
@@ -9,8 +9,7 @@ import {
   CarouselPreviousProgram,
 } from '@/components/ui/carousel'
 import Link from 'next/link'
-import { getCookie } from 'cookies-next'
-import { cookies } from 'next/headers'
+import { getCookie, deleteCookie } from 'cookies-next'
 import { CustomButton } from './module-elements/CustomButton'
 import {
   ProgramDetailModuleProps,
@@ -19,39 +18,70 @@ import {
 } from './interface'
 import { RegisterButton } from './module-elements/RegisterButton'
 import { toast } from 'sonner'
+import { useRouter } from 'next/navigation'
+import { useEffect, useState } from 'react'
 
-async function getProgramDetail(id: string) {
-  const programId = id
-  const at = getCookie('AT', { cookies })
-  try {
-    const headers = at ? { Authorization: `Bearer ${at}` } : undefined
-    const response = await fetch(
-      `${process.env.NEXT_PUBLIC_API_URL}/program/${programId}`,
-      {
-        headers,
-        cache: 'no-store',
-      }
-    )
-    const responseJson = await response.json()
-    const programDetail = (await responseJson.contents) as ProgramDetailProps
-
-    return programDetail
-  } catch (error) {
-    toast.error('Terjadi kesalahan dalam mengambil data!')
-  }
-}
-async function getPrograms() {
-  const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/program`)
-  const responseJson = await response.json()
-  const programs = await responseJson.contents
-  return programs
-}
-
-export const ProgramDetailModule: React.FC<ProgramDetailModuleProps> = async ({
+export const ProgramDetailModule: React.FC<ProgramDetailModuleProps> = ({
   id,
 }) => {
-  const programDetail = await getProgramDetail(id)
-  const programs = await getPrograms()
+  const router = useRouter()
+  const [programDetail, setProgramDetail] = useState<ProgramDetailProps | null>(
+    null
+  )
+  const [programs, setPrograms] = useState<ProgramProps[]>([])
+  const [loading, setLoading] = useState(true)
+
+  useEffect(() => {
+    const getProgramDetail = async () => {
+      const at = getCookie('AT')
+      try {
+        const headers = at ? { Authorization: `Bearer ${at}` } : undefined
+        const response = await fetch(
+          `${process.env.NEXT_PUBLIC_API_URL}/program/${id}`,
+          {
+            headers,
+            cache: 'no-store',
+          }
+        )
+        const responseJson = await response.json()
+
+        if (
+          responseJson.status === 401 ||
+          responseJson.message === 'Token is invalid or expired'
+        ) {
+          deleteCookie('AT')
+          router.push('/login')
+          return
+        }
+
+        setProgramDetail(responseJson.contents)
+      } catch (error) {
+        toast.error('Terjadi kesalahan dalam mengambil data!')
+      }
+    }
+
+    const getPrograms = async () => {
+      try {
+        const response = await fetch(
+          `${process.env.NEXT_PUBLIC_API_URL}/program`
+        )
+        const responseJson = await response.json()
+        setPrograms(responseJson.contents || [])
+      } catch (error) {
+        toast.error('Gagal memuat program lainnya')
+      } finally {
+        setLoading(false)
+      }
+    }
+
+    getProgramDetail()
+    getPrograms()
+  }, [id, router])
+
+  if (loading && !programDetail) {
+    return <div>Loading...</div>
+  }
+
   return (
     <main className="flex">
       {programDetail ? (
