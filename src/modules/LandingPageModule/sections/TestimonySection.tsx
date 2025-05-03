@@ -14,7 +14,7 @@ export const TestimonySection: React.FC = () => {
   return (
     <section className="container flex flex-col gap-6 items-center text-brown px-10">
       <div>
-        <h2 className="font-bold text-3xl md:text-4xl xl:text-5xl text-center">
+        <h2 className="font-bold heading-2 text-center">
           Apa kata mereka tentang Al-Utsmani?
         </h2>
       </div>
@@ -28,7 +28,7 @@ export const TestimonySection: React.FC = () => {
               >
                 <div className="flex flex-col gap-4 h-full w-full justify-between mx-auto max-w-[90%]">
                   <div className="py-8 px-10 shadow-lg drop-shadow-sm h-full w-full rounded-2xl">
-                    <p className="italic font-semibold leading-6 line-clamp-5">
+                    <p className="italic font-medium leading-6 line-clamp-5">
                       {testimony.quote}
                     </p>
                   </div>

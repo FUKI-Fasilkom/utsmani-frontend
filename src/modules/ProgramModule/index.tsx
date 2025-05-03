@@ -22,7 +22,9 @@ type Program = {
 }
 
 async function getPrograms() {
-  const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/program`)
+  const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/program`, {
+    cache: 'no-store',
+  })
   const responseJson = await response.json()
   const programs = await responseJson.contents
   return programs
