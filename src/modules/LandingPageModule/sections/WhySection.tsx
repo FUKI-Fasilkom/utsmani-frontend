@@ -4,7 +4,7 @@ export const WhySection: React.FC = () => {
     'Dibimbing oleh para ustadz dan ustadzah teruji profesional',
     'Menggunakan Metode Utsmani yang teruji mudah dan efektif',
     'Mendapatkan rapot dan sertifikat',
-    'Berkesempatan besar mengikuti Wisuda Al Qur&apos;an',
+    "Berkesempatan besar mengikuti Wisuda Al Qur'an",
   ]
   return (
     <div>
