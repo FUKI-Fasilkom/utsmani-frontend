@@ -7,12 +7,12 @@ export const ProgramDetailSkeleton: React.FC = () => {
       {/* Hero section skeleton */}
       <section className="flex flex-col lg:flex-row w-full lg:h-[536px] bg-[#F8EAD9] justify-left items-center">
         {/* Image placeholder */}
-        <div className="w-full max-h-72 lg:max-h-none lg:max-w-[40%] h-full relative overflow-hidden flex items-center">
+        <div className="w-full max-h-72 lg:max-h-none lg:max-w-[55%] h-full relative overflow-hidden flex items-center">
           <div className="w-full h-full bg-gray-300 animate-pulse" />
         </div>
 
         {/* Content placeholder */}
-        <div className="lg:w-1/2 flex flex-col gap-2 py-10 lg:py-4 lg:gap-6 px-2 lg:pr-12">
+        <div className="lg:w-[45%] flex flex-col gap-2 py-10 lg:py-4 lg:gap-6 px-2 lg:pr-12">
           {/* Title placeholder */}
           <div className="h-6 lg:h-8 w-3/4 bg-gray-300 rounded-md animate-pulse mx-auto lg:mx-0" />
 

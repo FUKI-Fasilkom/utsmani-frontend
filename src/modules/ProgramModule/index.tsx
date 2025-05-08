@@ -7,9 +7,7 @@ import {
   CarouselPreviousProgram,
 } from '@/components/ui/carousel'
 import Image from 'next/image'
-import { Button } from '@/components/ui/button'
 import Link from 'next/link'
-import { Search, SlidersHorizontal } from 'lucide-react'
 
 type Program = {
   id: number
@@ -29,7 +27,7 @@ async function getPrograms() {
 export const ProgramModule: React.FC = async () => {
   const programs = await getPrograms()
   return (
-    <main className="flex flex-col gap-20 w-screen">
+    <main className="flex flex-col gap-10 w-screen">
       <div className="h-[530px] w-full bg-[#6C4534] p-10 flex justify-evenly">
         <div className="flex justify-center items-center flex-col p-24 gap-6">
           <h1 className="text-white font-bold text-7xl">Program</h1>
@@ -71,30 +69,15 @@ export const ProgramModule: React.FC = async () => {
         </Carousel>
       </div>
       <div className="w-full flex justify-center items-center flex-col">
-        <div className="w-[800px] flex justify-center items-center gap-3">
-          <div className="relative w-[614px] flex h-14">
-            <Search className="absolute left-4 top-4" />
-            <input
-              type="text"
-              className="w-full h-full rounded-full shadow-md items-center px-12 text-[#8DA0B1] text-lg focus:outline-0"
-              placeholder="Search..."
-            />
-          </div>
-          <div className="w-14 h-14">
-            <Button className="w-full h-full rounded-3xl">
-              <SlidersHorizontal />
-            </Button>
-          </div>
-        </div>
         <div className="p-20">
           <div>
             <h1 className="text-5xl font-bold text-[#6C4534] text-center leading-relaxed p-6">
               Program Unggulan
             </h1>
-            <div className="grid grid-cols-4 gap-5 py-12">
+            <div className="grid grid-cols-4 gap-5 py-12 justify-content-center">
               {programs.map((program: Program) => (
                 <Link href={`/program/${program.id}`} key={program.id}>
-                  <div className="w-[288px] h-[272px] border-2 rounded-[40px] relative overflow-hidden cursor-pointer border-[#6C4534] hover:scale-105 transition-all">
+                  <div className="w-[288px] h-[272px] border-2 rounded-[40px] relative overflow-hidden cursor-pointer border-[rgb(108,69,52)] hover:scale-105 transition-all">
                     <p
                       className="absolute z-10 px-6 py-4 bottom-0 left-0 text-white font-semibold heading-5 drop-shadow-xl"
                       style={{
