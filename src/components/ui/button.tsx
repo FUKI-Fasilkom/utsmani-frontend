@@ -14,6 +14,8 @@ const buttonVariants = cva(
         secondary: 'bg-[#6C4534] text-[#F6EFE7]',
         tertiary: 'border-2 border-[#6C4534] text-[#6C4534] bg-transparent',
         danger: 'bg-red-500 text-neutral-50 ',
+        outline: 'border-2 border-neutral-950 text-neutral-950 bg-transparent',
+        ghost: 'bg-transparent text-neutral-950 hover:bg-neutral-100',
       },
       size: {
         sm: 'h-6 px-3',

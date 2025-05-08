@@ -29,7 +29,7 @@ export const LandingPageModule: React.FC = async () => {
       <HeaderSection />
       <WhySection />
       <AboutSection />
-      <ProgramSection branchPrograms={programs.contents} />
+      <ProgramSection programs={programs.contents} />
       <WakafSection />
       <ActivitySection activities={activities.contents} />
       <TestimonySection />
