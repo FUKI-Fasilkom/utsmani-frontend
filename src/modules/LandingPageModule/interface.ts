@@ -1,5 +1,3 @@
-export interface Props {}
-
 export interface ProgramProps {
   id: string
   name: string
@@ -34,4 +32,14 @@ export interface BranchProps {
 
 export interface BranchSectionProps {
   branches: BranchProps[]
+}
+
+export interface Testimony {
+  id: string
+  name: string
+  role: string
+  description: string
+  image: string | null
+  created_at: string
+  updated_at: string
 }
