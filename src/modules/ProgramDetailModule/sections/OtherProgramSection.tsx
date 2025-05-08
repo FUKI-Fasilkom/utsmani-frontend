@@ -4,6 +4,8 @@ import {
   Carousel,
   CarouselContent,
   CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
 } from '@/components/ui/carousel'
 import Link from 'next/link'
 import { ProgramProps } from '../interface'
@@ -60,6 +62,8 @@ export const OtherProgramSection = () => {
             </CarouselItem>
           ))}
         </CarouselContent>
+        <CarouselPrevious className="ml-10 md:ml-5 ">Prev</CarouselPrevious>
+        <CarouselNext className="mr-10 md:mr-5 ">Next</CarouselNext>
       </Carousel>
     </div>
   )
