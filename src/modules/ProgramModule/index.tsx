@@ -9,6 +9,7 @@ import {
 import Image from 'next/image'
 import { Button } from '@/components/ui/button'
 import Link from 'next/link'
+import { Search, SlidersHorizontal } from 'lucide-react'
 
 type Program = {
   id: number
@@ -45,11 +46,17 @@ export const ProgramModule: React.FC = async () => {
             {programs.map((program: Program) => (
               <CarouselItem
                 key={program.id}
-                className="w-[576px] h-[379px] flex justify-center items-center relative rounded-[55px] overflow-hidden"
+                className="w-[576px] h-[379px] flex justify-center items-center relative rounded-[55px] overflow-hidden pl-0"
               >
-                <p className="absolute z-10 bottom-6 left-6 text-white p-5 font-bold text-4xl drop-shadow-lg max-w-[400px]">
-                  {program.title}
-                </p>
+                <div
+                  className="absolute z-10 bottom-0 left-0 text-white px-16 py-6 w-full font-bold text-4xl drop-shadow-lg"
+                  style={{
+                    background:
+                      'linear-gradient(to top, rgba(0, 0, 0, 0.5) 70%, rgba(0, 0, 0, 0) 100%)',
+                  }}
+                >
+                  <p className="max-w-[400px]">{program.title}</p>
+                </div>
                 <Image
                   src={program.cover_image}
                   alt=""
@@ -66,29 +73,7 @@ export const ProgramModule: React.FC = async () => {
       <div className="w-full flex justify-center items-center flex-col">
         <div className="w-[800px] flex justify-center items-center gap-3">
           <div className="relative w-[614px] flex h-14">
-            <svg
-              width="50"
-              height="50"
-              viewBox="0 0 51 50"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-              className="absolute top-[3px]"
-            >
-              <path
-                d="M24.3634 32.9543C29.3841 32.9543 33.4543 28.8841 33.4543 23.8634C33.4543 18.8426 29.3841 14.7725 24.3634 14.7725C19.3426 14.7725 15.2725 18.8426 15.2725 23.8634C15.2725 28.8841 19.3426 32.9543 24.3634 32.9543Z"
-                stroke="#8DA0B1"
-                strokeWidth="2.27273"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              />
-              <path
-                d="M35.7272 35.2272L30.8408 30.3408"
-                stroke="#8DA0B1"
-                strokeWidth="2.27273"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              />
-            </svg>
+            <Search className="absolute left-4 top-4" />
             <input
               type="text"
               className="w-full h-full rounded-full shadow-md items-center px-12 text-[#8DA0B1] text-lg focus:outline-0"
@@ -97,77 +82,7 @@ export const ProgramModule: React.FC = async () => {
           </div>
           <div className="w-14 h-14">
             <Button className="w-full h-full rounded-3xl">
-              <svg
-                width="25"
-                height="24"
-                viewBox="0 0 25 24"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  d="M21.5 4H14.5"
-                  stroke="white"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                />
-                <path
-                  d="M10.5 4H3.5"
-                  stroke="white"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                />
-                <path
-                  d="M21.5 12H12.5"
-                  stroke="white"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                />
-                <path
-                  d="M8.5 12H3.5"
-                  stroke="white"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                />
-                <path
-                  d="M21.5 20H16.5"
-                  stroke="white"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                />
-                <path
-                  d="M12.5 20H3.5"
-                  stroke="white"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                />
-                <path
-                  d="M14.5 2V6"
-                  stroke="white"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                />
-                <path
-                  d="M8.5 10V14"
-                  stroke="white"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                />
-                <path
-                  d="M16.5 18V22"
-                  stroke="white"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                />
-              </svg>
+              <SlidersHorizontal />
             </Button>
           </div>
         </div>
@@ -180,7 +95,13 @@ export const ProgramModule: React.FC = async () => {
               {programs.map((program: Program) => (
                 <Link href={`/program/${program.id}`} key={program.id}>
                   <div className="w-[288px] h-[272px] border-2 rounded-[40px] relative overflow-hidden cursor-pointer border-[#6C4534] hover:scale-105 transition-all">
-                    <p className="absolute z-10 p-6 bottom-0 left-0 text-white font-bold text-2xl drop-shadow-xl text-center">
+                    <p
+                      className="absolute z-10 px-6 py-4 bottom-0 left-0 text-white font-semibold heading-5 drop-shadow-xl"
+                      style={{
+                        background:
+                          'linear-gradient(to top, rgba(0, 0, 0, 0.5) 70%, rgba(0, 0, 0, 0) 100%)',
+                      }}
+                    >
                       {program.title}
                     </p>
                     <Image
