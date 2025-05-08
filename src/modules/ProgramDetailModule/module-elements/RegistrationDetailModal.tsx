@@ -23,9 +23,15 @@ export const RegistrationDetailModal: React.FC<
   const getStatusBadge = () => {
     switch (user_status) {
       case 'PENDING':
-        return <Badge className="bg-yellow-500 hover:bg-yellow-500">Menunggu Pembayaran</Badge>
+        return (
+          <Badge className="bg-yellow-500 hover:bg-yellow-500">
+            Menunggu Pembayaran
+          </Badge>
+        )
       case 'ACCEPTED':
-        return <Badge className="bg-green-500 hover:bg-green-500">Diterima</Badge>
+        return (
+          <Badge className="bg-green-500 hover:bg-green-500">Diterima</Badge>
+        )
       case 'DECLINED':
         return <Badge className="bg-red-500 hover:bg-red-500">Ditolak</Badge>
       default:
