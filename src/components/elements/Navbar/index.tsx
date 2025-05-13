@@ -36,7 +36,7 @@ export const Navbar: React.FC = () => {
   }
 
   return (
-    <nav className="w-full bg-[#FCF9F4] h-[56px] md:h-[80px] py-2 px-4 fixed top-0 inset-x-0 z-10 drop-shadow-md">
+    <nav className="w-full bg-[#FCF9F4] h-[56px] md:h-[80px] py-2 px-4 fixed top-0 inset-x-0 z-30 drop-shadow-md">
       <div className="lg:container flex items-center justify-between">
         <div className="relative w-20 md:w-32 aspect-[2]">
           <Image
