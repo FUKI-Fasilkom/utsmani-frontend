@@ -2,13 +2,8 @@
 import { useEffect, useState, useCallback } from 'react'
 import { useSearchParams } from 'next/navigation'
 import PaymentOverviewSection from './sections/PaymentOverviewSection'
-import PaymentMethodSection from './sections/PaymentMethodSection'
 import PaymentSuccessSection from './sections/PaymentSuccessSection'
-import type {
-  Payment,
-  PaymentCheckoutResponse,
-  PaymentMethod,
-} from './interface'
+import type { Payment, PaymentCheckoutResponse } from './interface'
 import { Button } from '@/components/ui/button'
 import { Loader2 } from 'lucide-react'
 import { Alert, AlertDescription } from '@/components/ui/alert'
@@ -50,15 +45,8 @@ const PaymentModule = () => {
     fetchPaymentDetail(invoiceNumber)
   }, [searchParams, fetchPaymentDetail])
 
-  const onSelectPaymentMethod = (method: PaymentMethod) => {
-    setPayment((prev) => {
-      if (!prev) return prev
-      return { ...prev, payment_method: method, fee_amount: method.total_fee }
-    })
-  }
-
   const handlePayment = async () => {
-    if (!payment || !payment.payment_method) return
+    if (!payment) return
 
     setIsProcessing(true)
     try {
@@ -71,7 +59,6 @@ const PaymentModule = () => {
           },
           body: JSON.stringify({
             invoice_number: payment.invoice_number,
-            payment_method_code: payment.payment_method.code,
             callback_url: `${window.location.origin}/payment?invoice=${payment.invoice_number}`,
           }),
         }
@@ -135,13 +122,13 @@ const PaymentModule = () => {
 
   // Otherwise show the payment flow (pending or other statuses)
   return (
-    <main className="w-full max-w-screen-xl p-8 mx-auto flex flex-col lg:flex-row-reverse gap-12">
-      <div className="min-w-[300px] lg:w-[400px] lg:sticky lg:top-4 h-fit">
+    <main className="w-full max-w-screen-xl p-8 mx-auto flex flex-col gap-12">
+      <div className="min-w-[300px] md:w-1/2 mx-auto lg:sticky lg:top-4 h-fit">
         <PaymentOverviewSection payment={payment} />
         <Button
           className="h-10 md:text-lg md:h-12 w-full mt-8"
           variant={'secondary'}
-          disabled={payment.payment_method === null || isProcessing}
+          disabled={isProcessing}
           onClick={handlePayment}
         >
           {isProcessing ? (
@@ -154,10 +141,6 @@ const PaymentModule = () => {
           )}
         </Button>
       </div>
-      <PaymentMethodSection
-        payment={payment}
-        onSelectMethod={onSelectPaymentMethod}
-      />
     </main>
   )
 }
