@@ -11,6 +11,7 @@ import { Button } from '@/components/ui/button'
 import {
   CheckCircle2,
   Receipt,
+  CreditCard,
   User,
   Calendar,
   ExternalLink,
@@ -101,6 +102,14 @@ const PaymentSuccessSection: React.FC<{ payment: Payment }> = ({ payment }) => {
               </p>
             </div>
 
+            <div className="space-y-1">
+              <p className="text-sm text-muted-foreground">Metode Pembayaran</p>
+              <p className="font-medium flex items-center">
+                <CreditCard className="mr-1 h-4 w-4 text-muted-foreground" />
+                {payment.payment_method?.name || 'Transfer Bank'}
+              </p>
+            </div>
+
             <Separator />
 
             <div className="rounded-lg bg-muted/50 p-4">
@@ -121,6 +130,11 @@ const PaymentSuccessSection: React.FC<{ payment: Payment }> = ({ payment }) => {
                   {convertToRupiah(payment.net_amount)}
                 </span>
               </Link>
+            </div>
+
+            <div className="flex justify-between items-center text-sm">
+              <span className="text-muted-foreground">Biaya Layanan</span>
+              <span>{convertToRupiah(payment.fee_amount || 0)}</span>
             </div>
 
             <Separator />

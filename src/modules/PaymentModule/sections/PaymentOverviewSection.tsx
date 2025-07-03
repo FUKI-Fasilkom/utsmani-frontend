@@ -121,6 +121,11 @@ const PaymentOverviewSection: React.FC<{ payment: Payment }> = ({
             </Link>
           </div>
 
+          <div className="flex justify-between items-center text-sm">
+            <span className="text-muted-foreground">Biaya Layanan</span>
+            <span>{convertToRupiah(payment.fee_amount || 0)}</span>
+          </div>
+
           <Separator />
 
           <div className="flex justify-between items-center pt-2">
