@@ -8,6 +8,7 @@ import { NewsQuoteItem } from './interface'
 import Link from 'next/link'
 import { filterAndSortItems } from './utils'
 import { FilterControls } from './module-elements/FilterControls'
+import { Banner } from './sections'
 
 const fetchNewsQuotes = async (): Promise<NewsQuoteItem[]> => {
   const response = await fetch(
@@ -41,21 +42,8 @@ export const NewsQuotesModule: React.FC = () => {
 
   return (
     <div className="flex flex-col gap-14 items-center w-full mb-20 lg:mb-40">
-      <div className="flex w-full">
-        <div className="max-sm:py-16 w-full sm:w-1/2 bg-brown grid place-items-center text-center">
-          <h1 className="text-white1 text-5xl md:text-7xl xl:text-8xl font-bold">
-            Berita & Quotes
-          </h1>
-        </div>
+      <Banner />
 
-        <Image
-          src={'https://picsum.photos/1400/700'}
-          height={536}
-          width={1442}
-          alt="background image for quotes"
-          className=" object-cover max-h-[536px] min-h-[300px] w-1/2 max-sm:hidden"
-        />
-      </div>
       <div className="flex flex-col gap-12 items-center w-full container">
         <FilterControls />
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8 w-full">
