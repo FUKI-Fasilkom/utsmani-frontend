@@ -108,10 +108,21 @@ export const LoginModule: React.FC = () => {
                   </FormItem>
                 )}
               />
+
+              {/* Forgot Password Link */}
+              <div className="flex justify-end mt-2">
+                <Link
+                  href="/forgot-password"
+                  className="text-sm text-[#6C4534] hover:text-[#5A3A2A] font-medium transition-colors"
+                >
+                  Lupa Password?
+                </Link>
+              </div>
+
               {/* Submit Button */}
               <Button
                 type="submit"
-                className="w-full mt-12"
+                className="w-full mt-8"
                 variant={'secondary'}
               >
                 Masuk

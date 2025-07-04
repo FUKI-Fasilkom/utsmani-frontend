@@ -53,6 +53,7 @@ const config: Config = {
     require('tailwindcss-animate'),
     require('@xpd/tailwind-3dtransforms'),
     require('tailwind-scrollbar'),
+    require('@tailwindcss/typography'),
   ],
 }
 export default config

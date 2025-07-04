@@ -1,4 +1,3 @@
-import { TESTIMONY_EXAMPLES } from '../constant'
 import Image from 'next/image'
 import {
   Carousel,
@@ -7,41 +6,52 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from '@/components/ui/carousel'
+import { Testimony } from '../interface'
+import { Quote, UserIcon } from 'lucide-react'
 
-export const TestimonySection: React.FC = () => {
-  const testimonyCards = TESTIMONY_EXAMPLES
+interface TestimonySectionProps {
+  testimonies: Testimony[]
+}
 
+export const TestimonySection: React.FC<TestimonySectionProps> = ({
+  testimonies,
+}) => {
   return (
     <section className="container flex flex-col gap-6 items-center text-brown px-10">
       <div>
-        <h2 className="font-bold text-3xl md:text-4xl xl:text-5xl text-center">
+        <h2 className="font-bold heading-2 text-center">
           Apa kata mereka tentang Al-Utsmani?
         </h2>
       </div>
       <div className="flex justify-center w-full">
         <Carousel className="w-full" opts={{ loop: true }}>
           <CarouselContent className="flex w-full">
-            {testimonyCards.map((testimony, index) => (
+            {testimonies.map((testimony, index) => (
               <CarouselItem
                 key={index}
                 className="flex flex-col gap-4 h-auto basis-full md:basis-1/2 lg:basis-1/3 px-4"
               >
                 <div className="flex flex-col gap-4 h-full w-full justify-between mx-auto max-w-[90%]">
-                  <div className="py-8 px-10 shadow-lg drop-shadow-sm h-full w-full rounded-2xl">
-                    <p className="italic font-semibold leading-6 line-clamp-5">
-                      {testimony.quote}
+                  <div className="p-8 shadow-lg drop-shadow-sm h-[300px] w-full rounded-2xl relative">
+                    <Quote className="absolute top-2 left-2 text-brown" />
+                    <p className="italic font-medium leading-6 line-clamp-10">
+                      {testimony.description}
                     </p>
                   </div>
                   <div className="flex gap-2 items-center">
-                    <Image
-                      src={testimony.profilePicture}
-                      height={64}
-                      width={64}
-                      alt="pp testimony"
-                      className="rounded-full h-16 w-16"
-                    />
+                    {testimony.image ? (
+                      <Image
+                        src={testimony.image}
+                        height={64}
+                        width={64}
+                        alt="pp testimony"
+                        className="rounded-full h-16 w-16"
+                      />
+                    ) : (
+                      <UserIcon className="h-16 w-16 text-brown" />
+                    )}
                     <div>
-                      <h4 className="font-bold text-xl">{testimony.nama}</h4>
+                      <h4 className="font-bold text-xl">{testimony.name}</h4>
                       <p className="font-medium text-lg">{testimony.role}</p>
                     </div>
                   </div>

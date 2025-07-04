@@ -60,19 +60,6 @@ const PaymentMethodSection: React.FC<{
     {} as Record<string, PaymentMethod[]>
   )
 
-  // Define category order for consistent display
-  const categoryOrder = [
-    'Bank Transfer',
-    'e-Wallet',
-    'Convenient Store',
-    'Cards',
-    'QRIS',
-    'Digital Banking',
-    'PayLater',
-    'Internet Banking',
-    'Direct Debit',
-  ]
-
   const handleMethodSelect = (method: PaymentMethod) => {
     setSelectedMethod(method)
     if (onSelectMethod) {
@@ -84,83 +71,78 @@ const PaymentMethodSection: React.FC<{
     <section className="w-full lg:w-8/12">
       <h4 className="text-lg font-semibold mb-2">Choose Payment Method</h4>
       <Accordion type="single" collapsible={true} className="w-full">
-        {categoryOrder.map((category) => {
-          const methods = groupedMethods[category]
-          if (!methods) return null
-
-          return (
-            <AccordionItem key={category} value={category}>
-              <AccordionTrigger className="hover:no-underline">
-                <div className="flex items-center justify-between w-full pr-4">
-                  <span className="font-medium text-gray-700">{category}</span>
-                  <div className="flex items-center space-x-2">
-                    {methods.slice(0, 5).map((method) => (
-                      <Image
-                        key={method.code}
-                        src={method.image_url || '/placeholder.svg'}
-                        alt={method.name}
-                        width={32}
-                        height={32}
-                        className="h-8 w-8 object-contain border rounded-md p-1 bg-white"
-                      />
-                    ))}
-                  </div>
+        {Object.entries(groupedMethods).map(([category, methods]) => (
+          <AccordionItem key={category} value={category}>
+            <AccordionTrigger className="hover:no-underline">
+              <div className="flex items-center justify-between w-full pr-4">
+                <span className="font-medium text-gray-700">{category}</span>
+                <div className="flex items-center space-x-2">
+                  {methods.slice(0, 5).map((method) => (
+                    <Image
+                      key={method.code}
+                      src={method.image_url || '/placeholder.svg'}
+                      alt={method.name}
+                      width={32}
+                      height={32}
+                      className="h-8 w-8 object-contain border rounded-md p-1 bg-white"
+                    />
+                  ))}
                 </div>
-              </AccordionTrigger>
+              </div>
+            </AccordionTrigger>
 
-              <AccordionContent>
-                <div className="space-y-2">
-                  {methods.map((method) => {
-                    const isSelected = selectedMethod?.code === method.code
+            <AccordionContent>
+              <div className="space-y-2">
+                {methods.map((method) => {
+                  const isSelected = selectedMethod?.code === method.code
 
-                    return (
-                      <div key={method.code} className="flex flex-col">
-                        <div
-                          onClick={() => handleMethodSelect(method)}
-                          className={`flex items-center justify-between p-3 rounded-lg cursor-pointer border transition-colors
-                            ${isSelected ? 'bg-green-50 border-green-200' : 'hover:bg-gray-50 border-gray-200'}`}
-                        >
-                          <div className="flex items-center space-x-3">
-                            <Image
-                              src={method.image_url || '/placeholder.svg'}
-                              alt={method.name}
-                              width={32}
-                              height={32}
-                              className="h-8 w-8 object-contain"
-                            />
-                            <span className="text-sm font-medium text-gray-700">
-                              {method.name}
-                            </span>
-                          </div>
-                          <div className="flex items-center space-x-3">
-                            {method.total_fee && (
-                              <span className="text-sm text-gray-500">
-                                Fee: Rp
-                                {method.total_fee.toLocaleString('id-ID')}
-                              </span>
-                            )}
-                            {isSelected && (
-                              <Check className="h-5 w-5 text-green-500" />
-                            )}
-                          </div>
+                  return (
+                    <div key={method.code} className="flex flex-col">
+                      <div
+                        onClick={() => handleMethodSelect(method)}
+                        className={`flex items-center justify-between p-3 rounded-lg cursor-pointer border transition-colors
+                          ${isSelected ? 'bg-green-50 border-green-200' : 'hover:bg-gray-50 border-gray-200'}`}
+                      >
+                        <div className="flex items-center space-x-3">
+                          <Image
+                            src={method.image_url || '/placeholder.svg'}
+                            alt={method.name}
+                            width={32}
+                            height={32}
+                            className="h-8 w-8 object-contain"
+                          />
+                          <span className="text-sm font-medium text-gray-700">
+                            {method.name}
+                          </span>
                         </div>
-
-                        {/* Additional information when selected */}
-                        {isSelected && (
-                          <div className="p-3 border border-t-0 rounded-b-lg bg-green-50 border-green-200">
-                            <p className="text-sm text-gray-700">
-                              Bayar dengan {method.name}
-                            </p>
-                          </div>
-                        )}
+                        <div className="flex items-center space-x-3">
+                          {method.total_fee && (
+                            <span className="text-sm text-gray-500">
+                              Fee: Rp
+                              {method.total_fee.toLocaleString('id-ID')}
+                            </span>
+                          )}
+                          {isSelected && (
+                            <Check className="h-5 w-5 text-green-500" />
+                          )}
+                        </div>
                       </div>
-                    )
-                  })}
-                </div>
-              </AccordionContent>
-            </AccordionItem>
-          )
-        })}
+
+                      {/* Additional information when selected */}
+                      {isSelected && (
+                        <div className="p-3 border border-t-0 rounded-b-lg bg-green-50 border-green-200">
+                          <p className="text-sm text-gray-700">
+                            Bayar dengan {method.name}
+                          </p>
+                        </div>
+                      )}
+                    </div>
+                  )
+                })}
+              </div>
+            </AccordionContent>
+          </AccordionItem>
+        ))}
       </Accordion>
     </section>
   )

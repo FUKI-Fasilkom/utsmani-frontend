@@ -10,13 +10,24 @@ import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { useState } from 'react'
 
+const NAV_LINKS = [
+  { href: '/', label: 'Beranda' },
+  { href: '/about', label: 'Tentang Kami' },
+  { href: '/program', label: 'Program' },
+  { href: '/activity', label: 'Kegiatan' },
+  { href: '/news-quotes', label: 'Berita' },
+  { href: '/sedekah-jariyah', label: 'Sedekah Jariyah' },
+]
+
 export const Navbar: React.FC = () => {
   const router = useRouter()
   const { isAuthenticated, setIsAuthenticated, setUser } = useAuthContext()
   const [openNav, setOpenNav] = useState<boolean>(false)
+
   const openNavbar = () => {
     setOpenNav(!openNav)
   }
+
   const logout = () => {
     deleteCookie('AT')
     setIsAuthenticated(false)
@@ -25,9 +36,9 @@ export const Navbar: React.FC = () => {
   }
 
   return (
-    <nav className="w-full bg-[#FCF9F4] py-2">
-      <div className="container flex items-center justify-between">
-        <div className="relative w-20 md:w-40 aspect-[2]">
+    <nav className="w-full bg-[#FCF9F4] h-[56px] md:h-[80px] py-2 px-4 fixed top-0 inset-x-0 z-30 drop-shadow-md">
+      <div className="lg:container flex items-center justify-between">
+        <div className="relative w-20 md:w-32 aspect-[2]">
           <Image
             src={'/logo.png'}
             alt="Logo Al-Utsmani"
@@ -35,77 +46,32 @@ export const Navbar: React.FC = () => {
             className="object-contain"
           />
         </div>
-        <div className="hidden md:block">
-          <ul className="flex md:gap-3 lg:gap-8 font-medium">
-            <li>
-              <Link href="/">Beranda</Link>
-            </li>
-            <li>
-              <Link href="/about">Tentang Kami</Link>
-            </li>
-            <li>
-              <Link href="/program">Program</Link>
-            </li>
-            <li>
-              <Link href="/activity">Kegiatan</Link>
-            </li>
-            <li>
-              <Link href="/news-quotes">Berita</Link>
-            </li>
-            <li>
-              <Link href="/sedekah-jariyah">Sedekah Jariyah</Link>
-            </li>
+        <div className="hidden md:block pl-8">
+          <ul className="flex md:gap-2 lg:gap-6 font-medium">
+            {NAV_LINKS.map((link) => (
+              <li
+                key={link.href}
+                className="flex justify-center items-center text-center hover:scale-105 transition-all duration-200"
+              >
+                <Link href={link.href}>{link.label}</Link>
+              </li>
+            ))}
           </ul>
         </div>
         <div
           className={`block md:hidden absolute ${openNav ? 'top-14' : '-translate-y-full top-0'} transition-all left-0 z-50 w-full bg-[#FCF9F4]`}
         >
-          <ul className="flex md:gap-3 flex-col lg:gap-8 font-medium ">
-            <li>
-              <Link href="/" className="w-full text-center block p-3 border-y">
-                Beranda
-              </Link>
-            </li>
-            <li>
-              <Link
-                href="/about"
-                className="w-full text-center block p-3 border-y"
-              >
-                Tentang Kami
-              </Link>
-            </li>
-            <li>
-              <Link
-                href="/program"
-                className="w-full text-center block p-3 border-y"
-              >
-                Program
-              </Link>
-            </li>
-            <li>
-              <Link
-                href="/activity"
-                className="w-full text-center block p-3 border-y"
-              >
-                Kegiatan
-              </Link>
-            </li>
-            <li>
-              <Link
-                href="/news-quotes"
-                className="w-full text-center block p-3 border-y"
-              >
-                Berita
-              </Link>
-            </li>
-            <li>
-              <Link
-                href="/wakaf"
-                className="w-full text-center block p-3 border-y"
-              >
-                Wakaf
-              </Link>
-            </li>
+          <ul className="flex md:gap-3 flex-col lg:gap-8 font-medium">
+            {NAV_LINKS.map((link) => (
+              <li key={link.href}>
+                <Link
+                  href={link.href}
+                  className="w-full text-center block p-3 border-y"
+                >
+                  {link.label}
+                </Link>
+              </li>
+            ))}
           </ul>
         </div>
         <div className="gap-3 lg:gap-5 hidden md:flex">

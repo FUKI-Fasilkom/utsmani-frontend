@@ -32,7 +32,15 @@ export const DonationListSection: React.FC = () => {
   const currentPageParam = searchParams.get('page')
   const currentPage = currentPageParam ? parseInt(currentPageParam, 10) : 1
 
-  const fetchDonations = async (page: number) => {
+  const category = searchParams.get('category')
+
+  const fetchDonations = async ({
+    page,
+    category,
+  }: {
+    page: number
+    category: string | null
+  }) => {
     if (isNaN(page) || page < 1) {
       console.warn(`Invalid page number: ${page}. Defaulting to 1.`)
       return
@@ -42,8 +50,17 @@ export const DonationListSection: React.FC = () => {
     setError(null)
 
     try {
+      const queryParams = new URLSearchParams({
+        limit: pageSize.toString(),
+        offset: ((page - 1) * pageSize).toString(),
+      })
+
+      if (category) {
+        queryParams.append('category', category)
+      }
+
       const response = await fetch(
-        `${process.env.NEXT_PUBLIC_API_URL}/donation?limit=${pageSize}&offset=${(page - 1) * pageSize}`,
+        `${process.env.NEXT_PUBLIC_API_URL}/donation?${queryParams.toString()}`,
         {
           method: 'GET',
           credentials: 'include',
@@ -76,8 +93,8 @@ export const DonationListSection: React.FC = () => {
   }
 
   useEffect(() => {
-    fetchDonations(currentPage)
-  }, [currentPage])
+    fetchDonations({ page: currentPage, category: category })
+  }, [currentPage, category])
 
   const handlePageClick = (page: number) => {
     if (page < 1 || page > totalPages) return

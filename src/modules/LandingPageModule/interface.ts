@@ -1,5 +1,3 @@
-export interface Props {}
-
 export interface ProgramProps {
   id: string
   name: string
@@ -7,13 +5,8 @@ export interface ProgramProps {
   title: string
 }
 
-interface BranchProgram {
-  branch: string
-  programs: ProgramProps[]
-}
-
 export interface ProgramSectionProps {
-  branchPrograms: BranchProgram[]
+  programs: ProgramProps[]
 }
 
 export interface ActivityProps {
@@ -39,4 +32,14 @@ export interface BranchProps {
 
 export interface BranchSectionProps {
   branches: BranchProps[]
+}
+
+export interface Testimony {
+  id: string
+  name: string
+  role: string
+  description: string
+  image: string | null
+  created_at: string
+  updated_at: string
 }

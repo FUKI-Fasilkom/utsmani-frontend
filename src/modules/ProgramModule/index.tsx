@@ -7,13 +7,7 @@ import {
   CarouselPreviousProgram,
 } from '@/components/ui/carousel'
 import Image from 'next/image'
-import { Button } from '@/components/ui/button'
 import Link from 'next/link'
-
-type BranchProgram = {
-  branch: string
-  programs: Program[]
-}
 
 type Program = {
   id: number
@@ -22,36 +16,72 @@ type Program = {
 }
 
 async function getPrograms() {
-  const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/program`)
+  const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/program`, {
+    cache: 'no-store',
+  })
   const responseJson = await response.json()
-  const programs = await responseJson.contents
+  const programs = (await responseJson.contents) as Program[]
   return programs
 }
 
 export const ProgramModule: React.FC = async () => {
   const programs = await getPrograms()
   return (
-    <main className="flex flex-col gap-20 w-screen">
-      <div className="h-[530px] w-full bg-[#6C4534] p-10 flex justify-evenly">
-        <div className="flex justify-center items-center flex-col p-24 gap-6">
-          <h1 className="text-white font-bold text-7xl">Program</h1>
-          <h1 className="text-white font-semibold text-5xl">
-            Bersama Al-Qur’an
-          </h1>
+    <main className="flex flex-col gap-10 w-screen">
+      <div className="h-full lg:h-[530px] w-full bg-[#6C4534] p-10 flex flex-col lg:flex-row justify-evenly items-center">
+        <div className="flex justify-center items-center flex-col p-16 md:p-20 lg:p-24 gap-6">
+          <h1 className="text-white title-lg">Program</h1>
+          <h1 className="text-white subtitle-lg">Bersama Al-Qur&apos;an</h1>
         </div>
         {/* carousel */}
         <Carousel
-          className="w-[600px] flex justify-center items-center relative mr-16"
+          className="w-full lg:w-[600px] flex justify-center items-center relative lg:mr-16"
           opts={{ loop: true }}
         >
           <CarouselContent className="flex gap-3">
-            {programs.flatMap((branch: BranchProgram) =>
-              branch.programs.map((program: Program) => (
-                <CarouselItem
-                  key={program.id}
-                  className="w-[576px] h-[379px] flex justify-center items-center relative rounded-[55px] overflow-hidden"
+            {programs.map((program: Program) => (
+              <CarouselItem
+                key={program.id}
+                className="w-[576px] h-[379px] flex justify-center items-center relative rounded-[24px] md:rounded-[32px] lg:rounded-[48px] overflow-hidden pl-0"
+              >
+                <div
+                  className="absolute z-10 bottom-0 left-0 text-white px-16 py-6 w-full font-bold text-4xl drop-shadow-lg"
+                  style={{
+                    background:
+                      'linear-gradient(to top, rgba(0, 0, 0, 0.5) 70%, rgba(0, 0, 0, 0) 100%)',
+                  }}
                 >
-                  <p className="absolute z-10 bottom-6 left-6 text-white p-5 font-bold text-4xl drop-shadow-lg max-w-[400px]">
+                  <p className="max-w-[400px] heading-2">{program.title}</p>
+                </div>
+                <Image
+                  src={program.cover_image}
+                  alt=""
+                  fill
+                  className="object-cover"
+                />
+              </CarouselItem>
+            ))}
+          </CarouselContent>
+          <CarouselPreviousProgram className="absolute -left-6 h-12 w-12" />
+          <CarouselNextProgram className="absolute -right-6 h-12 w-12" />
+        </Carousel>
+      </div>
+      <div className="w-full flex justify-center items-center flex-col">
+        <div className="container px-10 lg:px-20">
+          <h1 className="heading-1 text-[#6C4534] text-center leading-relaxed p-6">
+            Program Unggulan
+          </h1>
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5 py-12 place-content-center">
+            {programs.map((program: Program) => (
+              <Link href={`/program/${program.id}`} key={program.id}>
+                <div className="w-full aspect-square border-2 rounded-[40px] relative overflow-hidden cursor-pointer border-[rgb(108,69,52)] hover:scale-105 transition-all">
+                  <p
+                    className="absolute w-full z-10 px-6 py-4 bottom-0 left-0 text-white font-semibold heading-5 drop-shadow-xl"
+                    style={{
+                      background:
+                        'linear-gradient(to top, rgba(0, 0, 0, 0.5) 70%, rgba(0, 0, 0, 0) 100%)',
+                    }}
+                  >
                     {program.title}
                   </p>
                   <Image
@@ -60,147 +90,10 @@ export const ProgramModule: React.FC = async () => {
                     fill
                     className="object-cover"
                   />
-                </CarouselItem>
-              ))
-            )}
-          </CarouselContent>
-          <CarouselPreviousProgram className="absolute -left-6 h-12 w-12" />
-          <CarouselNextProgram className="absolute -right-6 h-12 w-12" />
-        </Carousel>
-      </div>
-      <div className="w-full flex justify-center items-center flex-col">
-        <div className="w-[800px] flex justify-center items-center gap-3">
-          <div className="relative w-[614px] flex h-14">
-            <svg
-              width="50"
-              height="50"
-              viewBox="0 0 51 50"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-              className="absolute top-[3px]"
-            >
-              <path
-                d="M24.3634 32.9543C29.3841 32.9543 33.4543 28.8841 33.4543 23.8634C33.4543 18.8426 29.3841 14.7725 24.3634 14.7725C19.3426 14.7725 15.2725 18.8426 15.2725 23.8634C15.2725 28.8841 19.3426 32.9543 24.3634 32.9543Z"
-                stroke="#8DA0B1"
-                strokeWidth="2.27273"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              />
-              <path
-                d="M35.7272 35.2272L30.8408 30.3408"
-                stroke="#8DA0B1"
-                strokeWidth="2.27273"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              />
-            </svg>
-            <input
-              type="text"
-              className="w-full h-full rounded-full shadow-md items-center px-12 text-[#8DA0B1] text-lg focus:outline-0"
-              placeholder="Search..."
-            />
+                </div>
+              </Link>
+            ))}
           </div>
-          <div className="w-14 h-14">
-            <Button className="w-full h-full rounded-3xl">
-              <svg
-                width="25"
-                height="24"
-                viewBox="0 0 25 24"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  d="M21.5 4H14.5"
-                  stroke="white"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                />
-                <path
-                  d="M10.5 4H3.5"
-                  stroke="white"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                />
-                <path
-                  d="M21.5 12H12.5"
-                  stroke="white"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                />
-                <path
-                  d="M8.5 12H3.5"
-                  stroke="white"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                />
-                <path
-                  d="M21.5 20H16.5"
-                  stroke="white"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                />
-                <path
-                  d="M12.5 20H3.5"
-                  stroke="white"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                />
-                <path
-                  d="M14.5 2V6"
-                  stroke="white"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                />
-                <path
-                  d="M8.5 10V14"
-                  stroke="white"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                />
-                <path
-                  d="M16.5 18V22"
-                  stroke="white"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                />
-              </svg>
-            </Button>
-          </div>
-        </div>
-        <div className="p-20">
-          {programs.map((program: BranchProgram) => (
-            <div key={program.branch}>
-              <h1 className="text-5xl font-bold text-[#6C4534] text-center leading-relaxed p-6">
-                Program Unggulan <br /> {program.branch}
-              </h1>
-              <div className="grid grid-cols-4 gap-5 py-12">
-                {program.programs.map((program: Program) => (
-                  <Link href={`/program/${program.id}`} key={program.id}>
-                    <div className="w-[288px] h-[272px] border-2 rounded-[40px] relative overflow-hidden cursor-pointer border-[#6C4534] hover:scale-105 transition-all">
-                      <p className="absolute z-10 p-6 bottom-0 left-0 text-white font-bold text-2xl drop-shadow-xl text-center">
-                        {program.title}
-                      </p>
-                      <Image
-                        src={program.cover_image}
-                        alt=""
-                        fill
-                        className="object-cover"
-                      />
-                    </div>
-                  </Link>
-                ))}
-              </div>
-            </div>
-          ))}
         </div>
       </div>
     </main>
