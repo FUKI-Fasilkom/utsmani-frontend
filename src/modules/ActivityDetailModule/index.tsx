@@ -136,7 +136,7 @@ export const ActivityDetailModule: React.FC<
         {detail.images && detail.images.length > 0 && (
           <GalleryDocs images={detail.images} />
         )}
-        
+
         <div className="flex flex-col relative justify-center items-center gap-3 w-full">
           {' '}
           {/* Added w-full for carousel to take width */}
