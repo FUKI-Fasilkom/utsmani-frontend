@@ -15,9 +15,6 @@ export const ActivityCard: React.FC<ActivityCardProps> = ({ item }) => {
       key={item.id}
       className="flex flex-col gap-4 p-6 rounded-xl border border-gray-200 shadow-md"
     >
-      <h3 className=" self-center font-semibold text-brown heading-5 text line-clamp-3">
-        {item.title}
-      </h3>
       <Image
         src={item.cover_image}
         alt={item.title}
@@ -25,13 +22,22 @@ export const ActivityCard: React.FC<ActivityCardProps> = ({ item }) => {
         height={400}
         className="w-full h-[200px] object-cover rounded-lg"
       />
+      <h3 className=" self-center font-semibold text-brown heading-5 text line-clamp-3">
+        {item.title}
+      </h3>
       <div className="flex justify-center flex-col gap-2 text-black">
         {item.activity_date && (
           <div className="flex gap-2">
             <div>
               <CalendarDays className="mr-2 text-brown" strokeWidth={3} />
             </div>
-            {item.activity_date}
+            {new Intl.DateTimeFormat('id-ID', {
+              day: 'numeric',
+              month: 'long',
+              year: 'numeric',
+            }).format(
+              new Date(item.activity_date.split('-').reverse().join('-'))
+            )}
           </div>
         )}
         {item.dresscode && (

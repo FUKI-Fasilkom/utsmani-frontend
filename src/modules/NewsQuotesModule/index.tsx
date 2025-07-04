@@ -42,7 +42,7 @@ export const NewsQuotesModule: React.FC = () => {
   return (
     <div className="flex flex-col gap-14 items-center w-full mb-20 lg:mb-40">
       <div className="flex w-full">
-        <div className="max-sm:py-6 w-full sm:w-1/2 bg-brown grid place-items-center text-center">
+        <div className="max-sm:py-16 w-full sm:w-1/2 bg-brown grid place-items-center text-center">
           <h1 className="text-white1 text-5xl md:text-7xl xl:text-8xl font-bold">
             Berita & Quotes
           </h1>
@@ -64,9 +64,6 @@ export const NewsQuotesModule: React.FC = () => {
               key={item.id}
               className="flex flex-col gap-4 p-4 rounded-xl border border-gray-200 shadow-md"
             >
-              <h3 className=" self-center text-2xl font-semibold text-brown md:text-3xl xl:text-4xl">
-                {item.title}
-              </h3>
               <Image
                 src={item.cover_image}
                 alt={item.title}
@@ -74,10 +71,17 @@ export const NewsQuotesModule: React.FC = () => {
                 height={400}
                 className="w-full h-[200px] object-cover rounded-lg"
               />
+              <h3 className="self-center font-semibold text-brown heading-5">
+                {item.title}
+              </h3>
               <div className="flex justify-between items-center ">
                 <span className=" text-gray-500">
                   <Clock className="inline mr-2" />
-                  {new Date(item.updated_at).toLocaleDateString('id-ID')}
+                  {new Intl.DateTimeFormat('id-ID', {
+                    day: 'numeric',
+                    month: 'long',
+                    year: 'numeric',
+                  }).format(new Date(item.updated_at))}
                 </span>
                 <span className="px-3 py-1 rounded-full ring-brown ring-2 text-brown">
                   {item.type === 'NEWS' ? 'News' : 'Quotes'}
