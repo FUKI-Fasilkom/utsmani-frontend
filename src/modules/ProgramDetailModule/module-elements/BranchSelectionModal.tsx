@@ -151,7 +151,7 @@ export const BranchSelectionModal: React.FC<BranchSelectionModalProps> = ({
                       : 'hover:border-gray-300'
                   )}
                 >
-                  <CardHeader className="pb-2 flex flex-row items-start">
+                  <CardHeader className="pb-2 flex flex-col sm:flex-row sm:items-start">
                     <div className="flex items-center space-x-2 flex-1">
                       <RadioGroupItem
                         value={branchData.branch.id}
@@ -161,7 +161,7 @@ export const BranchSelectionModal: React.FC<BranchSelectionModalProps> = ({
                       <div className="flex-1">
                         <label
                           htmlFor={branchData.branch_program_id}
-                          className="text-lg font-medium text-brown cursor-pointer hover:underline"
+                          className="paragraph font-medium text-brown cursor-pointer hover:underline"
                         >
                           {branchData.branch.title}
                         </label>
@@ -176,7 +176,7 @@ export const BranchSelectionModal: React.FC<BranchSelectionModalProps> = ({
                     <Button
                       variant="outline"
                       size="sm"
-                      className="ml-2"
+                      className="ml-2 self-end"
                       asChild
                     >
                       <Link
