@@ -46,6 +46,15 @@ async function getOtherActivities() {
   return programs
 }
 
+async function getOtherNews() {
+  const response = await fetch(
+    `${process.env.NEXT_PUBLIC_API_URL}/blog/news-quotes`
+  )
+  const responseJson = await response.json()
+  const news = await responseJson.contents
+  return news
+}
+
 async function getDetail(id: string, type: 'BRANCH' | 'ACTIVITY' | 'NEWS') {
   const activityId = id
   try {
@@ -65,7 +74,8 @@ export const ActivityDetailModule: React.FC<
   ActivityDetailModuleProps
 > = async ({ id, type }) => {
   const detail = await getDetail(id, type)
-  const activities = await getOtherActivities()
+  const otherContents =
+    type === 'ACTIVITY' ? await getOtherActivities() : await getOtherNews()
   return (
     <div className="flex flex-col gap-14 items-center mb-20 lg:mb-40">
       <Image
@@ -140,7 +150,11 @@ export const ActivityDetailModule: React.FC<
           {' '}
           {/* Added w-full for carousel to take width */}
           <h1 className="rounded-full bg-[#6C4534] text-white font-semibold text-3xl w-fit text-center px-7 py-4 z-10">
-            {type === 'BRANCH' ? 'Program Tersedia' : 'Kegiatan Lainnya'}
+            {type === 'BRANCH'
+              ? 'Program Tersedia'
+              : type === 'ACTIVITY'
+                ? 'Kegiatan Lainnya'
+                : 'Berita Lainnya'}
           </h1>
           <hr className="absolute h-1 bg-[#6C4534] w-1/2 z-0 top-8" />
           {type === 'BRANCH' ? (
@@ -199,12 +213,14 @@ export const ActivityDetailModule: React.FC<
               opts={{ loop: true }}
             >
               <CarouselContent className="flex gap-2 py-10 px-7">
-                {activities.map((activity: ActivityProps) => (
+                {otherContents.map((activity: ActivityProps) => (
                   <CarouselItem
                     key={activity.id}
                     className="basis-full sm:basis-1/2 md:basis-1/3 lg:basis-1/4 w-[300px] h-[200px] flex justify-center items-center relative rounded-2xl overflow-hidden shadow-[4px_4px_8px_4px_rgba(0,0,0,0.15)] border-4 border-white"
                   >
-                    <Link href={`/activity/${activity.id}`}>
+                    <Link
+                      href={`/${type === 'ACTIVITY' ? 'activity' : 'news-quotes/news'}/${activity.id}`}
+                    >
                       <Image
                         src={activity.cover_image}
                         alt=""
