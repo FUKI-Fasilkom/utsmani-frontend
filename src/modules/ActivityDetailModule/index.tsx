@@ -77,10 +77,19 @@ export const ActivityDetailModule: React.FC<
   const detail = await getDetail(id, type)
   const otherContents =
     type === 'ACTIVITY' ? await getOtherActivities() : await getOtherNews()
+
+  if (!detail) {
+    return (
+      <div className="flex items-center justify-center h-screen">
+        <p className="text-gray-500">Detail tidak ditemukan</p>
+      </div>
+    )
+  }
+
   return (
     <div className="flex flex-col gap-14 items-center mb-20 lg:mb-40">
       <Image
-        src={detail?.cover_image ?? ''}
+        src={detail.cover_image ?? ''}
         height={658}
         width={1442}
         alt="background image for quotes"
@@ -96,13 +105,13 @@ export const ActivityDetailModule: React.FC<
                   ? 'Kegiatan'
                   : 'Berita'}
             </h2>
-            <h1 className="font-semibold text-5xl">{detail?.title}</h1>
+            <h1 className="font-semibold text-5xl">{detail.title}</h1>
             <p className="text-brown italic font-medium text-base space-x-12">
               <span className="items-center space-x-1">
                 <FaClock className="inline pb-1 pr-1" />
                 Posted on{' '}
                 <strong>
-                  {new Date(detail?.created_at ?? '').toLocaleDateString(
+                  {new Date(detail.created_at ?? '').toLocaleDateString(
                     'id-ID'
                   )}
                 </strong>
@@ -119,12 +128,15 @@ export const ActivityDetailModule: React.FC<
             <FaShareAlt className="fill-white size-6" />
           </Button>
         </div>
-        <div>
-          <p className="text-justify text-lg font-medium text-[#2e1a0f]">
-            {detail?.content}
-          </p>
-        </div>
-        <GalleryDocs detail={detail} />
+        <div
+          className="prose max-w-none"
+          dangerouslySetInnerHTML={{ __html: detail.content }}
+        ></div>
+
+        {detail.images && detail.images.length > 0 && (
+          <GalleryDocs images={detail.images} />
+        )}
+        
         <div className="flex flex-col relative justify-center items-center gap-3 w-full">
           {' '}
           {/* Added w-full for carousel to take width */}
@@ -144,7 +156,7 @@ export const ActivityDetailModule: React.FC<
               <CarouselContent className="flex gap-4 py-10 px-2">
                 {' '}
                 {/* Adjusted gap and padding */}
-                {detail?.programs.map((program: ProgramProps, index) => (
+                {detail.programs.map((program: ProgramProps, index) => (
                   <CarouselItem
                     key={index}
                     className="basis-full sm:basis-1/2 md:basis-1/3 lg:basis-1/4 flex justify-center" // Responsive basis

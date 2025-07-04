@@ -13,16 +13,12 @@ interface ImageData {
 }
 
 interface GalleryDocsProps {
-  detail?: {
-    images?: ImageData[]
-  }
+  images: ImageData[]
 }
 
-export default function GalleryDocs({ detail }: GalleryDocsProps) {
+export default function GalleryDocs({ images }: GalleryDocsProps) {
   const [isGalleryOpen, setIsGalleryOpen] = useState(false)
   const [currentImageIndex, setCurrentImageIndex] = useState(0)
-
-  const images = detail?.images || []
 
   const openGallery = (index: number) => {
     setCurrentImageIndex(index)
