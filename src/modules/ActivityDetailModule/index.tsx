@@ -12,6 +12,7 @@ import {
 } from '@/components/ui/carousel'
 import Link from 'next/link'
 import { ActivityProps, ProgramProps } from '../LandingPageModule/interface'
+import GalleryDocs from './sections/GalleryDocs'
 
 type ActivityDetail = {
   id: string
@@ -123,29 +124,7 @@ export const ActivityDetailModule: React.FC<
             {detail?.content}
           </p>
         </div>
-        <div className="flex flex-col relative justify-center items-center w-screen">
-          <h1 className="absolute -top-8 rounded-full bg-[#6C4534] text-white font-semibold text-3xl w-fit text-center px-7 py-4 z-10">
-            Dokumentasi
-          </h1>
-          <hr className="h-1 bg-[#6C4534] w-1/2 z-0" />
-          <div className="flex justify-center bg-[#EEDAC6] w-full">
-            <div className="grid grid-cols-3 gap-3 px-44 py-24 justify-center items-center w-fit">
-              {detail?.images?.map((image) => (
-                <div
-                  key={image.id}
-                  className="relative w-[22rem] h-52 bg-white rounded-2xl overflow-hidden shadow-[4px_4px_8px_4px_rgba(0,0,0,0.15)]"
-                >
-                  <Image
-                    src={image.image_url}
-                    alt="activity image"
-                    fill
-                    className="object-cover"
-                  />
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
+        <GalleryDocs detail={detail} />
         <div className="flex flex-col relative justify-center items-center gap-3 w-full">
           {' '}
           {/* Added w-full for carousel to take width */}
