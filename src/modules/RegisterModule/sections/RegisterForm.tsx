@@ -84,8 +84,8 @@ export const RegisterForm: React.FC<RegisterFormProps> = ({
   }
 
   return (
-    <div className="w-1/2 bg-white relative flex flex-col items-center justify-center px-8 py-4">
-      <div className="bg-white flex flex-col px-12 py-10 drop-shadow-lg rounded-xl w-full max-w-screen-sm">
+    <div className="w-full lg:w-1/2 bg-white relative flex flex-col items-center justify-center px-4 sm:px-6 lg:px-8 py-8 lg:py-4">
+      <div className="bg-white flex flex-col px-6 sm:px-8 lg:px-12 py-8 lg:py-10 drop-shadow-lg rounded-xl w-full max-w-md lg:max-w-screen-sm">
         <h1 className="text-2xl font-semibold mb-6 text-[#6C4534]">Daftar</h1>
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="w-full">
@@ -264,7 +264,7 @@ export const RegisterForm: React.FC<RegisterFormProps> = ({
             </Button>
           </form>
         </Form>
-        <span className="mt-4 font-light text-center">
+        <span className="mt-4 font-light text-center text-sm sm:text-base">
           Sudah punya akun?{' '}
           <Link href="/login" className="text-[#6C4534] font-semibold">
             Masuk

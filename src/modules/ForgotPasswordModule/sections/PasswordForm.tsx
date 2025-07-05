@@ -21,10 +21,10 @@ export function PasswordForm({ onSubmit, isLoading }: PasswordFormProps) {
     <>
       {/* Header */}
       <div className="mb-6">
-        <h1 className="text-2xl font-semibold text-[#6C4534] text-center">
+        <h1 className="text-xl sm:text-2xl font-semibold text-[#6C4534] text-center">
           Reset Password
         </h1>
-        <p className="text-sm text-gray-600 text-center mt-2">
+        <p className="text-xs sm:text-sm text-gray-600 text-center mt-2">
           Masukkan password baru Anda
         </p>
       </div>
@@ -39,7 +39,7 @@ export function PasswordForm({ onSubmit, isLoading }: PasswordFormProps) {
             className="bg-[#F3F7F9]"
           />
           {form.formState.errors.new_password && (
-            <p className="mt-1 text-sm text-red-600">
+            <p className="mt-1 text-xs sm:text-sm text-red-600">
               {form.formState.errors.new_password.message}
             </p>
           )}
@@ -53,7 +53,7 @@ export function PasswordForm({ onSubmit, isLoading }: PasswordFormProps) {
             className="bg-[#F3F7F9]"
           />
           {form.formState.errors.confirm_password && (
-            <p className="mt-1 text-sm text-red-600">
+            <p className="mt-1 text-xs sm:text-sm text-red-600">
               {form.formState.errors.confirm_password.message}
             </p>
           )}

@@ -12,14 +12,14 @@ export const StepperForm: React.FC<StepperFormProps> = ({ educationList }) => {
   const [step, setStep] = useState<number>(1)
   const [phoneNumber, setPhoneNumber] = useState<string>('')
   return (
-    <div className="min-h-screen w-full flex justify-end">
+    <div className="min-h-screen w-full flex flex-col lg:flex-row lg:justify-end">
       {/* Left Section with Image */}
-      <div className="w-full absolute min-h-screen">
+      <div className="w-full lg:absolute lg:min-h-screen h-48 lg:h-auto">
         <Image
           src="/assets/images/login-bg.png"
           alt="Al-Utsmani Building"
           fill
-          className="h-full w-full object-cover object-left"
+          className="h-full w-full object-cover object-center lg:object-left"
         />
       </div>
 

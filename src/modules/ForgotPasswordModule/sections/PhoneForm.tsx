@@ -21,10 +21,10 @@ export function PhoneForm({ onSubmit, isLoading }: PhoneFormProps) {
     <>
       {/* Header */}
       <div className="mb-6">
-        <h1 className="text-2xl font-semibold text-[#6C4534] text-center">
+        <h1 className="text-xl sm:text-2xl font-semibold text-[#6C4534] text-center">
           Lupa Password
         </h1>
-        <p className="text-sm text-gray-600 text-center mt-2">
+        <p className="text-xs sm:text-sm text-gray-600 text-center mt-2">
           Masukkan nomor telepon untuk menerima kode OTP
         </p>
       </div>
@@ -39,7 +39,7 @@ export function PhoneForm({ onSubmit, isLoading }: PhoneFormProps) {
             className="bg-[#F3F7F9]"
           />
           {form.formState.errors.phone_number && (
-            <p className="mt-1 text-sm text-red-600">
+            <p className="mt-1 text-xs sm:text-sm text-red-600">
               {form.formState.errors.phone_number.message}
             </p>
           )}

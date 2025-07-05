@@ -10,19 +10,19 @@ export function SuccessSection() {
     <>
       {/* Header */}
       <div className="mb-6">
-        <h1 className="text-2xl font-semibold text-[#6C4534] text-center">
+        <h1 className="text-xl sm:text-2xl font-semibold text-[#6C4534] text-center">
           Berhasil
         </h1>
-        <p className="text-sm text-gray-600 text-center mt-2">
+        <p className="text-xs sm:text-sm text-gray-600 text-center mt-2">
           Password berhasil direset
         </p>
       </div>
 
       {/* Success Content */}
       <div className="text-center">
-        <div className="mx-auto flex items-center justify-center h-16 w-16 rounded-full bg-green-100 mb-4">
+        <div className="mx-auto flex items-center justify-center h-12 w-12 sm:h-16 sm:w-16 rounded-full bg-green-100 mb-4">
           <svg
-            className="h-8 w-8 text-green-600"
+            className="h-6 w-6 sm:h-8 sm:w-8 text-green-600"
             fill="none"
             viewBox="0 0 24 24"
             stroke="currentColor"
@@ -35,10 +35,10 @@ export function SuccessSection() {
             />
           </svg>
         </div>
-        <h3 className="text-lg font-semibold text-[#6C4534] mb-2">
+        <h3 className="text-base sm:text-lg font-semibold text-[#6C4534] mb-2">
           Password Berhasil Direset
         </h3>
-        <p className="text-sm text-gray-600 mb-6">
+        <p className="text-xs sm:text-sm text-gray-600 mb-6">
           Anda sekarang dapat login dengan password baru
         </p>
 

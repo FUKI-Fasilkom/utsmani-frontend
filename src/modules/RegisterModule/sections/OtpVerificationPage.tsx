@@ -104,16 +104,16 @@ export const OtpVerificationPage: React.FC<OtpVerificationPageProps> = ({
   }, [resendCountDown])
 
   return (
-    <div className="w-full h-screen relative bg-black/50 flex justify-center items-center">
-      <div className="bg-white rounded-2xl shadow-lg p-8 max-w-md w-full">
-        <h1 className="text-2xl font-semibold text-center mb-4 text-[#6C4534]">
+    <div className="w-full lg:w-1/2 h-screen relative bg-black/50 lg:bg-white flex justify-center items-center px-4 sm:px-6 lg:px-8">
+      <div className="bg-white rounded-2xl shadow-lg p-6 sm:p-8 max-w-sm sm:max-w-md w-full">
+        <h1 className="text-xl sm:text-2xl font-semibold text-center mb-4 text-[#6C4534]">
           Verifikasi OTP
         </h1>
-        <p className="text-sm text-center text-gray-600 mb-6">
+        <p className="text-xs sm:text-sm text-center text-gray-600 mb-6">
           Masukkan 6 digit kode OTP yang dikirimkan ke nomor{' '}
           <span className="text-[#6C4534]">{phoneNumber}</span>
         </p>
-        <div className="flex justify-center gap-3 mb-6">
+        <div className="flex justify-center gap-2 sm:gap-3 mb-6">
           {otp.map((digit, index) => (
             <input
               key={index}
@@ -122,7 +122,7 @@ export const OtpVerificationPage: React.FC<OtpVerificationPageProps> = ({
               maxLength={1}
               value={digit}
               onChange={(e) => handleInputChange(e.target.value, index)}
-              className="w-12 h-12 text-center text-xl border border-gray-300 rounded-lg focus:outline-none focus:ring focus:ring-[#6C4534]"
+              className="w-10 h-10 sm:w-12 sm:h-12 text-center text-lg sm:text-xl border border-gray-300 rounded-lg focus:outline-none focus:ring focus:ring-[#6C4534]"
             />
           ))}
         </div>

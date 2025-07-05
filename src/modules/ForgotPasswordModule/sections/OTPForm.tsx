@@ -30,10 +30,10 @@ export function OTPForm({
     <>
       {/* Header */}
       <div className="mb-6">
-        <h1 className="text-2xl font-semibold text-[#6C4534] text-center">
+        <h1 className="text-xl sm:text-2xl font-semibold text-[#6C4534] text-center">
           Verifikasi OTP
         </h1>
-        <p className="text-sm text-gray-600 text-center mt-2">
+        <p className="text-xs sm:text-sm text-gray-600 text-center mt-2">
           {`Masukkan kode OTP yang dikirim ke ${phoneNumber}`}
         </p>
       </div>
@@ -46,10 +46,10 @@ export function OTPForm({
             type="text"
             maxLength={6}
             placeholder="Masukkan kode OTP (6 digit)"
-            className="bg-[#F3F7F9] text-center text-lg tracking-widest"
+            className="bg-[#F3F7F9] text-center text-base sm:text-lg tracking-widest"
           />
           {form.formState.errors.otp_code && (
-            <p className="mt-1 text-sm text-red-600">
+            <p className="mt-1 text-xs sm:text-sm text-red-600">
               {form.formState.errors.otp_code.message}
             </p>
           )}

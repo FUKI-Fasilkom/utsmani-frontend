@@ -164,19 +164,19 @@ export default function ForgotPasswordModule() {
   }, [resendCountDown])
 
   return (
-    <div className="h-screen w-full flex">
+    <div className="min-h-screen w-full flex flex-col lg:flex-row">
       {/* Left Section with Image */}
-      <div className="w-1/2 relative">
+      <div className="w-full lg:w-1/2 relative h-48 lg:h-auto">
         <img
           src="/assets/images/login-bg.png"
           alt="Al-Utsmani Building"
-          className="h-full w-full object-cover object-left"
+          className="h-full w-full object-cover object-center lg:object-left"
         />
       </div>
 
       {/* Right Section with Form */}
-      <div className="w-1/2 flex flex-col items-center justify-center px-8">
-        <div className="bg-white flex flex-col px-12 py-10 drop-shadow-lg rounded-xl w-full max-w-screen-sm">
+      <div className="w-full lg:w-1/2 flex flex-col items-center justify-center px-4 sm:px-6 lg:px-8 py-8 lg:py-0">
+        <div className="bg-white flex flex-col px-6 sm:px-8 lg:px-12 py-8 lg:py-10 drop-shadow-lg rounded-xl w-full max-w-md lg:max-w-screen-sm">
           {/* Render current step */}
           {currentStep === 'phone' && (
             <PhoneForm onSubmit={onSubmitPhone} isLoading={isLoading} />
