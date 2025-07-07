@@ -11,7 +11,11 @@ export const RegistrationSuccessPage: React.FC = () => {
         <h1 className="text-xl sm:text-2xl font-semibold text-center text-[#6C4534] mb-6 sm:mb-8">
           Akun Terverifikasi!
         </h1>
-        <CircleCheckBig size={60} color="#6C4534" className="mb-6 sm:mb-8 sm:w-20 sm:h-20" />
+        <CircleCheckBig
+          size={60}
+          color="#6C4534"
+          className="mb-6 sm:mb-8 sm:w-20 sm:h-20"
+        />
         <p className="text-xs sm:text-sm text-center text-gray-600 mb-8 sm:mb-10">
           OTP yang Anda masukkan sudah terverifikasi sehingga akun Anda berhasil
           dibuat.
