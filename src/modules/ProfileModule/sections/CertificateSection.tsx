@@ -1,39 +1,39 @@
 'use client'
 
 import type React from 'react'
-
-import {
-  Carousel,
-  CarouselContent,
-  CarouselItem,
-  CarouselNextProgram,
-  CarouselPreviousProgram,
-} from '@/components/ui/carousel'
-import Image from 'next/image'
-import type { CertificateProps, CertificateSectionProps } from '../interface'
+import { useState } from 'react'
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
+import { Card, CardContent } from '@/components/ui/card'
 import {
   Dialog,
   DialogContent,
   DialogOverlay,
   DialogTitle,
 } from '@/components/ui/dialog'
-import { useState } from 'react'
-import { X } from 'lucide-react'
 import { Button } from '@/components/ui/button'
+import { X, FileText, Calendar } from 'lucide-react'
+
+interface Certificate {
+  id: string
+  title: string
+  type: 'CERTIFICATE' | 'REPORT'
+  recipient_name: string
+  file_url: string
+  issued_at: string
+}
+
+interface CertificateSectionProps {
+  certificates: Certificate[]
+}
 
 export const CertificateSection: React.FC<CertificateSectionProps> = ({
   certificates,
 }) => {
   const [isDialogOpen, setIsDialogOpen] = useState<boolean>(false)
-  const [selectedImages, setSelectedImages] = useState<{
-    urls: string[]
-    title: string
-    type: 'certificate' | 'report'
-    currentIndex: number
-  } | null>(null)
+  const [selectedCertificate, setSelectedCertificate] =
+    useState<Certificate | null>(null)
 
-  const formatDate = (dateString: string | undefined) => {
-    if (!dateString) return 'Tidak tersedia'
+  const formatDate = (dateString: string) => {
     const options: Intl.DateTimeFormatOptions = {
       day: '2-digit',
       month: 'long',
@@ -44,189 +44,156 @@ export const CertificateSection: React.FC<CertificateSectionProps> = ({
     )
   }
 
-  const handleImageView = (
-    certificate: CertificateProps,
-    type: 'certificate' | 'report'
-  ) => {
-    const imageUrls =
-      type === 'certificate'
-        ? certificate.certificate_images || ['/placeholder.svg']
-        : certificate.report_files || ['/placeholder.svg']
-
-    setSelectedImages({
-      urls: imageUrls,
-      title: certificate.title,
-      type: type,
-      currentIndex: 0,
-    })
+  const handleCertificateView = (certificate: Certificate) => {
+    setSelectedCertificate(certificate)
     setIsDialogOpen(true)
   }
 
-  const nextImage = () => {
-    if (selectedImages) {
-      setSelectedImages({
-        ...selectedImages,
-        currentIndex:
-          (selectedImages.currentIndex + 1) % selectedImages.urls.length,
-      })
-    }
-  }
+  const certificatesList = certificates.filter(
+    (cert) => cert.type === 'CERTIFICATE'
+  )
+  const reportsList = certificates.filter((cert) => cert.type === 'REPORT')
 
-  const prevImage = () => {
-    if (selectedImages) {
-      setSelectedImages({
-        ...selectedImages,
-        currentIndex:
-          (selectedImages.currentIndex - 1 + selectedImages.urls.length) %
-          selectedImages.urls.length,
-      })
-    }
-  }
+  const renderCertificateCard = (certificate: Certificate) => (
+    <Card
+      key={certificate.id}
+      className="group cursor-pointer hover:shadow-lg transition-all duration-300 border-2 hover:border-[#6C4534]/30"
+      onClick={() => handleCertificateView(certificate)}
+    >
+      <CardContent className="p-4">
+        {/* PDF Preview */}
+        <div
+          className={`relative w-full mb-4 bg-gray-100 rounded-lg overflow-hidden border ${
+            certificate.type === 'CERTIFICATE'
+              ? 'aspect-[1.43/1]'
+              : 'aspect-[1/1.414]'
+          }`}
+        >
+          {/* PDF first page preview - shown by default */}
+          <iframe
+            src={`${certificate.file_url}#page=1&view=Fit&toolbar=0&navpanes=0&scrollbar=0`}
+            className="absolute inset-0 w-full h-full transition-opacity duration-300 pointer-events-none"
+            title={`Preview of ${certificate.title}`}
+          />
+
+          {/* Hover overlay - shown on hover */}
+          <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+            <div className="text-center text-white">
+              <FileText className="h-12 w-12 mx-auto mb-3" />
+              <p className="text-sm font-medium">Click to view full document</p>
+            </div>
+          </div>
+        </div>
+
+        {/* Certificate Info */}
+        <div className="space-y-2">
+          <h3 className="font-semibold text-lg text-[#6C4534] line-clamp-2 group-hover:text-[#8B5A3C] transition-colors">
+            {certificate.title}
+          </h3>
+          <div className="flex items-center text-sm text-gray-600">
+            <Calendar className="h-4 w-4 mr-2" />
+            <span>Diterbitkan {formatDate(certificate.issued_at)}</span>
+          </div>
+        </div>
+
+        {/* Hover overlay */}
+        <div className="absolute inset-0 bg-[#6C4534]/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-lg pointer-events-none" />
+      </CardContent>
+    </Card>
+  )
+
+  const renderEmptyState = (type: string) => (
+    <div className="flex flex-col items-center justify-center py-12 text-center">
+      <FileText className="h-16 w-16 text-[#6C4534] mb-4" />
+      <h3 className="text-lg font-medium mb-2">
+        Belum ada {type.toLowerCase()}
+      </h3>
+    </div>
+  )
 
   return (
-    <section className="flex flex-col relative items-center gap-3 bg-[#EEDAC6] min-h-96">
+    <section className="flex flex-col relative items-center gap-6 bg-[#EEDAC6] min-h-96 py-8">
       {/* Heading */}
-      <h2 className="rounded-full bg-[#6C4534] text-white font-semibold text-3xl w-fit text-center px-7 py-4 -top-8 relative z-10">
+      <h2 className="rounded-full bg-[#6C4534] text-white font-semibold text-3xl w-fit text-center px-7 py-4 -top-16 relative z-10">
         Sertifikat & Rapor
       </h2>
       <hr className="absolute h-1 bg-[#6C4534] w-1/2 z-0 -top-0.5" />
 
-      {/* Jika tidak ada sertifikat */}
-      {certificates.length === 0 ? (
-        <span>Belum ada sertifikat!</span>
-      ) : (
-        <Carousel
-          className="flex justify-center items-center container max-w-screen-lg relative mb-16"
-          opts={{ loop: true }}
-        >
-          <CarouselContent className="flex w-full gap-2 py-10 px-7">
-            {/* Map sertifikat */}
-            {certificates.map((certificate: CertificateProps, index) => (
-              <CarouselItem
-                key={index}
-                className="basis-1/3 flex justify-center items-center relative rounded-xl overflow-hidden shadow-[4px_4px_8px_4px_rgba(0,0,0,0.15)] border-8 bg-white border-white p-0"
-              >
-                <div className="w-full h-full flex flex-col items-center">
-                  {/* Gambar Sertifikat */}
-                  <div className="relative w-full aspect-video">
-                    <Image
-                      src={
-                        certificate.certificate_images?.[0] ||
-                        '/placeholder.svg'
-                      }
-                      alt={certificate.title}
-                      fill
-                      className="object-cover"
-                    />
-                  </div>
+      {/* Tabs for Certificate and Report */}
+      <div className="container max-w-screen-xl px-4">
+        <Tabs defaultValue="certificates" className="w-full">
+          <TabsList className="grid w-full grid-cols-2 mb-8 bg-white/50">
+            <TabsTrigger
+              value="certificates"
+              className="data-[state=active]:bg-[#6C4534] data-[state=active]:text-white"
+            >
+              Sertifikat ({certificatesList.length})
+            </TabsTrigger>
+            <TabsTrigger
+              value="reports"
+              className="data-[state=active]:bg-[#6C4534] data-[state=active]:text-white"
+            >
+              Rapor ({reportsList.length})
+            </TabsTrigger>
+          </TabsList>
 
-                  {/* Judul dan Tanggal */}
-                  <h3 className="font-semibold text-lg mt-3 text-[#6C4534]">
-                    {certificate.title}
-                  </h3>
-                  <span className="text-sm text-gray-600">
-                    Didapat {formatDate(certificate.obtained_at)}
-                  </span>
+          {/* Certificates Tab */}
+          <TabsContent value="certificates">
+            {certificatesList.length === 0 ? (
+              renderEmptyState('Sertifikat')
+            ) : (
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+                {certificatesList.map(renderCertificateCard)}
+              </div>
+            )}
+          </TabsContent>
 
-                  {/* Buttons for viewing certificate or report */}
-                  <div className="flex gap-2 mt-3 mb-4">
-                    {certificate.certificate_images?.length > 0 && (
-                      <Button
-                        variant="secondary"
-                        size={'sm'}
-                        onClick={() =>
-                          handleImageView(certificate, 'certificate')
-                        }
-                      >
-                        Lihat Sertifikat
-                      </Button>
-                    )}
-                    {certificate.report_files &&
-                      certificate.report_files?.length > 0 && (
-                        <Button
-                          variant="secondary"
-                          size={'sm'}
-                          onClick={() => handleImageView(certificate, 'report')}
-                        >
-                          Lihat Rapor
-                        </Button>
-                      )}
-                  </div>
-                </div>
-              </CarouselItem>
-            ))}
-          </CarouselContent>
+          {/* Reports Tab */}
+          <TabsContent value="reports">
+            {reportsList.length === 0 ? (
+              renderEmptyState('Rapor')
+            ) : (
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+                {reportsList.map(renderCertificateCard)}
+              </div>
+            )}
+          </TabsContent>
+        </Tabs>
+      </div>
 
-          {/* Tombol Carousel */}
-          <CarouselPreviousProgram
-            variant={'secondary'}
-            className="h-12 w-12"
-          />
-          <CarouselNextProgram variant={'secondary'} className="h-12 w-12" />
-        </Carousel>
-      )}
-
-      {/* Full Screen Dialog - Moved outside the map */}
+      {/* Full Screen PDF Viewer Dialog */}
       <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
-        <DialogOverlay className="bg-black/80" />
-        <DialogContent className="max-w-full max-h-full w-screen h-screen p-0 border-none bg-transparent">
-          <div className="relative w-full h-full flex items-center justify-center">
-            {/* Title and Close button container */}
-            <div className="absolute top-4 left-0 right-0 flex justify-between items-center px-4 z-50">
-              <DialogTitle className="text-white bg-[#6C4534]/90 px-6 py-3 rounded-full text-lg font-semibold">
-                {selectedImages?.type === 'certificate'
+        <DialogOverlay className="bg-[rgb(0_0_0_/_0.001)]" />
+        <DialogContent className="max-w-full max-h-full w-screen h-screen px-12 py-8 border-none bg-transparent">
+          <div className="relative w-full h-full">
+            {/* Header with title and close button */}
+            <div className="absolute top-0 left-0 right-0 flex justify-between items-center p-4 bg-black/50 backdrop-blur-sm z-50">
+              <DialogTitle className="text-white text-lg font-semibold">
+                {selectedCertificate?.type === 'CERTIFICATE'
                   ? 'Sertifikat'
-                  : 'Rapor'}{' '}
-                - {selectedImages?.title}{' '}
-                {selectedImages &&
-                  selectedImages.urls.length > 1 &&
-                  `(${selectedImages.currentIndex + 1}/${selectedImages.urls.length})`}
+                  : 'Rapor'}
+                : {selectedCertificate?.title}
               </DialogTitle>
-              <button
+              <Button
+                variant="ghost"
+                size="sm"
                 onClick={() => setIsDialogOpen(false)}
-                className="bg-black/50 hover:bg-black/70 text-white p-2 rounded-full transition-colors"
+                className="text-white hover:bg-white/20 p-2"
               >
                 <X className="h-6 w-6" />
                 <span className="sr-only">Close</span>
-              </button>
+              </Button>
             </div>
 
-            {/* Image viewer */}
-            {selectedImages && (
-              <div className="relative max-w-5xl max-h-[90vh] w-full h-full flex flex-col items-center justify-center p-4">
-                <div className="relative w-full h-full">
-                  <Image
-                    src={
-                      selectedImages.urls[selectedImages.currentIndex] ||
-                      '/placeholder.svg'
-                    }
-                    alt={`${selectedImages.title} - ${selectedImages.type === 'certificate' ? 'Sertifikat' : 'Rapor'}`}
-                    className="object-contain"
-                    fill
-                    sizes="(max-width: 768px) 100vw, 80vw"
-                    priority
-                  />
-                </div>
-
-                {/* Navigation buttons for multiple images */}
-                {selectedImages.urls.length > 1 && (
-                  <div className="absolute bottom-6 left-0 right-0 flex justify-center gap-4">
-                    <Button
-                      variant="secondary"
-                      onClick={prevImage}
-                      className="bg-brown/80 hover:bg-brown"
-                    >
-                      Sebelumnya
-                    </Button>
-                    <Button
-                      variant="secondary"
-                      onClick={nextImage}
-                      className="bg-brown/80 hover:bg-brown"
-                    >
-                      Berikutnya
-                    </Button>
-                  </div>
-                )}
+            {/* PDF Viewer */}
+            {selectedCertificate && (
+              <div className="w-full h-full pt-16">
+                <iframe
+                  src={selectedCertificate.file_url}
+                  className="w-full h-full border-none"
+                  title={selectedCertificate.title}
+                  allow="fullscreen"
+                />
               </div>
             )}
           </div>
