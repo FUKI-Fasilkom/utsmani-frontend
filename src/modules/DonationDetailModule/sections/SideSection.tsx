@@ -5,7 +5,7 @@ import CountdownTimer from '../module-elements/Countdown'
 import { convertToRupiah } from '../utils/currency'
 import { WrapperCard } from '../module-elements'
 import { getDuration } from '../utils'
-import { CTAButtons } from '../module-elements/CTAButtons.tsx'
+import { CTAButtons } from '../module-elements'
 
 interface SideSectionProps {
   donation: Donation
