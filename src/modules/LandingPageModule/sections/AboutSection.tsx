@@ -3,10 +3,10 @@ import Image from 'next/image'
 import Link from 'next/link'
 export const AboutSection: React.FC = () => {
   return (
-    <section className="w-full md:py-[5.5rem] lg:px-28">
-      <div className="flex flex-col lg:flex-row w-full h-full rounded-[20px] shadow-[2px_4px_6px_0px_rgba(0,0,0,0.25)] p-12 gap-[5.25rem] justify-between">
-        <div className="lg:w-1/2 flex flex-col justify-start items-start gap-5">
-          <h1 className="heading-2 font-bold text-[#6C4534] leading-normal max-lg:mx-auto">
+    <section className="w-full py-10 md:py-20 lg:px-28 px-4">
+      <div className="flex flex-col md:flex-row w-full h-full rounded-[20px] shadow-[2px_4px_6px_0px_rgba(0,0,0,0.25)] p-4 md:p-8 lg:p-12 gap-8 md:gap-20 lg:gap-20 justify-between">
+        <div className="md:w-1/2 flex flex-col justify-start items-start gap-5">
+          <h1 className="heading-2 font-bold text-[#6C4534] leading-normal max-md:mx-auto">
             Tentang Kami
           </h1>
           <p className="paragpaph text-[#6C4534] font-medium text-justify leading-normal">
@@ -23,13 +23,13 @@ export const AboutSection: React.FC = () => {
             Selengkapnya
           </Link>
         </div>
-        <div className="lg:w-1/2 h-[346px] my-2 rounded-[40px] bg-[#6C4534] flex justify-center items-center max-md:order-first">
+        <div className="lg:w-1/2 h-[346px] my-2 rounded-[40px] bg-[#6C4534] flex justify-center items-center max-md:order-first overflow-hidden">
           <Image
             height={1385}
             width={1620}
             src="/ilustrasi-gedung-al-utsmani.png"
             alt=""
-            className="h-full w-auto"
+            className="h-full w-auto object-cover"
           ></Image>
         </div>
       </div>

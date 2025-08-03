@@ -8,8 +8,6 @@ import {
   CarouselContent,
   CarouselDots,
   CarouselItem,
-  CarouselNext,
-  CarouselPrevious,
 } from '@/components/ui/carousel'
 import Autoplay from 'embla-carousel-autoplay'
 
@@ -53,9 +51,7 @@ export const BannerCarousel: React.FC<BannerCarouselProps> = ({ banners }) => {
           </CarouselItem>
         ))}
       </CarouselContent>
-      <CarouselPrevious className="absolute left-4" />
-      <CarouselNext className="absolute right-4" />
-      <CarouselDots className="absolute bottom-4 inset-x-0 z-50" />
+      <CarouselDots className="absolute bottom-4 inset-x-0" />
     </Carousel>
   )
 }
