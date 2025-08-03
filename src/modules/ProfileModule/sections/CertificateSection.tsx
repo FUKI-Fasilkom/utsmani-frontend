@@ -11,7 +11,20 @@ import {
   DialogTitle,
 } from '@/components/ui/dialog'
 import { Button } from '@/components/ui/button'
-import { X, FileText, Calendar } from 'lucide-react'
+import { X, FileText, Calendar, Loader2 } from 'lucide-react'
+import dynamic from 'next/dynamic'
+
+const PdfPreviewCanvas = dynamic(
+  () => import('../module-elements/PdfPreviewCanvas'),
+  {
+    ssr: false,
+    loading: () => (
+      <div className="flex h-full w-full items-center justify-center bg-gray-200">
+        <Loader2 className="h-8 w-8 animate-spin text-gray-500" />
+      </div>
+    ),
+  }
+)
 
 interface Certificate {
   id: string
@@ -45,8 +58,17 @@ export const CertificateSection: React.FC<CertificateSectionProps> = ({
   }
 
   const handleCertificateView = (certificate: Certificate) => {
-    setSelectedCertificate(certificate)
-    setIsDialogOpen(true)
+    // Check for screen width to determine if it's a mobile device
+    const isMobile = window.innerWidth < 768 // 768px is a common breakpoint for tablets
+
+    if (isMobile) {
+      // On mobile, open the PDF in a new tab to use the browser's native viewer
+      window.open(certificate.file_url, '_blank')
+    } else {
+      // On desktop, use the existing dialog for a full-screen experience
+      setSelectedCertificate(certificate)
+      setIsDialogOpen(true)
+    }
   }
 
   const certificatesList = certificates.filter(
@@ -70,10 +92,9 @@ export const CertificateSection: React.FC<CertificateSectionProps> = ({
           }`}
         >
           {/* PDF first page preview - shown by default */}
-          <iframe
-            src={`${certificate.file_url}#page=1&view=Fit&toolbar=0&navpanes=0&scrollbar=0`}
-            className="absolute inset-0 w-full h-full transition-opacity duration-300 pointer-events-none"
-            title={`Preview of ${certificate.title}`}
+          <PdfPreviewCanvas
+            fileUrl={certificate.file_url}
+            className="absolute inset-0 w-full h-full object-cover"
           />
 
           {/* Hover overlay - shown on hover */}
@@ -114,10 +135,10 @@ export const CertificateSection: React.FC<CertificateSectionProps> = ({
   return (
     <section className="flex flex-col relative items-center gap-6 bg-[#EEDAC6] min-h-96 py-8">
       {/* Heading */}
-      <h2 className="rounded-full bg-[#6C4534] text-white font-semibold text-3xl w-fit text-center px-7 py-4 -top-16 relative z-10">
+      <h2 className="rounded-full bg-[#6C4534] text-white font-semibold heading-3 w-fit text-center px-7 py-4 -top-16 relative z-10">
         Sertifikat & Rapor
       </h2>
-      <hr className="absolute h-1 bg-[#6C4534] w-1/2 z-0 -top-0.5" />
+      <hr className="absolute h-1 bg-[#6C4534] w-full z-0 -top-0.5" />
 
       {/* Tabs for Certificate and Report */}
       <div className="container max-w-screen-xl px-4">
@@ -142,7 +163,7 @@ export const CertificateSection: React.FC<CertificateSectionProps> = ({
             {certificatesList.length === 0 ? (
               renderEmptyState('Sertifikat')
             ) : (
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 {certificatesList.map(renderCertificateCard)}
               </div>
             )}
@@ -153,7 +174,7 @@ export const CertificateSection: React.FC<CertificateSectionProps> = ({
             {reportsList.length === 0 ? (
               renderEmptyState('Rapor')
             ) : (
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 {reportsList.map(renderCertificateCard)}
               </div>
             )}

@@ -113,7 +113,7 @@ export const PersonalDataSection: React.FC<PersonalDataSectionProps> = ({
   return (
     <section className="flex justify-center items-center py-12 container max-w-screen-lg">
       {/* Profile Section */}
-      <div className="flex items-start gap-16 w-full max-w-screen-lg">
+      <div className="flex flex-col items-center md:flex-row md:items-start gap-8 md:gap-12 lg:gap-16 w-full max-w-screen-lg">
         {/* Left Side - Profile Picture */}
         <div className="flex flex-col items-center">
           <div className="w-52 h-60 rounded-t-full px-2 pt-2 border-2 border-b-0 border-[#6C4534]">

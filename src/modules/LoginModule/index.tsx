@@ -1,7 +1,10 @@
 'use client'
 
 import { useAuthContext } from '@/components/context'
-import { LoginResponse } from '@/components/context/AuthContext/interface'
+import {
+  GetUserResponse,
+  LoginResponse,
+} from '@/components/context/AuthContext/interface'
 import { Button } from '@/components/ui/button'
 import {
   Form,
@@ -30,10 +33,11 @@ type LoginFormValues = z.infer<typeof loginSchema>
 
 // --- Sub-component for the Login Form ---
 interface LoginFormProps {
-  onLogin: (data: LoginFormValues) => Promise<LoginResponse>
+  login: (data: LoginFormValues) => Promise<LoginResponse>
+  getUser: () => Promise<GetUserResponse | undefined>
 }
 
-const LoginForm: React.FC<LoginFormProps> = ({ onLogin }) => {
+const LoginForm: React.FC<LoginFormProps> = ({ login, getUser }) => {
   const router = useRouter()
   const [showPassword, setShowPassword] = useState(false)
 
@@ -46,8 +50,10 @@ const LoginForm: React.FC<LoginFormProps> = ({ onLogin }) => {
 
   const onSubmit = async (data: LoginFormValues) => {
     try {
-      await onLogin(data)
+      await login(data)
       toast.success('Login berhasil!')
+      router.replace('/')
+      await getUser()
     } catch (err: any) {
       if (err.message === 'Nomor telepon Anda belum diverifikasi.') {
         router.push('/login/verification')
@@ -160,13 +166,13 @@ const LoginImage: React.FC = () => (
 // --- Main Page Component ---
 
 export const LoginModule: React.FC = () => {
-  const { login } = useAuthContext()
+  const { login, getUser } = useAuthContext()
 
   return (
     <div className="min-h-screen w-full flex flex-col lg:flex-row">
       <LoginImage />
       <div className="w-full lg:w-1/2 flex items-center justify-center p-4 sm:p-6 lg:p-8">
-        <LoginForm onLogin={login} />
+        <LoginForm login={login} getUser={getUser} />
       </div>
     </div>
   )
