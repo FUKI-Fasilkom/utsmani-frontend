@@ -37,7 +37,7 @@ export const BannerCarousel: React.FC<BannerCarouselProps> = ({ banners }) => {
     >
       <CarouselContent className="h-full">
         {banners.map((banner, index) => (
-          <CarouselItem key={index} className="pl-0">
+          <CarouselItem key={index} className="px-0">
             <Link
               href={banner.link || '#'}
               className="block relative w-full h-full"

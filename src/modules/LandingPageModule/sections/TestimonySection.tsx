@@ -24,21 +24,21 @@ export const TestimonySection: React.FC<TestimonySectionProps> = ({
         </h2>
       </div>
       <div className="flex justify-center w-full">
-        <Carousel className="w-full" opts={{ loop: true }}>
+        <Carousel className="w-full" opts={{ loop: true, align: 'start' }}>
           <CarouselContent className="flex w-full">
             {testimonies.map((testimony, index) => (
               <CarouselItem
                 key={index}
                 className="flex flex-col gap-4 h-auto basis-full md:basis-1/2 lg:basis-1/3 px-4"
               >
-                <div className="flex flex-col gap-4 h-full w-full justify-between mx-auto max-w-[90%]">
-                  <div className="p-8 shadow-lg drop-shadow-sm h-[300px] w-full rounded-2xl relative">
+                <div className="flex flex-col gap-4 h-full w-full mx-auto max-w-[90%]">
+                  <div className="p-8 shadow-lg drop-shadow-sm h-[300px] w-full rounded-2xl relative flex justify-center items-center">
                     <Quote className="absolute top-2 left-2 text-brown" />
-                    <p className="italic font-medium leading-6 line-clamp-10">
+                    <p className="paragraph-sm italic font-medium leading-6 line-clamp-10 text-justify">
                       {testimony.description}
                     </p>
                   </div>
-                  <div className="flex gap-2 items-center">
+                  <div className="flex gap-2 items-center grow">
                     {testimony.image ? (
                       <Image
                         src={testimony.image}
@@ -51,8 +51,10 @@ export const TestimonySection: React.FC<TestimonySectionProps> = ({
                       <UserIcon className="h-16 w-16 text-brown" />
                     )}
                     <div>
-                      <h4 className="font-bold text-xl">{testimony.name}</h4>
-                      <p className="font-medium text-lg">{testimony.role}</p>
+                      <h4 className="font-bold paragraph">{testimony.name}</h4>
+                      <p className="font-medium paragraph-sm">
+                        {testimony.role}
+                      </p>
                     </div>
                   </div>
                 </div>
