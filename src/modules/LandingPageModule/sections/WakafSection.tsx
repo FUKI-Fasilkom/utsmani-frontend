@@ -4,7 +4,7 @@ import Link from 'next/link'
 
 export const WakafSection: React.FC = () => {
   return (
-    <section className="container flex gap-10 justify-center items-start md:items-center max-md:pb-10">
+    <section className="container flex gap-10 justify-center items-start md:items-center py-8 lg:py-12">
       <div className="rounded-3xl md:w-[569px] h-[581px] max-md:hidden">
         <Image
           src="/assets/images/berwakaf.jpeg"
@@ -31,7 +31,7 @@ export const WakafSection: React.FC = () => {
             <br className="" />
             <span className="mt-2 block">(HR. Muslim)</span>
           </p>
-          <Link href={'/donation'}>
+          <Link href={'/sedekah-jariyah'}>
             <Button variant={'secondary'} size={'lg'} className="subtitle">
               Mari Bersedekah
             </Button>

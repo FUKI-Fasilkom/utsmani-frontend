@@ -65,12 +65,12 @@ export const AuthContextProvider: React.FC<AuthContextProviderProps> = ({
         setIsAuthenticated(false)
         router.push('/login')
       } else {
-        toast.error(`Oops. User tidak ditemukan!`)
+        // toast.error(`Oops. User tidak ditemukan!`)
         setUser({} as User)
         setIsAuthenticated(false)
       }
     } catch (error) {
-      toast.error(`Oops. User tidak ditemukan!`)
+      // toast.error(`Oops. User tidak ditemukan!`)
       setUser({} as User)
       setIsAuthenticated(false)
     }

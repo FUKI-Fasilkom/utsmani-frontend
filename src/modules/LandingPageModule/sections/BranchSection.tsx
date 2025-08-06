@@ -6,7 +6,7 @@ import { BranchSectionProps } from '../interface'
 
 export const BranchSection: React.FC<BranchSectionProps> = ({ branches }) => {
   return (
-    <section className="max-w-screen-xl mx-auto container pb-20 flex flex-col gap-y-9 md:flex-row md:gap-x-9">
+    <section className="max-w-screen-xl mx-auto container pb-20 flex flex-col gap-y-16 md:flex-row md:gap-x-9">
       <BranchListSection branches={branches} />
       <OurContactSection />
     </section>

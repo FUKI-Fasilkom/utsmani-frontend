@@ -102,7 +102,7 @@ export const DonationListSection: React.FC = () => {
   }
 
   return (
-    <section className="bg-cream-1 lg:py-[28px]">
+    <section className="bg-cream-1 lg:py-[28px] grow">
       <div className="container flex flex-wrap px-4 lg:px-10">
         {/* Loading Skeletons */}
         {isLoading &&
