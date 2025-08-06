@@ -17,7 +17,7 @@ type Program = {
 
 async function getPrograms() {
   const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/program`, {
-    cache: 'no-store',
+    next: { revalidate: 60 },
   })
   const responseJson = await response.json()
   const programs = (await responseJson.contents) as Program[]

@@ -9,8 +9,11 @@ export const ProfileModule: React.FC = async () => {
       headers: {
         Authorization: `Bearer ${getCookie('AT', { cookies })}`,
       },
+      cache: 'no-store',
     }),
-    fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/education`),
+    fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/education`, {
+      cache: 'no-store',
+    }),
   ])
 
   const userDataJson = await userData.json()

@@ -8,7 +8,12 @@ import {
 import { AboutPageData } from './interface'
 
 export const AboutModule: React.FC = async () => {
-  const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/aboutpage/data/`)
+  const res = await fetch(
+    `${process.env.NEXT_PUBLIC_API_URL}/aboutpage/data/`,
+    {
+      next: { revalidate: 60 },
+    }
+  )
   const data = (await res.json()) as AboutPageData
   return (
     <div className="flex flex-col gap-20">

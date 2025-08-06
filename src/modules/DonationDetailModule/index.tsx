@@ -28,6 +28,7 @@ export const DonationDetailModule: React.FC<{ id: string }> = async ({
           headers: {
             'Content-Type': 'application/json',
           },
+          cache: 'no-store',
         }
       )
       const data = (await response.json()) as Donation

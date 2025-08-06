@@ -40,7 +40,10 @@ type ActivityDetailModuleProps = {
 
 async function getOtherActivities() {
   const response = await fetch(
-    `${process.env.NEXT_PUBLIC_API_URL}/blog/activity`
+    `${process.env.NEXT_PUBLIC_API_URL}/blog/activity`,
+    {
+      next: { revalidate: 3600 },
+    }
   )
   const responseJson = await response.json()
   const programs = await responseJson.contents
@@ -49,7 +52,10 @@ async function getOtherActivities() {
 
 async function getOtherNews() {
   const response = await fetch(
-    `${process.env.NEXT_PUBLIC_API_URL}/blog/news-quotes`
+    `${process.env.NEXT_PUBLIC_API_URL}/blog/news-quotes`,
+    {
+      next: { revalidate: 3600 },
+    }
   )
   const responseJson = await response.json()
   const news = await responseJson.contents
@@ -60,7 +66,10 @@ async function getDetail(id: string, type: 'BRANCH' | 'ACTIVITY' | 'NEWS') {
   const activityId = id
   try {
     const response = await fetch(
-      `${process.env.NEXT_PUBLIC_API_URL}/blog/${type === 'NEWS' ? 'news-quotes/news' : type.toLocaleLowerCase()}/${activityId}`
+      `${process.env.NEXT_PUBLIC_API_URL}/blog/${type === 'NEWS' ? 'news-quotes/news' : type.toLocaleLowerCase()}/${activityId}`,
+      {
+        next: { revalidate: 60 },
+      }
     )
     const responseJson = await response.json()
     const detail = (await responseJson.contents) as ActivityDetail
