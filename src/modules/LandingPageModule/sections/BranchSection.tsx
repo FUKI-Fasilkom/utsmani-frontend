@@ -27,7 +27,7 @@ const BranchListSection: React.FC<BranchSectionProps> = ({ branches }) => {
               className="flex items-center gap-x-2 group"
             >
               <span className="inline-block w-6 text-right">{index + 1}. </span>
-              <span className="group-hover:underline">{branch.title}</span>
+              <span className="group-hover:underline">{branch.name}</span>
             </Link>
           </li>
         ))}

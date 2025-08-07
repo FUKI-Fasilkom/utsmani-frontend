@@ -15,10 +15,18 @@ import { YouTubeSection } from './sections/YoutubeSection'
 export const LandingPageModule: React.FC = async () => {
   const [responseProgram, responseActivity, responseBranch, responseTestimony] =
     await Promise.all([
-      fetch(`${process.env.NEXT_PUBLIC_API_URL}/program/`),
-      fetch(`${process.env.NEXT_PUBLIC_API_URL}/blog/activity/`),
-      fetch(`${process.env.NEXT_PUBLIC_API_URL}/blog/branch/`),
-      fetch(`${process.env.NEXT_PUBLIC_API_URL}/testimony/`),
+      fetch(`${process.env.NEXT_PUBLIC_API_URL}/program/`, {
+        next: { revalidate: 60 },
+      }),
+      fetch(`${process.env.NEXT_PUBLIC_API_URL}/blog/activity/`, {
+        next: { revalidate: 60 },
+      }),
+      fetch(`${process.env.NEXT_PUBLIC_API_URL}/branch/`, {
+        next: { revalidate: 60 },
+      }),
+      fetch(`${process.env.NEXT_PUBLIC_API_URL}/testimony/`, {
+        next: { revalidate: 60 },
+      }),
     ])
   const activities = await responseActivity.json()
   const programs = await responseProgram.json()
