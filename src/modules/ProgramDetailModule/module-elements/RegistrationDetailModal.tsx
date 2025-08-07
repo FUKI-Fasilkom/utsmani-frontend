@@ -53,7 +53,7 @@ export const RegistrationDetailModal: React.FC<
           <div>
             <h3 className="text-lg font-medium text-brown">Cabang</h3>
             <div className="flex items-center justify-between mt-2">
-              <p className="text-gray-700">{branch.branch.title}</p>
+              <p className="text-gray-700">{branch.branch.name}</p>
               <Button variant="outline" size="sm" asChild>
                 <a
                   href={`/branch/${branch.branch.id}`}

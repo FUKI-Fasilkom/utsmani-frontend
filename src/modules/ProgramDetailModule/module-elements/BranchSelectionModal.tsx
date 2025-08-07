@@ -163,7 +163,7 @@ export const BranchSelectionModal: React.FC<BranchSelectionModalProps> = ({
                           htmlFor={branchData.branch_program_id}
                           className="paragraph font-medium text-brown cursor-pointer hover:underline"
                         >
-                          {branchData.branch.title}
+                          {branchData.branch.name}
                         </label>
                         {isSelected && (
                           <Badge className="ml-2 bg-green-100 text-green-800 hover:bg-green-100">
@@ -246,9 +246,7 @@ export const BranchSelectionModal: React.FC<BranchSelectionModalProps> = ({
             {selectedBranch && (
               <p className="font-medium">
                 Selected:{' '}
-                <span className="text-brown">
-                  {selectedBranch.branch.title}
-                </span>
+                <span className="text-brown">{selectedBranch.branch.name}</span>
               </p>
             )}
           </div>

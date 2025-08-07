@@ -8,7 +8,7 @@ export interface Branch {
   branch_program_id: string
   branch: {
     id: string
-    title: string
+    name: string
     location: string | null
   }
   fees: Fee[]
