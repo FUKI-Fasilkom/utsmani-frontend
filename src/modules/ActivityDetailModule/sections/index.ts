@@ -1,1 +1,1 @@
-export * from './GalleryDocs'
+export * from '.'

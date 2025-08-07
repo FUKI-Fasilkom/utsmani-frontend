@@ -27,7 +27,7 @@ export interface ActivitySectionProps {
 
 export interface BranchProps {
   id: string
-  title: string
+  name: string
 }
 
 export interface BranchSectionProps {

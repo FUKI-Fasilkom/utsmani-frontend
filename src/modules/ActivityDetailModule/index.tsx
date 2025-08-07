@@ -11,32 +11,9 @@ import {
   CarouselPreviousProgram,
 } from '@/components/ui/carousel'
 import Link from 'next/link'
-import { ActivityProps, ProgramProps } from '../LandingPageModule/interface'
-import GalleryDocs from './sections/GalleryDocs'
-
-type ActivityDetail = {
-  id: string
-  title: string
-  content: string
-  created_at: string
-  updated_at: string
-  cover_image: string
-  location: string | null
-  activity_date: string | null
-  dresscode: string | null
-  images: {
-    id: string
-    image_url: string
-    created_at: string
-    updated_at: string
-  }[]
-  programs: { id: string; title: string; cover_image: string; name: string }[]
-}
-
-type ActivityDetailModuleProps = {
-  id: string
-  type: 'BRANCH' | 'ACTIVITY' | 'NEWS'
-}
+import { ActivityProps } from '../LandingPageModule/interface'
+import ImageGallery from '@/components/elements/ImageGallery'
+import { ActivityDetail, ActivityDetailModuleProps } from './interface'
 
 async function getOtherActivities() {
   const response = await fetch(
@@ -62,7 +39,7 @@ async function getOtherNews() {
   return news
 }
 
-async function getDetail(id: string, type: 'BRANCH' | 'ACTIVITY' | 'NEWS') {
+async function getDetail(id: string, type: 'ACTIVITY' | 'NEWS') {
   const activityId = id
   try {
     const response = await fetch(
@@ -108,11 +85,7 @@ export const ActivityDetailModule: React.FC<
         <div className="w-full flex justify-between">
           <div className="space-y-4">
             <h2 className="mb-3 text-brown font-bold text-3xl">
-              {type === 'BRANCH'
-                ? 'Cabang Al-Utsmani'
-                : type === 'ACTIVITY'
-                  ? 'Kegiatan'
-                  : 'Berita'}
+              {type === 'ACTIVITY' ? 'Kegiatan' : 'Berita'}
             </h2>
             <h1 className="font-semibold text-5xl">{detail.title}</h1>
             <p className="text-brown italic font-medium text-base space-x-12">
@@ -120,8 +93,13 @@ export const ActivityDetailModule: React.FC<
                 <FaClock className="inline pb-1 pr-1" />
                 Posted on{' '}
                 <strong>
-                  {new Date(detail.created_at ?? '').toLocaleDateString(
-                    'id-ID'
+                  {new Date(detail.updated_at ?? '').toLocaleDateString(
+                    'id-ID',
+                    {
+                      day: 'numeric',
+                      month: 'long',
+                      year: 'numeric',
+                    }
                   )}
                 </strong>
               </span>
@@ -129,7 +107,7 @@ export const ActivityDetailModule: React.FC<
               <span className="items-center space-x-1">
                 <FaUser className="inline pb-1 pr-1" />
                 Posted by
-                <strong>Admin</strong>
+                <strong>{detail.posted_by}</strong>
               </span>
             </p>
           </div>
@@ -138,78 +116,22 @@ export const ActivityDetailModule: React.FC<
           </Button>
         </div>
         <div
-          className="prose max-w-none"
+          className="prose max-w-none text-justify"
           dangerouslySetInnerHTML={{ __html: detail.content }}
         ></div>
 
         {detail.images && detail.images.length > 0 && (
-          <GalleryDocs images={detail.images} />
+          <ImageGallery images={detail.images} />
         )}
 
         <div className="flex flex-col relative justify-center items-center gap-3 w-full">
-          {' '}
-          {/* Added w-full for carousel to take width */}
           <h1 className="rounded-full bg-[#6C4534] text-white font-semibold text-3xl w-fit text-center px-7 py-4 z-10">
-            {type === 'BRANCH'
-              ? 'Program Tersedia'
-              : type === 'ACTIVITY'
-                ? 'Kegiatan Lainnya'
-                : 'Berita Lainnya'}
+            {type === 'ACTIVITY' ? 'Kegiatan Lainnya' : 'Berita Lainnya'}
           </h1>
-          <hr className="absolute h-1 bg-[#6C4534] w-1/2 z-0 top-8" />
-          {type === 'BRANCH' ? (
+          <hr className="absolute h-1 bg-[#6C4534] block max-w-screen-lg w-screen z-0 top-8" />
+          {
             <Carousel
-              className="w-full flex justify-center items-center relative mb-16 px-10 md:px-16" // Added padding for prev/next buttons
-              opts={{ loop: true }}
-            >
-              <CarouselContent className="flex gap-4 py-10 px-2">
-                {' '}
-                {/* Adjusted gap and padding */}
-                {detail.programs.map((program: ProgramProps, index) => (
-                  <CarouselItem
-                    key={index}
-                    className="basis-full sm:basis-1/2 md:basis-1/3 lg:basis-1/4 flex justify-center" // Responsive basis
-                  >
-                    <Link
-                      href={`/program/${program.id}`}
-                      className="w-[240px] h-[240px] border-2 border-brown rounded-[40px] overflow-hidden flex items-center justify-center relative shadow-[4px_4px_8px_4px_rgba(0,0,0,0.15)]"
-                    >
-                      <Image
-                        src={program.cover_image}
-                        alt={program.title}
-                        className="object-cover w-full h-full"
-                        width={288}
-                        height={272}
-                      />
-                      <div
-                        className="py-4 px-2 absolute bottom-0 w-full flex justify-center"
-                        style={{
-                          background:
-                            'linear-gradient(to top, rgba(0, 0, 0, 0.6) 80%, rgba(0, 0, 0, 0) 100%)', // Slightly darker gradient
-                        }}
-                      >
-                        <span className="font-bold text-xl text-center text-white drop-shadow-md">
-                          {' '}
-                          {/* Adjusted text size and added drop shadow */}
-                          {program.title}
-                        </span>
-                      </div>
-                    </Link>
-                  </CarouselItem>
-                ))}
-              </CarouselContent>
-              <CarouselPreviousProgram
-                variant={'secondary'}
-                className="h-12 w-12 text-brown" // Added text color
-              />
-              <CarouselNextProgram
-                variant={'secondary'}
-                className="h-12 w-12 text-brown" // Added text color
-              />
-            </Carousel>
-          ) : (
-            <Carousel
-              className="flex justify-center items-center relative mb-16 w-full px-10 md:px-16" // Added w-full and padding
+              className="flex justify-center items-center relative mb-16 w-full px-10 md:px-16"
               opts={{ loop: true }}
             >
               <CarouselContent className="flex gap-2 py-10 px-7">
@@ -233,14 +155,14 @@ export const ActivityDetailModule: React.FC<
               </CarouselContent>
               <CarouselPreviousProgram
                 variant={'secondary'}
-                className="h-12 w-12 text-brown" // Added text color
+                className="h-12 w-12 text-brown"
               />
               <CarouselNextProgram
                 variant={'secondary'}
-                className="h-12 w-12 text-brown" // Added text color
+                className="h-12 w-12 text-brown"
               />
             </Carousel>
-          )}
+          }
         </div>
       </div>
     </div>

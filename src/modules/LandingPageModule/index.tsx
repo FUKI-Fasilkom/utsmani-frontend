@@ -21,7 +21,7 @@ export const LandingPageModule: React.FC = async () => {
       fetch(`${process.env.NEXT_PUBLIC_API_URL}/blog/activity/`, {
         next: { revalidate: 60 },
       }),
-      fetch(`${process.env.NEXT_PUBLIC_API_URL}/blog/branch/`, {
+      fetch(`${process.env.NEXT_PUBLIC_API_URL}/branch/`, {
         next: { revalidate: 60 },
       }),
       fetch(`${process.env.NEXT_PUBLIC_API_URL}/testimony/`, {
