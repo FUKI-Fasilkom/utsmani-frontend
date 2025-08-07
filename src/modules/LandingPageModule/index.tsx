@@ -18,9 +18,12 @@ export const LandingPageModule: React.FC = async () => {
       fetch(`${process.env.NEXT_PUBLIC_API_URL}/program/`, {
         next: { revalidate: 60 },
       }),
-      fetch(`${process.env.NEXT_PUBLIC_API_URL}/blog/activity/`, {
-        next: { revalidate: 60 },
-      }),
+      fetch(
+        `${process.env.NEXT_PUBLIC_API_URL}/blog/activity/?is_featured=true`,
+        {
+          next: { revalidate: 60 },
+        }
+      ),
       fetch(`${process.env.NEXT_PUBLIC_API_URL}/branch/`, {
         next: { revalidate: 60 },
       }),
@@ -40,7 +43,7 @@ export const LandingPageModule: React.FC = async () => {
       <AboutSection />
       <ProgramSection programs={programs.contents} />
       <WakafSection />
-      <ActivitySection activities={activities.contents} />
+      <ActivitySection activities={activities.results} />
       <TestimonySection testimonies={testimonies.contents} />
       <JoinUsSection />
       <BranchSection branches={branches.contents} />
