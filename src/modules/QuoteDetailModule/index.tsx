@@ -13,7 +13,8 @@ import { QuoteItem } from './interface'
 
 const getQuoteDetail = async (id: string) => {
   const response = await fetch(
-    `${process.env.NEXT_PUBLIC_API_URL}/blog/news-quotes/quotes/${id}`
+    `${process.env.NEXT_PUBLIC_API_URL}/blog/news-quotes/quotes/${id}`,
+    { next: { revalidate: 60 } }
   )
   const data = await response.json()
   return data

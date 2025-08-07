@@ -34,7 +34,7 @@ export const ProgramDetailModule: React.FC<ProgramDetailModuleProps> = ({
         `${process.env.NEXT_PUBLIC_API_URL}/program/${id}`,
         {
           headers,
-          cache: 'no-store',
+          next: { revalidate: 60 },
         }
       )
       const responseJson = await response.json()

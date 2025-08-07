@@ -6,7 +6,8 @@ import { StepperForm } from './sections/StepperForm'
 
 export const RegisterModule: React.FC = async () => {
   const response = await fetch(
-    `${process.env.NEXT_PUBLIC_API_URL}/auth/education`
+    `${process.env.NEXT_PUBLIC_API_URL}/auth/education`,
+    { cache: 'no-store' }
   )
   const responseJson = await response.json()
   return <StepperForm educationList={responseJson.contents} />

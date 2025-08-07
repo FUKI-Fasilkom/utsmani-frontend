@@ -18,7 +18,8 @@ export function YouTubeSection() {
       try {
         setLoading(true)
         const response = await fetch(
-          `${process.env.NEXT_PUBLIC_API_URL}/homepage/youtube-video/`
+          `${process.env.NEXT_PUBLIC_API_URL}/homepage/youtube-video/`,
+          { next: { revalidate: 60 } }
         )
 
         if (!response.ok) {
