@@ -1,157 +1,138 @@
 'use client'
-import Image from 'next/image'
-import type React from 'react'
 
-import { getCookie, deleteCookie } from 'cookies-next'
-import { CustomButton } from './module-elements/CustomButton'
-import type { ProgramDetailModuleProps, ProgramDetailProps } from './interface'
-import { useRouter } from 'next/navigation'
-import { useEffect, useState } from 'react'
-import { Button } from '@/components/ui/button'
+import type React from 'react'
+import { useState, useEffect, useCallback } from 'react'
+import { getCookie } from 'cookies-next'
 import { toast } from 'sonner'
-import { OtherProgramSection } from './sections/OtherProgramSection'
-import { BranchSelectionModal } from './module-elements/BranchSelectionModal'
-import { RegistrationDetailModal } from './module-elements/RegistrationDetailModal'
-import { JenjangSection } from './sections/JenjangSection'
-import { ProgramDetailSkeleton } from './sections/ProgramDetailSkeleton'
 import { cn } from '@/lib/utils'
 
-export const ProgramDetailModule: React.FC<ProgramDetailModuleProps> = ({
-  id,
-}) => {
-  const router = useRouter()
-  const [programDetail, setProgramDetail] = useState<ProgramDetailProps | null>(
-    null
-  )
-  const [branchModalOpen, setBranchModalOpen] = useState(false)
-  const [detailsModalOpen, setDetailsModalOpen] = useState(false)
+import type { ProgramDetail, UserRegistration } from './interface'
 
-  const getProgramDetail = async () => {
-    const at = getCookie('AT')
-    try {
-      const headers = at ? { Authorization: `Bearer ${at}` } : undefined
-      const response = await fetch(
-        `${process.env.NEXT_PUBLIC_API_URL}/program/${id}`,
-        {
-          headers,
-          next: { revalidate: 60 },
-        }
-      )
-      const responseJson = await response.json()
+import { HeaderSection } from './sections/HeaderSection'
+import { JenjangSection } from './sections/JenjangSection'
+import { OtherProgramSection } from './sections/OtherProgramSection'
+import { ProgramDetailSkeleton } from './sections/ProgramDetailSkeleton'
+import { CustomButton } from './module-elements/CustomButton'
 
-      if (
-        responseJson.status === 401 ||
-        responseJson.message === 'Token is invalid or expired'
-      ) {
-        deleteCookie('AT')
-        router.push('/login')
-        return
-      }
-
-      setProgramDetail(responseJson.contents)
-    } catch (error) {
-      toast.error('Terjadi kesalahan dalam mengambil data!')
+const getProgramDetail = async (id: string): Promise<ProgramDetail | null> => {
+  try {
+    const response = await fetch(
+      `${process.env.NEXT_PUBLIC_API_URL}/program/${id}`
+    )
+    if (!response.ok) {
+      throw new Error('Gagal mengambil data program.')
     }
+    const responseJson = await response.json()
+    return responseJson.contents as ProgramDetail
+  } catch (error: any) {
+    toast.error(error.message)
+    return null
+  }
+}
+
+const getUserRegistrations = async (
+  id: string
+): Promise<UserRegistration[] | null> => {
+  const token = getCookie('AT')
+  if (!token) {
+    return null
   }
 
-  useEffect(() => {
-    getProgramDetail()
-  }, [id, router])
+  try {
+    const response = await fetch(
+      `${process.env.NEXT_PUBLIC_API_URL}/program/${id}/registrations`,
+      { headers: { Authorization: `Bearer ${token}` } }
+    )
+    if (response.status === 404) {
+      return []
+    }
+    if (!response.ok) {
+      throw new Error('Gagal mengambil riwayat pendaftaran.')
+    }
+    const responseJson = await response.json()
+    return responseJson.contents as UserRegistration[]
+  } catch (error: any) {
+    toast.error(error.message)
+    return null
+  }
+}
 
-  if (!programDetail) {
+export const ProgramDetailModule: React.FC<{ id: string }> = ({ id }) => {
+  const [programDetail, setProgramDetail] = useState<ProgramDetail | null>(null)
+  const [latestRegistration, setLatestRegistration] =
+    useState<UserRegistration | null>(null)
+  const [loading, setLoading] = useState(true)
+
+  const fetchData = useCallback(async () => {
+    setLoading(true)
+    try {
+      const [programData, registrationsData] = await Promise.all([
+        getProgramDetail(id),
+        getUserRegistrations(id),
+      ])
+
+      setProgramDetail(programData)
+
+      if (registrationsData && registrationsData.length > 0) {
+        const sortedRegistrations = [...registrationsData].sort(
+          (a, b) =>
+            new Date(b.created_at).getTime() - new Date(a.created_at).getTime()
+        )
+        setLatestRegistration(sortedRegistrations[0])
+      } else {
+        setLatestRegistration(null)
+      }
+    } catch (error) {
+      toast.error('Terjadi kesalahan saat memuat semua data.')
+    } finally {
+      setLoading(false)
+    }
+  }, [id])
+
+  useEffect(() => {
+    fetchData()
+  }, [fetchData])
+
+  if (loading) {
     return <ProgramDetailSkeleton />
   }
 
-  // Find the registered branch if user has registered
-  const registeredBranch =
-    programDetail.user_status !== null && programDetail.branches.length > 0
-      ? programDetail.branches[0] // Assuming the first branch is the registered one
-      : null
+  if (!programDetail) {
+    return (
+      <div className="text-center py-20">
+        Program tidak ditemukan atau gagal dimuat.
+      </div>
+    )
+  }
 
   const hasLevels =
-    programDetail.custom_fields && programDetail.custom_fields.levels
+    programDetail.custom_fields?.levels &&
+    programDetail.custom_fields.levels.length > 0
 
   return (
     <main className="flex flex-col">
-      <section className="flex flex-col lg:flex-row w-full lg:h-[536px] bg-[#F8EAD9] justify-left items-center">
-        <div className="w-full max-h-72 lg:max-h-none lg:max-w-[55%] h-full relative overflow-hidden flex items-center">
-          <Image
-            src={programDetail.cover_image || '/placeholder.svg'}
-            alt={programDetail.title}
-            width={1000}
-            height={1000}
-            className="object-cover lg:pr-16 w-full h-full"
-          />
-        </div>
-        <div className="lg:w-[45%] flex flex-col gap-2 py-10 lg:py-4 lg:gap-6 px-2 lg:pr-12">
-          <h2 className="text-center lg:text-start lg:text-3xl font-bold text-[#A0653C]">
-            {programDetail.title}
-          </h2>
-          <h1 className="text-center lg:text-start lg:text-4xl font-bold text-[#6C4534]">
-            {programDetail.headline}
-          </h1>
-          <div className="flex flex-col lg:flex-row lg:items-center gap-2">
-            <Button
-              size={'lg'}
-              className="px-12 py-6"
-              onClick={() => {
-                if (programDetail.user_status === null) {
-                  setBranchModalOpen(true)
-                } else {
-                  setDetailsModalOpen(true)
-                }
-              }}
-            >
-              <span className="paragraph-lg font-semibold">
-                {programDetail.user_status === null
-                  ? 'Pilih Cabang dan Daftar'
-                  : 'Lihat Pendaftaran'}
-              </span>
-            </Button>
-          </div>
-        </div>
-
-        <BranchSelectionModal
-          programId={programDetail.id}
-          branches={programDetail.branches}
-          isOpen={branchModalOpen}
-          onClose={() => setBranchModalOpen(false)}
-          onRegisterSuccess={() => {
-            getProgramDetail() // Refresh data after registration
-          }}
-        />
-
-        <RegistrationDetailModal
-          isOpen={detailsModalOpen}
-          onClose={() => setDetailsModalOpen(false)}
-          branch={registeredBranch}
-          user_status={programDetail.user_status}
-          cp_wa_number_1={programDetail.cp_wa_number_1}
-        />
-      </section>
+      <HeaderSection
+        programDetail={programDetail}
+        latestRegistration={latestRegistration}
+        onRegisterSuccess={fetchData} // Me-refresh semua data setelah pendaftaran berhasil
+      />
 
       <section className="flex flex-col lg:flex-row p-4 md:p-14 xl:p-28 gap-10 lg:gap-20 justify-center">
         <div
           className={cn(
-            'flex flex-col gap-8 justify-center items-center',
+            'flex flex-col gap-8',
             hasLevels ? 'lg:w-1/2' : 'lg:w-4/5'
           )}
         >
-          <div className="prose">
-            <div
-              dangerouslySetInnerHTML={{ __html: programDetail.description }}
-            ></div>
-          </div>
+          <div
+            className="prose max-w-none"
+            dangerouslySetInnerHTML={{ __html: programDetail.description }}
+          />
           <CustomButton title={programDetail.title} />
         </div>
 
-        {programDetail.custom_fields && programDetail.custom_fields.levels && (
-          <JenjangSection
-            levels={programDetail.custom_fields.levels.map((level) => ({
-              name: level.name,
-              description: level.description,
-            }))}
-          />
+        {hasLevels && (
+          <JenjangSection levels={programDetail.custom_fields!.levels!} />
         )}
       </section>
 
