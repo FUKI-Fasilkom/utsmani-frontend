@@ -8,12 +8,12 @@ import {
   CarouselPrevious,
 } from '@/components/ui/carousel'
 import Link from 'next/link'
-import { ProgramProps } from '../interface'
 import { toast } from 'sonner'
 import Image from 'next/image'
+import { Program } from '../interface'
 
 export const OtherProgramSection = () => {
-  const [programs, setPrograms] = useState<ProgramProps[]>([])
+  const [programs, setPrograms] = useState<Program[]>([])
   const getPrograms = async () => {
     try {
       const response = await fetch(
@@ -41,7 +41,7 @@ export const OtherProgramSection = () => {
         opts={{ loop: true }}
       >
         <CarouselContent className="flex gap-2 py-10 px-7">
-          {programs.map((program: ProgramProps) => (
+          {programs.map((program: Program) => (
             <CarouselItem
               key={program.id}
               className="basis-full sm:basis-1/2 md:basis-1/3 lg:basis-1/4 w-[300px] h-[200px] flex justify-center items-center relative rounded-2xl overflow-hidden shadow-[4px_4px_8px_4px_rgba(0,0,0,0.15)] border-4 border-white group"
