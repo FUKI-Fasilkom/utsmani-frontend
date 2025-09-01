@@ -41,14 +41,16 @@ export const BranchSelectionModal: React.FC<BranchSelectionModalProps> = ({
   onRegisterSuccess,
   userRegistration,
 }) => {
-  const [branches, setBranches] = useState<BranchProgram[] | null>(null)
+  const [branchPrograms, setBranchPrograms] = useState<BranchProgram[] | null>(
+    null
+  )
   const [selectedBranchId, setSelectedBranchId] = useState<string | null>(null)
   const [loading, setLoading] = useState(false)
   const [expandedFees, setExpandedFees] = useState<string[]>([])
   const router = useRouter()
 
   useEffect(() => {
-    const getBranches = async () => {
+    const getBranchPrograms = async () => {
       if (!isOpen) return
       try {
         const response = await fetch(
@@ -56,12 +58,12 @@ export const BranchSelectionModal: React.FC<BranchSelectionModalProps> = ({
         )
         if (!response.ok) throw new Error('Gagal mengambil data cabang.')
         const data = (await response.json()).contents as BranchProgram[]
-        setBranches(data)
+        setBranchPrograms(data)
       } catch (error) {
         toast.error('Gagal mengambil data cabang.')
       }
     }
-    getBranches()
+    getBranchPrograms()
   }, [isOpen, programId])
 
   const toggleFees = (branchId: string) => {
@@ -90,7 +92,7 @@ export const BranchSelectionModal: React.FC<BranchSelectionModalProps> = ({
             'Content-Type': 'application/json',
             Authorization: `Bearer ${at}`,
           },
-          body: JSON.stringify({ branch_program_id: selectedBranchId }),
+          body: JSON.stringify({ branch_id: selectedBranchId }),
         }
       )
 
@@ -110,7 +112,7 @@ export const BranchSelectionModal: React.FC<BranchSelectionModalProps> = ({
 
   if (!isOpen) return null
 
-  const selectedBranch = branches?.find((b) => b.id === selectedBranchId)
+  const selectedBranch = branchPrograms?.find((b) => b.id === selectedBranchId)
 
   const getStatusBadge = (status: UserRegistration['status']) => {
     switch (status) {
@@ -189,18 +191,18 @@ export const BranchSelectionModal: React.FC<BranchSelectionModalProps> = ({
             onValueChange={setSelectedBranchId}
             className="space-y-4"
           >
-            {branches ? (
-              branches.map((branchData) => {
-                const groupedFees = groupFeesByCategory(branchData.fees)
-                const isExpanded = expandedFees.includes(branchData.id)
-                const isSelected = selectedBranchId === branchData.id
+            {branchPrograms ? (
+              branchPrograms.map((branchProgram) => {
+                const groupedFees = groupFeesByCategory(branchProgram.fees)
+                const isExpanded = expandedFees.includes(branchProgram.id)
+                const isSelected = selectedBranchId === branchProgram.branch.id
                 const isAlreadyRegisteredInThisBranch =
                   userRegistration?.branch_program.branch.id ===
-                  branchData.branch.id
+                  branchProgram.branch.id
 
                 return (
                   <Card
-                    key={branchData.id}
+                    key={branchProgram.id}
                     className={cn(
                       'transition-all',
                       isSelected && 'border-brown ring-1 ring-brown'
@@ -208,26 +210,26 @@ export const BranchSelectionModal: React.FC<BranchSelectionModalProps> = ({
                   >
                     <CardHeader className="pb-2 flex flex-row items-start space-x-4">
                       <RadioGroupItem
-                        value={branchData.id}
-                        id={branchData.id}
+                        value={branchProgram.branch.id}
+                        id={branchProgram.id}
                         className="mt-1"
                       />
                       <div className="flex-1">
                         <label
-                          htmlFor={branchData.id}
+                          htmlFor={branchProgram.id}
                           className="font-medium text-brown cursor-pointer"
                         >
-                          {branchData.branch.name}
+                          {branchProgram.branch.name}
                         </label>
                         {isAlreadyRegisteredInThisBranch && (
                           <Badge className="ml-2 bg-blue-100 hover:bg-blue-100/80 text-blue-800">
-                            Pendaftaran Terakhir
+                            Terdaftar pada Cabang Ini
                           </Badge>
                         )}
                       </div>
                       <Button variant="outline" size="sm" asChild>
                         <Link
-                          href={`/branch/${branchData.branch.id}`}
+                          href={`/branch/${branchProgram.branch.id}`}
                           target="_blank"
                           rel="noopener noreferrer"
                           className="flex items-center gap-1"
@@ -241,7 +243,7 @@ export const BranchSelectionModal: React.FC<BranchSelectionModalProps> = ({
                         variant="ghost"
                         size="sm"
                         className="w-full justify-between text-gray-600"
-                        onClick={() => toggleFees(branchData.id)}
+                        onClick={() => toggleFees(branchProgram.id)}
                       >
                         <span>Lihat Biaya</span>
                         {isExpanded ? (
