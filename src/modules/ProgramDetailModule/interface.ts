@@ -1,36 +1,15 @@
-export interface Fee {
-  category: string
-  tier: string | null
-  amount: number
-}
-
-export interface Branch {
-  branch_program_id: string
-  branch: {
-    id: string
-    name: string
-    location: string | null
-  }
-  fees: Fee[]
-}
-
-export type UserStatus = 'PENDING' | 'ACCEPTED' | 'DECLINED' | null
-
-export interface ProgramDetailProps {
+export interface Program {
   id: string
-  branches: Branch[]
   title: string
   cover_image: string
+}
+
+export interface ProgramDetail extends Program {
   headline: string
   description: string
   min_registration_age: number
   max_registration_age: number
   education_level_requirement: object
-  cp_name_1: string
-  cp_name_2: string
-  cp_wa_number_1: string
-  cp_wa_number_2: string
-  user_status: UserStatus
   custom_fields: {
     levels?: {
       name: string
@@ -38,11 +17,43 @@ export interface ProgramDetailProps {
     }[]
   } | null
 }
-export interface ProgramDetailModuleProps {
+
+interface Branch {
   id: string
-}
-export interface ProgramProps {
-  id: string
-  title: string
+  name: string
   cover_image: string
+}
+
+export interface Fee {
+  category: string
+  tier: string | null
+  amount: number
+}
+
+interface ContactPerson {
+  name: string
+  phone: string
+}
+
+export interface BranchProgram {
+  id: string
+  branch: Branch
+  fees: Fee[]
+  contact_persons: ContactPerson[]
+}
+
+export interface UserRegistration {
+  id: string
+  branch_program: {
+    id: string
+    program: Program
+    branch: Branch
+  }
+  batch_program: {
+    id: string
+    title: string
+    description: string | null
+  }
+  status: 'PENDING' | 'ACCEPTED' | 'DECLINED'
+  created_at: string
 }
