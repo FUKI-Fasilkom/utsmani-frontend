@@ -23,19 +23,19 @@ async function getOtherActivities() {
     }
   )
   const responseJson = await response.json()
-  const programs = await responseJson.contents
+  const programs = await responseJson.results
   return programs
 }
 
 async function getOtherNews() {
   const response = await fetch(
-    `${process.env.NEXT_PUBLIC_API_URL}/blog/news-quotes`,
+    `${process.env.NEXT_PUBLIC_API_URL}/blog/news-quotes?type=NEWS`,
     {
       next: { revalidate: 3600 },
     }
   )
   const responseJson = await response.json()
-  const news = await responseJson.contents
+  const news = await responseJson.results
   return news
 }
 
