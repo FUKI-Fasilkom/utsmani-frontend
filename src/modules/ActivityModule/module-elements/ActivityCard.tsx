@@ -31,13 +31,7 @@ export const ActivityCard: React.FC<ActivityCardProps> = ({ item }) => {
             <div>
               <CalendarDays className="mr-2 text-brown" strokeWidth={3} />
             </div>
-            {new Intl.DateTimeFormat('id-ID', {
-              day: 'numeric',
-              month: 'long',
-              year: 'numeric',
-            }).format(
-              new Date(item.activity_date.split('-').reverse().join('-'))
-            )}
+            {item.activity_date}
           </div>
         )}
         {item.dresscode && (
