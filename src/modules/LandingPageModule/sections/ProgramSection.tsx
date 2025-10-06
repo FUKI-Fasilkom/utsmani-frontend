@@ -1,4 +1,4 @@
-import { ProgramProps, ProgramSectionProps } from '../interface'
+import { ProgramProps } from '../interface'
 import Image from 'next/image'
 import Link from 'next/link'
 import {
@@ -8,9 +8,36 @@ import {
   CarouselItem,
   CarouselNext,
   CarouselPrevious,
-} from '@/components/ui/carousel' // Assuming this path is correct for your project structure
+} from '@/components/ui/carousel'
 
-export const ProgramSection: React.FC<ProgramSectionProps> = ({ programs }) => {
+async function getPrograms(): Promise<ProgramProps[]> {
+  try {
+    const response = await fetch(
+      `${process.env.NEXT_PUBLIC_API_URL}/program/`,
+      {
+        cache: 'no-store',
+      }
+    )
+
+    if (!response.ok) {
+      throw new Error('Failed to fetch programs data')
+    }
+
+    const data = await response.json()
+    return data.contents
+  } catch (error) {
+    console.error(error)
+    return []
+  }
+}
+
+export const ProgramSection: React.FC = async () => {
+  const programs = await getPrograms()
+
+  if (programs.length === 0) {
+    return null
+  }
+
   return (
     <section className="container items-center flex flex-col px-4 gap-8">
       <div className="md:mb-4 lg:mb-8">

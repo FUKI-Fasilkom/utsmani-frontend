@@ -10,7 +10,7 @@ interface YouTubeVideoData {
 export function YouTubeSection() {
   const [videoData, setVideoData] = useState<YouTubeVideoData | null>(null)
   const [loading, setLoading] = useState(true)
-  const [_, setError] = useState<string | null>(null)
+  const [error, setError] = useState<string | null>(null)
   const [isClient, setIsClient] = useState(false)
 
   useEffect(() => {
@@ -19,7 +19,7 @@ export function YouTubeSection() {
         setLoading(true)
         const response = await fetch(
           `${process.env.NEXT_PUBLIC_API_URL}/homepage/youtube-video/`,
-          { next: { revalidate: 60 } }
+          { cache: 'no-store' }
         )
 
         if (!response.ok) {
@@ -41,18 +41,16 @@ export function YouTubeSection() {
     fetchVideoData()
   }, [])
 
-  // Set isClient to true after component mounts
   useEffect(() => {
     setIsClient(true)
   }, [])
 
-  // Don't render anything if there's no embed code
-  if (!loading && (!videoData || !videoData.embed_code)) {
+  if (!loading && (!videoData || !videoData.embed_code || error)) {
     return null
   }
 
   return (
-    <section className="pb-16">
+    <section className="pb-10">
       <div className="container mx-auto px-4">
         <div className="max-w-4xl mx-auto">
           {loading ? (
@@ -86,9 +84,7 @@ export function YouTubeSection() {
   )
 }
 
-// Basic sanitization function to help prevent XSS
 function sanitizeEmbedCode(embedCode: string): string {
-  // Only allow YouTube embeds
   if (
     !embedCode.includes('youtube.com/embed/') &&
     !embedCode.includes('youtu.be/')
@@ -97,13 +93,11 @@ function sanitizeEmbedCode(embedCode: string): string {
     return ''
   }
 
-  // Make sure it's an iframe
   if (!embedCode.startsWith('<iframe') || !embedCode.endsWith('</iframe>')) {
     console.warn('Invalid embed code format detected')
     return ''
   }
 
-  // Add responsive styling if not present
   if (!embedCode.includes('width="100%"')) {
     embedCode = embedCode.replace(/width="(\d+)"/, 'width="100%"')
   }

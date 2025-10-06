@@ -9,13 +9,34 @@ import {
 import { Testimony } from '../interface'
 import { Quote, UserIcon } from 'lucide-react'
 
-interface TestimonySectionProps {
-  testimonies: Testimony[]
+async function getTestimonies(): Promise<Testimony[]> {
+  try {
+    const response = await fetch(
+      `${process.env.NEXT_PUBLIC_API_URL}/testimony/`,
+      {
+        cache: 'no-store',
+      }
+    )
+
+    if (!response.ok) {
+      throw new Error('Failed to fetch testimonies data')
+    }
+
+    const data = await response.json()
+    return data.contents
+  } catch (error) {
+    console.error(error)
+    return []
+  }
 }
 
-export const TestimonySection: React.FC<TestimonySectionProps> = ({
-  testimonies,
-}) => {
+export const TestimonySection: React.FC = async () => {
+  const testimonies = await getTestimonies()
+
+  if (testimonies.length === 0) {
+    return null
+  }
+
   return (
     <section className="container flex flex-col gap-6 items-center text-brown px-10">
       <div>

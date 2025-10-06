@@ -69,9 +69,9 @@ export const Navbar: React.FC = () => {
     <nav className="w-full bg-[#FCF9F4] h-[56px] md:h-[80px] py-2 px-4 fixed top-0 inset-x-0 z-30 drop-shadow-md">
       <div className="lg:container flex items-center justify-between h-full">
         {/* Logo */}
-        <Link href={'/'} className="relative w-20 md:w-32 aspect-[2]">
+        <Link href={'/'} className="relative w-32 md:w-40 aspect-[2]">
           <Image
-            src={'/logo.png'}
+            src={`${process.env.NEXT_PUBLIC_API_URL}/site-settings/logo/`}
             alt="Logo Al-Utsmani"
             fill
             className="object-contain"

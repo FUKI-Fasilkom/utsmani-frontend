@@ -43,3 +43,10 @@ export interface Testimony {
   created_at: string
   updated_at: string
 }
+
+export interface Partner {
+  id: string
+  name: string
+  logo: string
+  website: string | null
+}
