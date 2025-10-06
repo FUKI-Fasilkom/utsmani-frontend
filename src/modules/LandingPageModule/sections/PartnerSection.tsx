@@ -55,11 +55,11 @@ export const PartnerSection = () => {
           }),
         ]}
       >
-        <CarouselContent className="w-full justify-center">
+        <CarouselContent>
           {partners.map((partner) => (
             <CarouselItem
               key={partner.id}
-              className="basis-1/3 md:basis-1/4 lg:basis-1/5 aspect-square px-2 md:px-4 lg:px-6"
+              className="basis-1/3 md:basis-1/4 lg:basis-1/5 aspect-square px-2 md:px-4 lg:px-6 flex justify-center items-center"
             >
               {partner.website ? (
                 <Link
