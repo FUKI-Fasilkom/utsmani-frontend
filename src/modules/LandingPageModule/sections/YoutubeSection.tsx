@@ -52,7 +52,7 @@ export function YouTubeSection() {
   }
 
   return (
-    <section className="pb-16">
+    <section className="pb-10">
       <div className="container mx-auto px-4">
         <div className="max-w-4xl mx-auto">
           {loading ? (

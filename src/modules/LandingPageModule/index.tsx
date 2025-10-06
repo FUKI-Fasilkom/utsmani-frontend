@@ -11,6 +11,7 @@ import {
   WhySection,
 } from './sections'
 import { YouTubeSection } from './sections/YoutubeSection'
+import { PartnerSection } from './sections/PartnerSection'
 
 export const LandingPageModule: React.FC = async () => {
   const [responseProgram, responseActivity, responseBranch, responseTestimony] =
@@ -48,6 +49,7 @@ export const LandingPageModule: React.FC = async () => {
       <JoinUsSection />
       <BranchSection branches={branches.contents} />
       <YouTubeSection />
+      <PartnerSection />
     </div>
   )
 }
