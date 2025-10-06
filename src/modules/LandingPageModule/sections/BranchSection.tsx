@@ -2,9 +2,29 @@ import Link from 'next/link'
 import TikTokIcon from '@/components/icons/TikTok'
 import { Mail, MapPin, Phone } from 'lucide-react'
 import { Facebook, Instagram, Youtube } from '@/components/icons'
-import { BranchSectionProps } from '../interface'
+import { BranchProps } from '../interface'
 
-export const BranchSection: React.FC<BranchSectionProps> = ({ branches }) => {
+async function getBranches(): Promise<BranchProps[]> {
+  try {
+    const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/branch/`, {
+      cache: 'no-store',
+    })
+
+    if (!response.ok) {
+      throw new Error('Failed to fetch branches data')
+    }
+
+    const data = await response.json()
+    return data.contents
+  } catch (error) {
+    console.error(error)
+    return []
+  }
+}
+
+export const BranchSection: React.FC = async () => {
+  const branches = await getBranches()
+
   return (
     <section className="max-w-screen-xl mx-auto container pb-20 flex flex-col gap-y-16 md:flex-row md:gap-x-9">
       <BranchListSection branches={branches} />
@@ -13,7 +33,13 @@ export const BranchSection: React.FC<BranchSectionProps> = ({ branches }) => {
   )
 }
 
-const BranchListSection: React.FC<BranchSectionProps> = ({ branches }) => {
+const BranchListSection: React.FC<{ branches: BranchProps[] }> = ({
+  branches,
+}) => {
+  if (branches.length === 0) {
+    return null
+  }
+
   return (
     <section className="w-full md:w-[60%] flex flex-col bg-white drop-shadow-lg rounded-[20px] text-[#6C4534] px-[32px] py-[40px]">
       <h2 className="font-bold text-4xl heading-2 text-center">

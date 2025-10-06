@@ -34,11 +34,12 @@ async function getBannerData(): Promise<Banner[]> {
   try {
     const response = await fetch(
       `${process.env.NEXT_PUBLIC_API_URL}/homepage/banner`,
-      { next: { revalidate: 60 } }
+      { cache: 'no-store' }
     )
 
     if (!response.ok) {
-      throw new Error(`Failed to fetch banner data: ${response.status}`)
+      console.error(`Failed to fetch banner data: ${response.status}`)
+      return []
     }
 
     const data: Banner[] = await response.json()

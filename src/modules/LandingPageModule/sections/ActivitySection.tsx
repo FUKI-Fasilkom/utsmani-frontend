@@ -7,19 +7,43 @@ import {
   CarouselPrevious,
 } from '@/components/ui/carousel'
 import Image from 'next/image'
-import { ActivitySectionProps } from '../interface'
+import { ActivityProps } from '../interface'
 import Link from 'next/link'
 
-export const ActivitySection: React.FC<ActivitySectionProps> = ({
-  activities,
-}) => {
+async function getActivities(): Promise<ActivityProps[]> {
+  try {
+    const response = await fetch(
+      `${process.env.NEXT_PUBLIC_API_URL}/blog/activity/?is_featured=true`,
+      {
+        cache: 'no-store',
+      }
+    )
+
+    if (!response.ok) {
+      throw new Error('Failed to fetch activities data')
+    }
+
+    const data = await response.json()
+    return data.results
+  } catch (error) {
+    console.error(error)
+    return []
+  }
+}
+
+export const ActivitySection: React.FC = async () => {
+  const activities = await getActivities()
+
+  if (activities.length === 0) {
+    return null
+  }
+
   return (
     <section className="container w-full flex flex-col px-4 gap-3 lg:gap-6 justify-center items-center">
       <h1 className="text-center text-[#6C4534] heading-2 font-bold">
         Kegiatan
       </h1>
 
-      {/* kegiatan atas */}
       <Carousel
         className="w-full px-5 py-4 md:py-8 lg:py-10"
         opts={{ loop: true, align: 'start' }}
