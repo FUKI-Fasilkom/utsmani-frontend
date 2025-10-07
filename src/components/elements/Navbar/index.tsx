@@ -10,6 +10,7 @@ import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { useEffect, useRef, useState } from 'react'
 import UserProfileDropdown from './UserProfileDropdown'
+import serverImageLoader from '@/lib/image/serverImageLoader'
 
 const NAV_LINKS = [
   { href: '/', label: 'Beranda' },
@@ -74,7 +75,9 @@ export const Navbar: React.FC = () => {
             src={`${process.env.NEXT_PUBLIC_API_URL}/site-settings/logo/`}
             alt="Logo Al-Utsmani"
             fill
-            className="object-contain"
+            className="object-contain w-full h-full"
+            loader={serverImageLoader}
+            unoptimized
           />
         </Link>
 
