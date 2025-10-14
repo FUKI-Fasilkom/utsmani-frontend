@@ -77,7 +77,7 @@ export const RegisterForm: React.FC<RegisterFormProps> = ({
       const responseJson = await response.json()
       if (responseJson.status !== 200) throw new Error(responseJson.errors)
       setPhoneNumber(data.phone_number.replace(/^08/, '+628'))
-      setStep(2) // Lanjut ke langkah memasukkan OTP
+      setStep(3) // Skip OTP. Set langsung ke step 3 (sukses)
     } catch (err) {
       console.error(err)
     }

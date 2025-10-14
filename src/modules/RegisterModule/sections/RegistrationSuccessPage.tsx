@@ -9,7 +9,7 @@ export const RegistrationSuccessPage: React.FC = () => {
     <div className="w-full lg:w-1/2 h-screen relative bg-black/50 lg:bg-white flex justify-center items-center px-4 sm:px-6 lg:px-8">
       <div className="bg-white rounded-2xl shadow-lg p-6 sm:p-8 max-w-sm sm:max-w-lg w-full flex flex-col items-center">
         <h1 className="text-xl sm:text-2xl font-semibold text-center text-[#6C4534] mb-6 sm:mb-8">
-          Akun Terverifikasi!
+          Akun berhasil dibuat!
         </h1>
         <CircleCheckBig
           size={60}
@@ -17,8 +17,8 @@ export const RegistrationSuccessPage: React.FC = () => {
           className="mb-6 sm:mb-8 sm:w-20 sm:h-20"
         />
         <p className="text-xs sm:text-sm text-center text-gray-600 mb-8 sm:mb-10">
-          OTP yang Anda masukkan sudah terverifikasi sehingga akun Anda berhasil
-          dibuat.
+          Akun Anda telah berhasil dibuat. Silakan klik tombol di bawah untuk
+          masuk ke akun Anda.
         </p>
 
         <Link href="/login" className="block w-full">
