@@ -2,6 +2,7 @@ import React from 'react'
 import { PersonalDataSection, CertificateSection } from './sections'
 import { getCookie } from 'cookies-next'
 import { cookies } from 'next/headers'
+import { redirect } from 'next/navigation'
 
 export const ProfileModule: React.FC = async () => {
   const [userData, education] = await Promise.all([
@@ -15,6 +16,10 @@ export const ProfileModule: React.FC = async () => {
       cache: 'no-store',
     }),
   ])
+
+  if (userData.status === 401) {
+    redirect('/login?next=/profile')
+  }
 
   const userDataJson = await userData.json()
   const educationJson = await education.json()
