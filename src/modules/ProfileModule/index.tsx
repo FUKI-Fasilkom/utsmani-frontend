@@ -1,35 +1,36 @@
+'use client'
+
 import React from 'react'
-import { PersonalDataSection, CertificateSection } from './sections'
-import { getCookie } from 'cookies-next'
-import { cookies } from 'next/headers'
-import { redirect } from 'next/navigation'
+import { PersonalDataSection } from './sections/PersonalDataSection'
+import { CertificateSection } from './sections/CertificateSection'
+import { RegistrationHistorySection } from './sections/RegistrationHistorySection'
+import { ProfileSidebar } from './components/ProfileSidebar'
+import { ProfileTab } from './interface'
 
-export const ProfileModule: React.FC = async () => {
-  const [userData, education] = await Promise.all([
-    fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/profile`, {
-      headers: {
-        Authorization: `Bearer ${getCookie('AT', { cookies })}`,
-      },
-      cache: 'no-store',
-    }),
-    fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/education`, {
-      cache: 'no-store',
-    }),
-  ])
+interface ProfileModuleProps {
+  defaultTab: ProfileTab
+}
 
-  if (userData.status === 401) {
-    redirect('/login?next=/profile')
+export const ProfileModule: React.FC<ProfileModuleProps> = ({ defaultTab }) => {
+  const renderContent = () => {
+    switch (defaultTab) {
+      case ProfileTab.Profile:
+        return <PersonalDataSection />
+      case ProfileTab.Certificates:
+        return <CertificateSection />
+      case ProfileTab.Registrations:
+        return <RegistrationHistorySection />
+      default:
+        return <PersonalDataSection />
+    }
   }
 
-  const userDataJson = await userData.json()
-  const educationJson = await education.json()
   return (
-    <div className="flex flex-col gap-8">
-      <PersonalDataSection
-        {...userDataJson.contents}
-        educationList={educationJson.contents}
-      />
-      <CertificateSection certificates={userDataJson.contents.certificates} />
+    <div className="container mx-auto max-w-screen-xl p-4 md:p-8">
+      <div className="flex flex-col md:flex-row gap-8">
+        <ProfileSidebar activeTab={defaultTab} />
+        <main className="flex-1">{renderContent()}</main>
+      </div>
     </div>
   )
 }
