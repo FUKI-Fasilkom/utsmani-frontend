@@ -5,7 +5,7 @@ import { getCookie } from 'cookies-next'
 import { toast } from 'sonner'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import type { UserRegistration } from '../interface'
-import { FileText } from 'lucide-react'
+import { FileText, Info } from 'lucide-react'
 import { RegistrationCard } from '../module-elements/RegistrationCard'
 
 const fetchRegistrations = async (): Promise<UserRegistration[]> => {
@@ -100,6 +100,14 @@ export const RegistrationHistorySection: React.FC = () => {
         <TabsContent value="pending" className="mt-6">
           {pendingList.length > 0 ? (
             <div className="space-y-4">
+              <div className="flex items-start gap-3 p-4 bg-amber-50 text-amber-800 rounded-lg border border-amber-200">
+                <Info className="h-5 w-5 mt-0.5 flex-shrink-0" />
+                <p className="text-sm">
+                  Pendaftaran Anda sedang menunggu konfirmasi. Silakan hubungi
+                  admin dari masing-masing program untuk menyelesaikan proses
+                  pendaftaran dan pembayaran.
+                </p>
+              </div>
               {pendingList.map((reg) => (
                 <RegistrationCard key={reg.id} registration={reg} />
               ))}

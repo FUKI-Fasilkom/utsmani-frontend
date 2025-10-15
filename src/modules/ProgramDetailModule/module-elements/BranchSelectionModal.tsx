@@ -19,10 +19,10 @@ interface BranchSelectionModalProps {
   isOpen: boolean
   onClose: () => void
   onRegisterSuccess: () => void
-  userRegistration: UserRegistration | null // Prop untuk info pendaftaran terakhir
+  userRegistration: UserRegistration | null
 }
 
-const groupFeesByCategory = (fees: Fee[]): Record<string, Fee[]> => {
+const groupFeesByCategory: (fees: Fee[]) => Record<string, Fee[]> = (fees) => {
   return fees.reduce(
     (acc, fee) => {
       const { category } = fee
@@ -79,11 +79,6 @@ export const BranchSelectionModal: React.FC<BranchSelectionModalProps> = ({
     setLoading(true)
     try {
       const at = getCookie('AT')
-      if (!at) {
-        toast.error('Silakan login terlebih dahulu!')
-        router.push('/login')
-        return
-      }
       const response = await fetch(
         `${process.env.NEXT_PUBLIC_API_URL}/program/${programId}/register`,
         {
@@ -96,11 +91,17 @@ export const BranchSelectionModal: React.FC<BranchSelectionModalProps> = ({
         }
       )
 
+      if (response.status === 401) {
+        toast.error('Silakan login terlebih dahulu!')
+        router.push(`/login?next=/program/${programId}`)
+        return
+      }
+
       const responseJson = await response.json()
       if (response.status !== 201)
         throw new Error(responseJson.message || 'Gagal mendaftar')
 
-      toast.success('Pendaftaran berhasil!')
+      // Panggil callback sukses dan tutup modal ini
       onRegisterSuccess()
       onClose()
     } catch (err: any) {
@@ -147,11 +148,11 @@ export const BranchSelectionModal: React.FC<BranchSelectionModalProps> = ({
 
   return (
     <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50 p-4">
-      <div className="bg-white rounded-lg shadow-xl w-full max-w-2xl flex flex-col max-h-[90vh]">
+      <div className="bg-white rounded-lg shadow-xl w-full max-w-3xl flex flex-col max-h-[90vh]">
         <div className="p-6 border-b">
           <h2 className="text-xl font-bold text-brown">Pilih Cabang</h2>
           <p className="text-gray-500 text-sm mt-1">
-            Pilih cabang, lihat biaya, dan daftar program
+            Pilih cabang dan daftar program
           </p>
         </div>
 
@@ -169,14 +170,18 @@ export const BranchSelectionModal: React.FC<BranchSelectionModalProps> = ({
                     {userRegistration.branch_program.branch.name}
                   </span>{' '}
                   dengan status {getStatusBadge(userRegistration.status)}.
-                  Mendaftar kembali akan membuat pendaftaran baru.
+                  {userRegistration.status === 'PENDING' && (
+                    <span>
+                      Silakan menghubungi admin untuk informasi lebih lanjut.
+                    </span>
+                  )}
                 </div>
                 <Button
                   variant="tertiary"
                   className="font-semibold mt-2"
                   asChild
                 >
-                  <Link href="/profile" target="__blank">
+                  <Link href="/profile/my-programs" target="__blank">
                     Lihat Riwayat Pendaftaran
                   </Link>
                 </Button>
@@ -245,7 +250,7 @@ export const BranchSelectionModal: React.FC<BranchSelectionModalProps> = ({
                         className="w-full justify-between text-gray-600"
                         onClick={() => toggleFees(branchProgram.id)}
                       >
-                        <span>Lihat Biaya</span>
+                        <span>Lihat Informasi Detail</span>
                         {isExpanded ? (
                           <ChevronUp size={16} />
                         ) : (
@@ -254,32 +259,60 @@ export const BranchSelectionModal: React.FC<BranchSelectionModalProps> = ({
                       </Button>
                       {isExpanded && (
                         <div className="mt-2 border-t pt-3">
-                          {Object.entries(groupedFees).length > 0 ? (
-                            Object.entries(groupedFees).map(
-                              ([category, feeArray]) => (
-                                <div key={category} className="mb-3">
-                                  <h4 className="font-semibold text-sm">
-                                    {category}
-                                  </h4>
-                                  <ul className="pl-4 list-disc text-sm space-y-1 mt-1">
-                                    {feeArray.map((fee, i) => (
-                                      <li key={i}>
-                                        {fee.tier && `${fee.tier}: `}
-                                        <span className="font-medium">
-                                          Rp{' '}
-                                          {fee.amount.toLocaleString('id-ID')}
-                                        </span>
-                                      </li>
-                                    ))}
-                                  </ul>
-                                </div>
+                          <div className="">
+                            <h3 className="font-semibold">Biaya</h3>
+                            {Object.entries(groupedFees).length > 0 ? (
+                              Object.entries(groupedFees).map(
+                                ([category, feeArray], i) => (
+                                  <div key={category} className="mb-2">
+                                    <h4 className="font-medium text-sm">
+                                      {i + 1}. {category}
+                                    </h4>
+                                    <ul className="pl-8 list-disc text-sm space-y-1 mt-1">
+                                      {feeArray.map((fee, i) => (
+                                        <li key={i}>
+                                          {fee.tier && `${fee.tier}: `}
+                                          <span className="font-medium">
+                                            Rp{' '}
+                                            {fee.amount.toLocaleString('id-ID')}
+                                          </span>
+                                        </li>
+                                      ))}
+                                    </ul>
+                                  </div>
+                                )
                               )
-                            )
-                          ) : (
-                            <p className="text-sm text-gray-500">
-                              Tidak ada informasi biaya.
-                            </p>
-                          )}
+                            ) : (
+                              <p className="text-sm text-gray-500">
+                                Tidak ada informasi biaya.
+                              </p>
+                            )}
+
+                            <h3 className="font-semibold mt-6">
+                              Contact Person
+                            </h3>
+                            {branchProgram.contact_persons.length > 0 ? (
+                              <ul className="pl-5 list-disc text-sm space-y-1 mt-1">
+                                {branchProgram.contact_persons.map((cp, i) => (
+                                  <li key={i}>
+                                    {cp.name}:{' '}
+                                    <a
+                                      href={`https://wa.me/${cp.phone}`}
+                                      target="_blank"
+                                      rel="noopener noreferrer"
+                                      className="text-brown hover:underline font-bold"
+                                    >
+                                      {cp.phone}
+                                    </a>
+                                  </li>
+                                ))}
+                              </ul>
+                            ) : (
+                              <p className="text-sm text-gray-500">
+                                Tidak ada contact person tersedia.
+                              </p>
+                            )}
+                          </div>
                         </div>
                       )}
                     </CardContent>
