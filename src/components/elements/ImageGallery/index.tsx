@@ -66,7 +66,7 @@ export default function ImageGallery({
   return (
     <>
       <div className="flex flex-col relative justify-center items-center w-screen">
-        <h1 className="absolute -top-8 rounded-full bg-[#6C4534] text-white font-semibold heading-3 w-fit text-center px-7 py-4 z-10">
+        <h1 className="absolute -top-8 rounded-full bg-[#6C4534] text-white font-semibold heading-4 w-fit text-center px-7 py-4 z-10">
           {title}
         </h1>
         <hr className="block max-w-screen-lg mx-auto w-screen h-1 bg-[#6C4534] z-0" />

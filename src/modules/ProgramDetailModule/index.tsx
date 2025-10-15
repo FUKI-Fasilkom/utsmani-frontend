@@ -40,7 +40,7 @@ const getUserRegistrations = async (
 
   try {
     const response = await fetch(
-      `${process.env.NEXT_PUBLIC_API_URL}/program/${id}/registrations`,
+      `${process.env.NEXT_PUBLIC_API_URL}/program/my-registrations?program_id=${id}`,
       { headers: { Authorization: `Bearer ${token}` } }
     )
     if (response.status === 404) {
@@ -114,7 +114,8 @@ export const ProgramDetailModule: React.FC<{ id: string }> = ({ id }) => {
       <HeaderSection
         programDetail={programDetail}
         latestRegistration={latestRegistration}
-        onRegisterSuccess={fetchData} // Me-refresh semua data setelah pendaftaran berhasil
+        // onRegisterSuccess={fetchData} // Me-refresh semua data setelah pendaftaran berhasil
+        onRegisterSuccess={() => {}}
       />
 
       <section className="flex flex-col lg:flex-row p-4 md:p-14 xl:p-28 gap-10 lg:gap-20 justify-center">

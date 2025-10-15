@@ -1,5 +1,4 @@
 import { CustomFetchBaseResponse } from '@/components/utils/customFetch/interface'
-import { CertificateProps } from '@/modules/ProfileModule/interface'
 import { ReactNode } from 'react'
 
 export interface AuthContextProviderProps {
@@ -20,7 +19,6 @@ export interface AuthContextInterface {
 
 export interface User {
   address: string
-  certificates: CertificateProps
   education_level: string
   email: string
   fullname: string

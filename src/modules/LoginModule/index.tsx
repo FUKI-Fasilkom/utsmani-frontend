@@ -18,7 +18,7 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { Eye, EyeOff } from 'lucide-react'
 import Image from 'next/image'
 import Link from 'next/link'
-import { useRouter } from 'next/navigation'
+import { useRouter, useSearchParams } from 'next/navigation'
 import React, { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { toast } from 'sonner'
@@ -39,6 +39,7 @@ interface LoginFormProps {
 
 const LoginForm: React.FC<LoginFormProps> = ({ login, getUser }) => {
   const router = useRouter()
+  const searchParams = useSearchParams()
   const [showPassword, setShowPassword] = useState(false)
 
   const form = useForm<LoginFormValues>({
@@ -52,7 +53,8 @@ const LoginForm: React.FC<LoginFormProps> = ({ login, getUser }) => {
     try {
       await login(data)
       toast.success('Login berhasil!')
-      router.replace('/')
+      const nextPage = searchParams.get('next') || '/'
+      router.replace(nextPage)
       await getUser()
     } catch (err: any) {
       if (err.message === 'Nomor telepon Anda belum diverifikasi.') {

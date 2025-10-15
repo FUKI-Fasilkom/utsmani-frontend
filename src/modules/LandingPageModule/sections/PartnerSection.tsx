@@ -41,9 +41,7 @@ export const PartnerSection = () => {
 
   return (
     <section className="container w-full flex flex-col px-4 gap-3 lg:gap-6 justify-center items-center pb-16">
-      <h1 className="text-center text-[#6C4534] heading-2 font-bold">
-        Partner
-      </h1>
+      <h1 className="text-center text-[#6C4534] heading-2 font-bold">Mitra</h1>
       <Carousel
         className="w-full"
         opts={{ loop: true, align: 'center' }}

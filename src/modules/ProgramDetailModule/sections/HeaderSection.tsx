@@ -1,9 +1,10 @@
 'use client'
-import React from 'react'
+import React, { useState } from 'react'
 import Image from 'next/image'
 import { Button } from '@/components/ui/button'
 import type { ProgramDetail, UserRegistration } from '../interface'
 import { BranchSelectionModal } from '../module-elements/BranchSelectionModal'
+import { RegistrationSuccessModal } from '../module-elements/RegistrationSuccessModal'
 
 interface HeaderSectionProps {
   programDetail: ProgramDetail
@@ -16,14 +17,12 @@ export const HeaderSection: React.FC<HeaderSectionProps> = ({
   latestRegistration,
   onRegisterSuccess,
 }) => {
-  const [branchModalOpen, setBranchModalOpen] = React.useState(false)
+  const [branchModalOpen, setBranchModalOpen] = useState(false)
+  const [successModalOpen, setSuccessModalOpen] = useState(false)
 
-  const getButtonText = () => {
-    if (!latestRegistration) return 'Pilih Cabang dan Daftar'
-
-    // Jika sudah ada pendaftaran, kita bisa memberikan teks yang lebih kontekstual
-    // Misalnya, "Daftar Lagi / Naik Level" atau tetap "Pilih Cabang & Daftar"
-    return 'Pilih Cabang & Daftar'
+  const handleSuccessfulRegistration = () => {
+    onRegisterSuccess()
+    setSuccessModalOpen(true)
   }
 
   return (
@@ -52,7 +51,7 @@ export const HeaderSection: React.FC<HeaderSectionProps> = ({
               onClick={() => setBranchModalOpen(true)}
             >
               <span className="paragraph-lg font-semibold">
-                {getButtonText()}
+                Pilih Cabang dan Daftar
               </span>
             </Button>
           </div>
@@ -63,8 +62,13 @@ export const HeaderSection: React.FC<HeaderSectionProps> = ({
         programId={programDetail.id}
         isOpen={branchModalOpen}
         onClose={() => setBranchModalOpen(false)}
-        onRegisterSuccess={onRegisterSuccess}
+        onRegisterSuccess={handleSuccessfulRegistration}
         userRegistration={latestRegistration}
+      />
+
+      <RegistrationSuccessModal
+        isOpen={successModalOpen}
+        onClose={() => setSuccessModalOpen(false)}
       />
     </>
   )
