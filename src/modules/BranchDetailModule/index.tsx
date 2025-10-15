@@ -76,7 +76,7 @@ export const BranchDetailModule: React.FC<BranchDetailModuleProps> = async ({
           <h2 className="mb-3 text-brown font-bold heading-4">
             Cabang Al-Utsmani
           </h2>
-          <h1 className="font-semibold heading-1">{detail.name}</h1>
+          <h1 className="font-semibold heading-2">{detail.name}</h1>
           <p className="text-brown italic font-medium text-base space-x-12">
             <span className="items-center space-x-1">
               <FaClock className="inline pb-1 pr-1" />
@@ -92,17 +92,34 @@ export const BranchDetailModule: React.FC<BranchDetailModuleProps> = async ({
           </p>
         </div>
 
-        <div
-          className="prose max-w-none text-justify"
-          dangerouslySetInnerHTML={{ __html: detail.description }}
-        ></div>
+        <div className="prose max-w-none text-justify xl:w-2/3">
+          <div dangerouslySetInnerHTML={{ __html: detail.description }}></div>
+        </div>
+
+        {detail.map_address_link && (
+          <div className="w-full flex flex-col relative items-center px-10">
+            <h2 className="rounded-full heading-4 bg-brown text-white w-fit text-center px-6 py-2 z-10 mb-6">
+              Lokasi
+            </h2>
+            <hr className="block max-w-screen-lg w-screen absolute h-1 bg-brown z-0 top-6 " />
+            <iframe
+              src={detail.map_address_link}
+              height="400"
+              style={{ border: 0 }}
+              allowFullScreen={true}
+              loading="lazy"
+              referrerPolicy="no-referrer-when-downgrade"
+              className="w-full max-w-screen-md rounded-[20px] mb-[24px]"
+            ></iframe>
+          </div>
+        )}
 
         {detail.images && detail.images.length > 0 && (
           <ImageGallery images={detail.images} title="Galeri" />
         )}
 
         <div className="flex flex-col relative justify-center items-center gap-3 w-full">
-          <h1 className="rounded-full bg-[#6C4534] text-white font-semibold heading-3 w-fit text-center px-7 py-4 z-10">
+          <h1 className="rounded-full bg-[#6C4534] text-white font-semibold heading-4 w-fit text-center px-7 py-4 z-10">
             Program Tersedia
           </h1>
           <hr className="block max-w-screen-lg w-screen absolute h-1 bg-[#6C4534] z-0 top-8" />
@@ -131,7 +148,7 @@ export const BranchDetailModule: React.FC<BranchDetailModuleProps> = async ({
                           'linear-gradient(to top, rgba(0, 0, 0, 0.6) 80%, rgba(0, 0, 0, 0) 100%)',
                       }}
                     >
-                      <span className="font-bold text-xl text-center text-white drop-shadow-md">
+                      <span className="font-medium heading-6 text-center text-white drop-shadow-md">
                         {program.title}
                       </span>
                     </div>
