@@ -8,16 +8,10 @@ const slugToTabMap: Record<string, ProfileTab> = {
   'my-programs': ProfileTab.Registrations,
 }
 
-interface ProfileSlugPageProps {
-  params: {
-    slug: string
-  }
-}
+type Params = Promise<{ slug: string }>
 
-export default async function ProfileSlugPage({
-  params,
-}: ProfileSlugPageProps) {
-  const { slug } = await params
+export default async function ProfileSlugPage(props: { params: Params }) {
+  const { slug } = await props.params
   const activeTab = slugToTabMap[slug]
 
   if (!activeTab) {
