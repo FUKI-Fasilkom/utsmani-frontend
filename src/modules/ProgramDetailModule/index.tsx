@@ -40,7 +40,7 @@ const getUserRegistrations = async (
 
   try {
     const response = await fetch(
-      `${process.env.NEXT_PUBLIC_API_URL}/program/${id}/registrations`,
+      `${process.env.NEXT_PUBLIC_API_URL}/program/my-registrations?program_id=${id}`,
       { headers: { Authorization: `Bearer ${token}` } }
     )
     if (response.status === 404) {
