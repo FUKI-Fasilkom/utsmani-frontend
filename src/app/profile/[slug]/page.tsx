@@ -14,8 +14,11 @@ interface ProfileSlugPageProps {
   }
 }
 
-export default function ProfileSlugPage({ params }: ProfileSlugPageProps) {
-  const activeTab = slugToTabMap[params.slug]
+export default async function ProfileSlugPage({
+  params,
+}: ProfileSlugPageProps) {
+  const { slug } = await params
+  const activeTab = slugToTabMap[slug]
 
   if (!activeTab) {
     redirect('/profile/my-profile')
