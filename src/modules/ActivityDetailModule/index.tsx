@@ -16,27 +16,35 @@ import ImageGallery from '@/components/elements/ImageGallery'
 import { ActivityDetail, ActivityDetailModuleProps } from './interface'
 
 async function getOtherActivities() {
-  const response = await fetch(
-    `${process.env.NEXT_PUBLIC_API_URL}/blog/activity`,
-    {
-      next: { revalidate: 3600 },
-    }
-  )
-  const responseJson = await response.json()
-  const programs = await responseJson.results
-  return programs
+  try {
+    const response = await fetch(
+      `${process.env.NEXT_PUBLIC_API_URL}/blog/activity`,
+      {
+        next: { revalidate: 3600 },
+      }
+    )
+    const responseJson = await response.json()
+    return (responseJson.results as ActivityProps[]) ?? []
+  } catch (error) {
+    console.log('Error fetching other activities:', error)
+    return []
+  }
 }
 
 async function getOtherNews() {
-  const response = await fetch(
-    `${process.env.NEXT_PUBLIC_API_URL}/blog/news-quotes?type=NEWS`,
-    {
-      next: { revalidate: 3600 },
-    }
-  )
-  const responseJson = await response.json()
-  const news = await responseJson.results
-  return news
+  try {
+    const response = await fetch(
+      `${process.env.NEXT_PUBLIC_API_URL}/blog/news-quotes?type=NEWS`,
+      {
+        next: { revalidate: 3600 },
+      }
+    )
+    const responseJson = await response.json()
+    return (responseJson.results as ActivityProps[]) ?? []
+  } catch (error) {
+    console.log('Error fetching other news:', error)
+    return []
+  }
 }
 
 async function getDetail(id: string, type: 'ACTIVITY' | 'NEWS') {

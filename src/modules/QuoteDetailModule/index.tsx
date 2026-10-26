@@ -12,16 +12,29 @@ import {
 import { QuoteItem } from './interface'
 
 const getQuoteDetail = async (id: string) => {
-  const response = await fetch(
-    `${process.env.NEXT_PUBLIC_API_URL}/blog/news-quotes/quotes/${id}`,
-    { next: { revalidate: 60 } }
-  )
-  const data = await response.json()
-  return data
+  try {
+    const response = await fetch(
+      `${process.env.NEXT_PUBLIC_API_URL}/blog/news-quotes/quotes/${id}`,
+      { next: { revalidate: 60 } }
+    )
+    const data = await response.json()
+    return data
+  } catch (error) {
+    console.error('Error fetching quote detail:', error)
+    return {}
+  }
 }
 
 export const QuoteDetailModule: React.FC<{ id: string }> = async ({ id }) => {
   const { contents } = await getQuoteDetail(id)
+
+  if (!contents) {
+    return (
+      <div className="flex items-center justify-center h-screen">
+        <p className="text-gray-500">Detail tidak ditemukan</p>
+      </div>
+    )
+  }
 
   return (
     <div className="flex flex-col gap-14 items-center w-full mb-20 lg:mb-40">

@@ -15,13 +15,17 @@ type Program = {
   cover_image: string
 }
 
-async function getPrograms() {
-  const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/program`, {
-    next: { revalidate: 60 },
-  })
-  const responseJson = await response.json()
-  const programs = (await responseJson.contents) as Program[]
-  return programs
+async function getPrograms(): Promise<Program[]> {
+  try {
+    const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/program`, {
+      next: { revalidate: 60 },
+    })
+    const responseJson = await response.json()
+    return (responseJson.contents as Program[]) ?? []
+  } catch (error) {
+    console.error('Error fetching programs:', error)
+    return []
+  }
 }
 
 export const ProgramModule: React.FC = async () => {
